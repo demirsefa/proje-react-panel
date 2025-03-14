@@ -1,11 +1,12 @@
 import React from 'react';
-import { Layout } from '../layout/Layout';
+import { Layout } from '../components/layout/Layout';
 import { Screen } from '../types/Screen';
 import { useEffect, useState } from 'react';
 import { CrudApi } from '../api/crudApi';
 import { Link } from 'react-router-dom';
 import { List } from '../list/List';
-import { StoreData } from '../index';
+
+import { StoreData } from "../storeData";
 
 export function ControllerList({ screen }: { screen: Screen }) {
   const [page, setPage] = useState(0);

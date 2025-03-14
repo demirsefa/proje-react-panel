@@ -34,7 +34,7 @@ export default {
             entries: [
                 {
                     find: 'react-panel', // The package name
-                    replacement: path.resolve(__dirname, '../react-panel/src'), // Path to the `src` folder of `react-panel`
+                    replacement: path.resolve(__dirname, '../..'), // Path to the `src` folder of `react-panel`
                 },
             ],
         }),

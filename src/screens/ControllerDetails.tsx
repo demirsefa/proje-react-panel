@@ -1,4 +1,4 @@
-import { Layout } from '../layout/Layout';
+import { Layout } from '../components/layout/Layout';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { CrudApi } from '../api/crudApi';

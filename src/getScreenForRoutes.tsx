@@ -3,9 +3,9 @@ import { ControllerCreate } from './screens/ControllerCreate';
 import { ControllerDetails } from './screens/ControllerDetails';
 import { ControllerEdit } from './screens/ControllerEdit';
 import { ControllerList } from './screens/ControllerList';
-import { StoreData } from './index';
 import { Screen } from './types/Screen';
 import React from 'react';
+import { StoreData } from "./storeData";
 
 export function getScreenForRoutes() {
   const screens = Object.entries(StoreData.screens);
