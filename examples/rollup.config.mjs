@@ -21,7 +21,7 @@ export default {
 			'process.env.NODE_ENV': JSON.stringify( 'development' )
 		}),
 		external(), resolve(), commonjs(),		typescript({ tsconfig: "tsconfig.json", clean: true }),
-		scss({ fileName: 'examples/public/dist/bundle.css' }),
+		scss({ fileName: 'bundle.css' }),
 		serve({
 			open: true,
 			verbose: true,
