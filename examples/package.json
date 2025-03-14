@@ -7,15 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build/examples": "rollup -c -w --sourcemap"
   },
-  "author": "Seafa Demir",
+  "author": "Sefa Demir",
   "license": "ISC",
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-panel": "./..",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",

@@ -1,4 +1,5 @@
-import { Layout } from '../../layout/Layout';
+import React from 'react';
+import { Layout } from '../layout/Layout';
 import { Screen } from '../types/Screen';
 import { useEffect, useState } from 'react';
 import { CrudApi } from '../api/crudApi';

@@ -1,6 +1,6 @@
-import { Layout } from '../../layout/Layout';
+import { Layout } from '../layout/Layout';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CrudApi } from '../api/crudApi';
 import { Screen } from '../types/Screen';
 

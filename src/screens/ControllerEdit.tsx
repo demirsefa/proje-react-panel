@@ -1,4 +1,4 @@
-import { Layout } from '../../layout/Layout';
+import { Layout } from '../layout/Layout';
 import { Form } from './Form';
 import React, { useEffect, useState } from 'react';
 import { Screen } from '../types/Screen';

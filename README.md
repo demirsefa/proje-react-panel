@@ -1,7 +1,7 @@
-# NestJS React Panel
+#  React Panel
 
 ## Overview
-NestJS React Panel is a web application built using NestJS as the backend framework and React for the frontend. It features a customizable sidebar and supports CRUD operations on entities. This project is designed to be a foundational template for building admin panels or other web-based interfaces.
+React Panel is a web application built using  as the backend framework and React for the frontend. It features a customizable sidebar and supports CRUD operations on entities. This project is designed to be a foundational template for building admin panels or other web-based interfaces.
 
 ---
 
