@@ -1,6 +1,6 @@
 {
   "name": "proje-react-panel",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "author": "SEFA DEMİR",
   "license": "ISC",
@@ -39,6 +39,7 @@
     "eslint": "^8.57.1",
     "react": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-router": "^7.3.0",
     "react-router-dom": "^7.3.0",
     "reflect-metadata": "^0.2.2",
     "rollup": "^4.35.0",
