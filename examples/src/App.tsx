@@ -1,5 +1,5 @@
 import React from "react";
-import { Panel } from "react-panel";
+import { Panel } from "proje-react-panel";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function Test() {

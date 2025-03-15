@@ -3,6 +3,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import external from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
+import scss from "rollup-plugin-scss";
 
 export default {
 	input: "src/index.ts",
@@ -18,7 +19,16 @@ export default {
 			sourcemap: false,
 		},
 	],
-	plugins: [external(), resolve(), commonjs(), typescript({ tsconfig: "./tsconfig.json", clean: true }), terser()],
+	plugins: [
+		external(),
+		resolve(),
+		commonjs(),
+		typescript({ tsconfig: "./tsconfig.json", clean: true }),
+		terser(),
+		scss({
+			output: 'dist/bundle.css', // Output CSS file
+			outputStyle: 'compressed', // Optional: compress the output
+		}),
+	],
 	external: ["react"],
-
 };

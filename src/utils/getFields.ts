@@ -1,8 +1,8 @@
-import { ScreenCreatorData } from "./types/ScreenCreatorData";
 import { getMetadataStorage } from "class-validator";
-import { getClassCrudData } from "./declerations/Crud";
+import { getClassCrudData } from "../declerations/Crud";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { getCellFields } from "./declerations/Cell";
+import { getCellFields } from "../declerations/Cell";
+import { ScreenCreatorData } from "../types/ScreenCreatorData";
 
 export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
 	const metadataStorage = getMetadataStorage();

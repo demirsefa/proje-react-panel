@@ -3,7 +3,7 @@ import { Screen } from '../types/Screen';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { CrudApi } from '../api/crudApi';
-import { StoreData } from "../storeData";
+import { StoreData } from "../utils/storeData";
 
 export function Form({ data, screen }: { data?: any; screen: Screen }) {
   const {

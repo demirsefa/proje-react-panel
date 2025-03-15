@@ -1,8 +1,7 @@
 import React from 'react';
-import '../styles/list.scss';
-import { CellOptions } from '../declerations/Cell';
+import { CellOptions } from '../../declerations/Cell';
 import { Link } from 'react-router-dom';
-import { Screen } from '../types/Screen';
+import { Screen } from '../../types/Screen';
 
 interface ListProps<T> {
   data: T[];

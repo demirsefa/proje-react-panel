@@ -93,7 +93,7 @@ typings/
 # Serverless directories
 .serverless/
 
-# FuseBox cacheproje-react-panel
+# FuseBox cache
 .fusebox/
 
 # DynamoDB Local files
@@ -102,6 +102,9 @@ typings/
 # TernJS port file
 .tern-port
 
-.idea
-dist
-
+.prettierrc.json
+.gitignore
+package-lock.json
+rollup.config.mjs
+tsconfig.json
+examples

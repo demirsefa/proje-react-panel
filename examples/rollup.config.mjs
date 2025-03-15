@@ -33,8 +33,8 @@ export default {
         alias({
             entries: [
                 {
-                    find: 'react-panel', // The package name
-                    replacement: path.resolve(__dirname, '../..'), // Path to the `src` folder of `react-panel`
+                    find: 'proje-react-panel', // The package name
+                    replacement: path.resolve(__dirname, '../..'), // Path to the `src` folder of `proje-react-panel`
                 },
             ],
         }),

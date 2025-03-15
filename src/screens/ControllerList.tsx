@@ -4,9 +4,9 @@ import { Screen } from '../types/Screen';
 import { useEffect, useState } from 'react';
 import { CrudApi } from '../api/crudApi';
 import { Link } from 'react-router-dom';
-import { List } from '../list/List';
+import { List } from '../components/list/List';
 
-import { StoreData } from "../storeData";
+import { StoreData } from "../utils/storeData";
 
 export function ControllerList({ screen }: { screen: Screen }) {
   const [page, setPage] = useState(0);

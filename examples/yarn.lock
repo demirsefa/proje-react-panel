@@ -1023,6 +1023,15 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
+proje-react-panel@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/proje-react-panel/-/proje-react-panel-1.0.0.tgz#e8ca30260dc59f968210fbc0997835a8f8552705"
+  integrity sha512-J5DGTRMilO6oJvkaZaYk/+bSuQq0GhHL7Caq+5VUZRMW6CoVbJKjwFZQrBRO6EZdJUrKHR7P3BpFd2ohLYjAGQ==
+  dependencies:
+    axios "^1.8.3"
+    react-hook-form "^7.54.2"
+    rollup-plugin-serve "^3.0.0"
+
 proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
@@ -1040,12 +1049,9 @@ react-hook-form@^7.54.2:
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.54.2.tgz#8c26ed54c71628dff57ccd3c074b1dd377cfb211"
   integrity sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==
 
-react-panel@./..:
-  version "1.0.0"
-  dependencies:
-    axios "^1.8.3"
-    react-hook-form "^7.54.2"
-    rollup-plugin-serve "^3.0.0"
+"react-panel@link:./..":
+  version "0.0.0"
+  uid ""
 
 react-router-dom@^7.3.0:
   version "7.3.0"

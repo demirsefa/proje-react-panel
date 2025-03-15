@@ -1,4 +1,4 @@
-import { ScreenCreatorData } from "./types/ScreenCreatorData";
+import { ScreenCreatorData } from "../types/ScreenCreatorData";
 
 export const StoreData: {
 	screens: Record<string, ScreenCreatorData<any>>
