@@ -10,10 +10,9 @@
   "author": "Sefa Demir",
   "license": "ISC",
   "dependencies": {
-    "proje-react-panel": "^1.0.0",
+    "proje-react-panel": "^1.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-panel": "link:./..",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {

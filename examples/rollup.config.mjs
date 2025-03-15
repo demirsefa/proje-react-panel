@@ -1,4 +1,3 @@
-// Constants for repeated values
 import * as path from "node:path";
 import alias from '@rollup/plugin-alias';
 import serve from "rollup-plugin-serve";
@@ -8,8 +7,8 @@ import external from "rollup-plugin-peer-deps-external";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import replace from '@rollup/plugin-replace';
-import scss from 'rollup-plugin-scss';
 import { fileURLToPath } from 'url';
+import json from "@rollup/plugin-json";
 
 // Simulate __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -49,11 +48,7 @@ export default {
             tsconfig: "tsconfig.json",
             clean: true
         }),
-        // Extract and compile SCSS
-        scss({
-            fileName: 'bundle.css'
-        }),
-        // Development server setup
+        json(),
         serve({
             open: true,
             verbose: true,

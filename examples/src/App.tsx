@@ -8,7 +8,7 @@ function Test() {
 
 export function App() {
 	return (
-	    	<Panel>
+		<Panel>
 			<Router>
 				<Routes>
 					<Route path="/" element={<Test/>} />
