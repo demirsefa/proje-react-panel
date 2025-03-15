@@ -1,6 +1,6 @@
 {
   "name": "proje-react-panel",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "author": "SEFA DEMİR",
   "license": "ISC",
@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c   ",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",
