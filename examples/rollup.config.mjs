@@ -8,7 +8,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import replace from '@rollup/plugin-replace';
 import { fileURLToPath } from 'url';
-import json from "@rollup/plugin-json";
 
 // Simulate __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +32,7 @@ export default {
             entries: [
                 {
                     find: 'proje-react-panel', // The package name
-                    replacement: path.resolve(__dirname, '../..'), // Path to the `src` folder of `proje-react-panel`
+                    replacement: path.resolve(__dirname, '..'), // Path to the `src` folder of `proje-react-panel`
                 },
             ],
         }),
@@ -48,7 +47,6 @@ export default {
             tsconfig: "tsconfig.json",
             clean: true
         }),
-        json(),
         serve({
             open: true,
             verbose: true,

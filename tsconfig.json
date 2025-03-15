@@ -14,7 +14,9 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true
   },
   "include": [
     "src"

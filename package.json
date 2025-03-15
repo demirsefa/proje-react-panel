@@ -15,7 +15,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c   ",
     "lint": "eslint src --ext .ts,.tsx",
-    "generate-nestjs-entity": "node scripts/generate-nestjs-entity.js"
   },
   "repository": {
     "type": "git",
