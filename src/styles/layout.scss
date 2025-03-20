@@ -10,4 +10,53 @@
     overflow-y: auto;
     transition: margin-left 0.3s ease;
   }
+
+  .error-container {
+    display: flex;
+    padding: 16px;
+    margin: 20px 0;
+    border-radius: 8px;
+    background-color: rgba(255, 77, 79, 0.1);
+    border-left: 4px solid #ff4d4f;
+    color: #f2f2f2;
+    align-items: flex-start;
+
+    .error-icon {
+      margin-right: 16px;
+      color: #ff4d4f;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    .error-content {
+      flex: 1;
+
+      h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        color: #ff4d4f;
+      }
+
+      p {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+  }
+
+  // Additional error feedback styles
+  .field-error {
+    border-color: #ff4d4f !important;
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+    }
+  }
+
+  .error-message {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #ff4d4f;
+  }
 }

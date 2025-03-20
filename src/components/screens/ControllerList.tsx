@@ -1,10 +1,11 @@
 import React from "react";
-import { Screen } from "../types/Screen";
+import { Screen } from "../../types/Screen";
 import { useEffect, useState } from "react";
-import { CrudApi } from "../api/crudApi";
+import { CrudApi } from "../../api/crudApi";
 import { Link } from "react-router";
-import { List } from "../components/list/List";
-import { useAppStore } from "../store/store";
+import { List } from "../list/List";
+import { useAppStore } from "../../store/store";
+import { ErrorComponent } from "../ErrorComponent";
 
 export function ControllerList({ screen }: { screen: Screen }) {
 	const { screens, fetchSettings } = useAppStore((s) => ({
@@ -27,9 +28,13 @@ export function ControllerList({ screen }: { screen: Screen }) {
 				});
 		}
 	}, [page, screen.controller, fetchSettings]);
+
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
 	return (
 		<div>
-			<Link to={"/maps/create"}>Create</Link>
+			<Link to={"create"}>Create</Link>
 			{/*
 			{error ? <p>Error {error}</p> : <></>}
 */}

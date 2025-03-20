@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppStore } from "../store/store";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 type AppProps = {
 	children: React.ReactNode;
@@ -11,5 +12,5 @@ export function Panel({ children, setFetchSettings }: AppProps) {
 		useAppStore.setState({ fetchSettings: setFetchSettings() });
 	}, [setFetchSettings]);
 
-	return <>{children}</>;
+	return <ErrorBoundary>{children}</ErrorBoundary>;
 }

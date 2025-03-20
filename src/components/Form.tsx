@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { Screen } from "../types/Screen";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { CrudApi } from "../api/crudApi";
 import { useAppStore } from "../store/store";
+import { InputOptions } from "../decorators/Input";
+import { Label } from "./Label";
 
 export function Form({ data, screen }: { data?: any; screen: Screen }) {
 	const { screens, fetchSettings } = useAppStore((s) => ({
 		screens: s.screens ?? {},
 		fetchSettings: s.fetchSettings,
 	}));
+	const isEditForm = !!data;
 	const {
 		register,
 		handleSubmit,
@@ -20,8 +23,8 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 		defaultValues: data,
 	});
 	const navigate = useNavigate();
-	const fields = screens[screen.controller].fields;
-
+	//const fields = screens[screen.controller].fields;
+	const inputs = screens[screen.controller].inputs;
 	useEffect(() => {
 		reset(data);
 	}, [data, reset]);
@@ -33,7 +36,7 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 					if (!fetchSettings) {
 						return;
 					}
-					if (data) {
+					if (isEditForm) {
 						CrudApi.edit(fetchSettings, screen.controller, dataForm).then(() => {
 							navigate("/" + screen.controller, {
 								replace: true,
@@ -47,18 +50,24 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 						});
 					}
 				})}>
-				{fields.map((field: any) => (
-					<div className="form-field" key={field}>
-						<label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
-						<input type="text" {...register(field)} placeholder={`Enter ${field}`} id={field} />
-						{errors[field] && (
-							<span className="error-message">
-								{/*@ts-ignore*/}
-								{(errors[field] as FieldErrors)?.message}
-							</span>
-						)}
-					</div>
-				))}
+				{inputs.map((input: InputOptions) => {
+					const fieldName = input.name || "";
+					return (
+						<div className="form-field" key={fieldName}>
+							<Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
+							<input
+								type={input.inputType}
+								{...register(fieldName)}
+								placeholder={input.placeholder}
+								id={fieldName}
+								disabled={isEditForm && input.editable === false}
+							/>
+							{errors[fieldName] && (
+								<span className="error-message">{errors[fieldName]?.message as string}</span>
+							)}
+						</div>
+					);
+				})}
 				<button type="submit" className="submit-button">
 					Submit
 				</button>

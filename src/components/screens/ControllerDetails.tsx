@@ -1,11 +1,11 @@
-import { Form } from "./Form";
-import React, { useEffect, useState } from "react";
-import { Screen } from "../types/Screen";
 import { useParams } from "react-router";
-import { CrudApi } from "../api/crudApi";
-import { useAppStore } from "../store/store";
+import React, { useEffect, useState } from "react";
+import { CrudApi } from "../../api/crudApi";
+import { Screen } from "../../types/Screen";
+import { useAppStore } from "../../store/store";
+import { ErrorComponent } from "../ErrorComponent";
 
-export function ControllerEdit({ screen }: { screen: Screen }) {
+export function ControllerDetails({ screen }: { screen: Screen }) {
 	const { fetchSettings } = useAppStore((s) => ({
 		fetchSettings: s.fetchSettings,
 	}));
@@ -26,5 +26,15 @@ export function ControllerEdit({ screen }: { screen: Screen }) {
 		}
 	}, [fetchSettings, id, screen]);
 
-	return <Form data={data} screen={screen} />;
+	if (error) {
+		return <ErrorComponent error={error} />;
+	}
+
+	return (
+		<p
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(data, null, "   " + "<br/>"),
+			}}
+		/>
+	);
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { Route } from "react-router";
-import { ControllerCreate } from "../screens/ControllerCreate";
-import { ControllerDetails } from "../screens/ControllerDetails";
-import { ControllerEdit } from "../screens/ControllerEdit";
-import { ControllerList } from "../screens/ControllerList";
+import { ControllerCreate } from "../components/screens/ControllerCreate";
+import { ControllerDetails } from "../components/screens/ControllerDetails";
+import { ControllerEdit } from "../components/screens/ControllerEdit";
+import { ControllerList } from "../components/screens/ControllerList";
 import { Screen } from "../types/Screen";
 import { useAppStore } from "../store/store";
 

@@ -3,6 +3,7 @@ import { getClassCrudData } from "../decorators/Crud";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { getCellFields } from "../decorators/Cell";
 import { ScreenCreatorData } from "../types/ScreenCreatorData";
+import { getInputFields } from "../decorators/Input";
 
 export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
 	const metadataStorage = getMetadataStorage();
@@ -11,6 +12,7 @@ export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
 	return {
 		resolver: classValidatorResolver(entityClass as any),
 		fields: Array.from(new Set(targetMetadata.map((meta) => meta.propertyName))),
+		inputs: getInputFields(entityClass),
 		cells: getCellFields(entityClass),
 		crud: crud!,
 	};

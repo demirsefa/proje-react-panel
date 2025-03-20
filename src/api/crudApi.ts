@@ -15,12 +15,10 @@ export const CrudApi = {
 		}).then((res) => res.json());
 	},
 	details: (fetchSettings: { baseUrl: string }, api: string, id: any) => {
-		console.log("xxx");
 		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}/${id}`, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		}).then((res) => {
-			console.log("resres", res);
 			return res.json();
 		});
 	},
