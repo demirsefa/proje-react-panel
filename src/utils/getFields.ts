@@ -1,16 +1,12 @@
 import { getMetadataStorage } from "class-validator";
-import { getClassCrudData } from "../declerations/Crud";
+import { getClassCrudData } from "../decorators/Crud";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { getCellFields } from "../declerations/Cell";
+import { getCellFields } from "../decorators/Cell";
 import { ScreenCreatorData } from "../types/ScreenCreatorData";
 
 export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
 	const metadataStorage = getMetadataStorage();
-	const targetMetadata = metadataStorage.getTargetValidationMetadatas(
-		entityClass as any,
-		"",
-		false, false,
-	);
+	const targetMetadata = metadataStorage.getTargetValidationMetadatas(entityClass as any, "", false, false);
 	const crud = getClassCrudData(entityClass);
 	return {
 		resolver: classValidatorResolver(entityClass as any),

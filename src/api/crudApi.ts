@@ -1,30 +1,34 @@
-
 export const CrudApi = {
-  getList: (api: string, page: number) => {
-    return fetch(api, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page }),
-    }).then((res) => res.json());
-  },
-  create: (api: string, data: any) => {
-    return fetch(api, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
-  },
-  details(api: string, id: any) {
-    return fetch(`${api}/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    }).then((res) => res.json());
-  },
-  edit(api: string, data: any) {
-    return fetch(`${api}/${data.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
-  },
+	getList: (fetchSettings: { baseUrl: string }, api: string) => {
+		return fetch(`${fetchSettings.baseUrl}/${api}`, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}).then((res) => {
+			return res.json();
+		});
+	},
+	create: (fetchSettings: { baseUrl: string }, api: string, data: any) => {
+		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		}).then((res) => res.json());
+	},
+	details: (fetchSettings: { baseUrl: string }, api: string, id: any) => {
+		console.log("xxx");
+		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}/${id}`, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}).then((res) => {
+			console.log("resres", res);
+			return res.json();
+		});
+	},
+	edit: (fetchSettings: { baseUrl: string }, api: string, data: any) => {
+		return fetch(`${fetchSettings?.baseUrl ?? ""}${api}/${data.id}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		}).then((res) => res.json());
+	},
 };

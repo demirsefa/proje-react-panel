@@ -1,21 +1,18 @@
 import * as path from "node:path";
-import alias from '@rollup/plugin-alias';
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 import typescript from "rollup-plugin-typescript2";
 import external from "rollup-plugin-peer-deps-external";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import replace from '@rollup/plugin-replace';
-import { fileURLToPath } from 'url';
+import replace from "@rollup/plugin-replace";
+import scss from "rollup-plugin-scss"; // Import SCSS plugin
 
 // Simulate __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const INPUT_FILE = "src/index.tsx";
 const OUTPUT_FILE = "public/dist/index.js";
-const ENVIRONMENT = 'development';
+const ENVIRONMENT = "development";
 const SERVER_PORT = 3000;
 
 export default {
@@ -28,16 +25,8 @@ export default {
         },
     ],
     plugins: [
-        alias({
-            entries: [
-                {
-                    find: 'proje-react-panel', // The package name
-                    replacement: path.resolve(__dirname, '..'), // Path to the `src` folder of `proje-react-panel`
-                },
-            ],
-        }),
         replace({
-            'process.env.NODE_ENV': JSON.stringify(ENVIRONMENT),
+            "process.env.NODE_ENV": JSON.stringify(ENVIRONMENT),
         }),
         external(),
         resolve(),
@@ -45,7 +34,11 @@ export default {
         // TypeScript compilation with config
         typescript({
             tsconfig: "tsconfig.json",
-            clean: true
+            clean: true,
+        }),
+        // SCSS bundling
+        scss({
+             fileName: "bundle.css", // Output for the compiled CSS
         }),
         serve({
             open: true,
@@ -57,7 +50,7 @@ export default {
         }),
         // Live reloading for development
         livereload({
-            watch: "public/dist"
+            watch: "public/dist",
         }),
     ],
 };

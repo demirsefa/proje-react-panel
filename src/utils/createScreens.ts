@@ -1,5 +1,5 @@
-import { StoreData } from "./storeData";
+import { useAppStore } from "../store/store";
 
 export function createScreens(screens: Record<string, any>) {
-	StoreData.screens = screens;
+	useAppStore.setState({ screens });
 }

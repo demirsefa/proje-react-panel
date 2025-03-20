@@ -1,34 +1,42 @@
 {
-  "name": "examples",
   "version": "1.0.0",
+  "name": "examples",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build/examples": "rollup -c -w --sourcemap"
+    "dev": "vite"
   },
   "author": "Sefa Demir",
   "license": "ISC",
   "dependencies": {
-    "proje-react-panel": "^1.0.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.3.0"
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "proje-react-panel": "link:..",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router": "7.3.0",
+    "use-sync-external-store": "^1.4.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
-    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
-    "@types/react": "^19.0.10",
+    "@types/react": "19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
     "rollup": "^4.35.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-scss": "^4.0.1",
     "rollup-plugin-serve": "^3.0.0",
     "rollup-plugin-typescript2": "^0.36.0",
     "sass": "^1.85.1",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2"
   }
 }

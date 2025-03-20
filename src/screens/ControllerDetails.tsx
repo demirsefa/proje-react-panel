@@ -1,34 +1,35 @@
-import { Layout } from '../components/layout/Layout';
-import { useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { CrudApi } from '../api/crudApi';
-import { Screen } from '../types/Screen';
+import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
+import { CrudApi } from "../api/crudApi";
+import { Screen } from "../types/Screen";
+import { useAppStore } from "../store/store";
 
 export function ControllerDetails({ screen }: { screen: Screen }) {
-  const { id } = useParams();
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState(null);
+	const { fetchSettings } = useAppStore((s) => ({
+		fetchSettings: s.fetchSettings,
+	}));
+	const { id } = useParams();
+	const [data, setData] = useState<any>(null);
+	const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (screen.controller && id) {
-      CrudApi.details(screen.controller, id)
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((e: any) => {
-          setError(e);
-          console.error(e);
-        });
-    }
-  }, [id, screen]);
+	useEffect(() => {
+		if (fetchSettings && screen.controller && id) {
+			CrudApi.details(fetchSettings, screen.controller, id)
+				.then((res) => {
+					setData(res);
+				})
+				.catch((e: any) => {
+					setError(e);
+					console.error(e);
+				});
+		}
+	}, [fetchSettings, id, screen]);
 
-  return (
-    <Layout>
-      <p
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(data, null, '   ' + '<br/>'),
-        }}
-      />
-    </Layout>
-  );
+	return (
+		<p
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(data, null, "   " + "<br/>"),
+			}}
+		/>
+	);
 }

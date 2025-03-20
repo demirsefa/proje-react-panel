@@ -1,9 +1,9 @@
-import { CellOptions } from "../declerations/Cell";
-import { CrudOptions } from "../declerations/Crud";
+import { CellOptions } from "../decorators/Cell";
+import { CrudOptions } from "../decorators/Crud";
 
-export type ScreenCreatorData<T> = {
-	resolver: any,
-	fields: string[],
-	cells: CellOptions<T>[],
-	crud: CrudOptions
+export interface ScreenCreatorData<T> {
+	resolver: any;
+	fields: string[];
+	cells: CellOptions<T>[];
+	crud: CrudOptions;
 }

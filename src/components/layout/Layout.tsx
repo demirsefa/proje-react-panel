@@ -1,18 +1,20 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { SideBar } from './SideBar';
+import React from "react";
+import { SideBar } from "./SideBar";
+import { ScreenCreatorData } from "../../types/ScreenCreatorData";
 
-export function Layout({
-  children,
-  noSidebar = false,
+export function Layout<IconType>({
+	children,
+	menu,
+	getIcons,
 }: {
-  children?: React.ReactNode;
-  noSidebar?: boolean;
+	children?: React.ReactNode;
+	menu?: (screens: Record<string, ScreenCreatorData<any>>) => { name: string; path: string; iconType: IconType }[];
+	getIcons?: (iconType: IconType) => React.ReactNode;
 }) {
-  return (
-    <div className="layout">
-      {!noSidebar && <SideBar />}
-      <main className="content">{children || <Outlet />}</main>
-    </div>
-  );
+	return (
+		<div className="layout">
+			<SideBar menu={menu} getIcons={getIcons} />
+			<main className="content">{children}</main>
+		</div>
+	);
 }

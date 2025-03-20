@@ -1,15 +1,17 @@
 .list-wrapper {
   width: 100%;
   padding: 16px;
-  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #2b2b2b;
+  color: #e0e0e0;
 
   .header {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
+    color: #ffffff;
   }
 
   .list-table {
@@ -20,20 +22,20 @@
     td {
       padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #444444;
     }
 
     th {
-      background-color: #007bff;
-      color: white;
+      color: #ffffff;
+      background-color: #3c3c3c;
     }
 
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #353535;
     }
 
     tr:hover {
-      background-color: #e8f4ff;
+      background-color: #444444;
     }
   }
 }

@@ -1,4 +1,21 @@
-@import 'sidebar';
-@import 'form';
-@import 'layout';
-@import 'list';
+@use './sidebar';
+@use './form';
+@use './layout';
+@use './list';
+
+.layout{
+  a {
+    color: white;
+
+    &:hover,
+    &:active {
+      color: white;
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}

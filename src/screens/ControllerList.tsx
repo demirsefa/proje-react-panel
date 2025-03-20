@@ -1,40 +1,39 @@
-import React from 'react';
-import { Layout } from '../components/layout/Layout';
-import { Screen } from '../types/Screen';
-import { useEffect, useState } from 'react';
-import { CrudApi } from '../api/crudApi';
-import { Link } from 'react-router-dom';
-import { List } from '../components/list/List';
-
-import { StoreData } from "../utils/storeData";
+import React from "react";
+import { Screen } from "../types/Screen";
+import { useEffect, useState } from "react";
+import { CrudApi } from "../api/crudApi";
+import { Link } from "react-router";
+import { List } from "../components/list/List";
+import { useAppStore } from "../store/store";
 
 export function ControllerList({ screen }: { screen: Screen }) {
-  const [page, setPage] = useState(0);
-  const [data, setData] = useState<any>(null);
-  const [error, setError] = useState(null);
+	const { screens, fetchSettings } = useAppStore((s) => ({
+		screens: s.screens ?? {},
+		fetchSettings: s.fetchSettings,
+	}));
+	const [page, setPage] = useState(0);
+	const [data, setData] = useState<any>(null);
+	const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (screen.controller) {
-      CrudApi.getList(screen.controller, page)
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((e: any) => {
-          setError(e);
-          console.error(e);
-        });
-    }
-  }, [page, screen.controller]);
-
-  return (
-    <Layout>
-      <Link to={'/maps/create'}>Create</Link>
-      {error ? <p>Error {error}</p> : null}
-      <List
-        screen={screen}
-        cells={StoreData.screens[screen.key].cells}
-        data={data}
-      />
-    </Layout>
-  );
+	useEffect(() => {
+		if (screen.controller && fetchSettings) {
+			CrudApi.getList(fetchSettings, screen.controller)
+				.then((res) => {
+					setData(res);
+				})
+				.catch((e: any) => {
+					setError(e);
+					console.error(e);
+				});
+		}
+	}, [page, screen.controller, fetchSettings]);
+	return (
+		<div>
+			<Link to={"/maps/create"}>Create</Link>
+			{/*
+			{error ? <p>Error {error}</p> : <></>}
+*/}
+			<List screen={screen} cells={screens[screen.key].cells} data={data} />
+		</div>
+	);
 }
