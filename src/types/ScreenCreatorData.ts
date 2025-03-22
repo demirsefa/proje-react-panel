@@ -2,10 +2,11 @@ import { CellOptions } from "../decorators/Cell";
 import { CrudOptions } from "../decorators/Crud";
 import { InputOptions } from "../decorators/Input";
 
-export interface ScreenCreatorData<T> {
+export interface ScreenCreatorData {
 	resolver: any;
 	fields: string[];
-	cells: CellOptions<T>[];
+	cells: CellOptions[];
 	inputs: InputOptions[];
-	crud: CrudOptions;
+	crud?: CrudOptions;
+	path: string;
 }

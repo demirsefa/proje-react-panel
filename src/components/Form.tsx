@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { CrudApi } from "../api/crudApi";
 import { useAppStore } from "../store/store";
 import { InputOptions } from "../decorators/Input";
-import { Label } from "./Label";
+import { FormField } from "./FormField";
 
 export function Form({ data, screen }: { data?: any; screen: Screen }) {
 	const { screens, fetchSettings } = useAppStore((s) => ({
@@ -20,14 +20,15 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 		formState: { errors },
 	} = useForm<any>({
 		resolver: screens[screen.controller].resolver,
-		defaultValues: data,
+		//TODO: remove __formEdit from api
+		defaultValues: { ...data, __formEdit: isEditForm },
 	});
 	const navigate = useNavigate();
 	//const fields = screens[screen.controller].fields;
 	const inputs = screens[screen.controller].inputs;
 	useEffect(() => {
-		reset(data);
-	}, [data, reset]);
+		reset({ ...data, __formEdit: isEditForm });
+	}, [isEditForm, data, reset]);
 
 	return (
 		<div className="form-wrapper">
@@ -36,6 +37,7 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 					if (!fetchSettings) {
 						return;
 					}
+					delete dataForm.__formEdit;
 					if (isEditForm) {
 						CrudApi.edit(fetchSettings, screen.controller, dataForm).then(() => {
 							navigate("/" + screen.controller, {
@@ -50,24 +52,15 @@ export function Form({ data, screen }: { data?: any; screen: Screen }) {
 						});
 					}
 				})}>
-				{inputs.map((input: InputOptions) => {
-					const fieldName = input.name || "";
-					return (
-						<div className="form-field" key={fieldName}>
-							<Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
-							<input
-								type={input.inputType}
-								{...register(fieldName)}
-								placeholder={input.placeholder}
-								id={fieldName}
-								disabled={isEditForm && input.editable === false}
-							/>
-							{errors[fieldName] && (
-								<span className="error-message">{errors[fieldName]?.message as string}</span>
-							)}
-						</div>
-					);
-				})}
+				{inputs.map((input: InputOptions) => (
+					<FormField
+						key={input.name || ""}
+						input={input}
+						register={register}
+						isEditForm={isEditForm}
+						error={errors[input.name || ""]}
+					/>
+				))}
 				<button type="submit" className="submit-button">
 					Submit
 				</button>

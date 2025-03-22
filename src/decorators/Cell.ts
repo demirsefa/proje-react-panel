@@ -2,15 +2,14 @@ import "reflect-metadata";
 
 const CELL_KEY = Symbol("cell");
 
-export interface CellOptions<T> {
+export interface CellOptions {
 	name?: string;
 	title?: string;
 	type?: "string" | "number" | "date";
 	placeHolder?: string;
-	linkTo?: (item: T) => string;
 }
 
-export function Cell<T>(options?: CellOptions<T>): PropertyDecorator {
+export function Cell(options?: CellOptions): PropertyDecorator {
 	return (target, propertyKey) => {
 		const existingCells: string[] = Reflect.getMetadata(CELL_KEY, target) || [];
 		Reflect.defineMetadata(CELL_KEY, [...existingCells, propertyKey.toString()], target);
@@ -22,7 +21,7 @@ export function Cell<T>(options?: CellOptions<T>): PropertyDecorator {
 	};
 }
 
-export function getCellFields<T>(entityClass: any): CellOptions<T>[] {
+export function getCellFields(entityClass: any): CellOptions[] {
 	const prototype = entityClass.prototype;
 	const cellFields: string[] = Reflect.getMetadata(CELL_KEY, prototype) || [];
 	return cellFields.map((field) => {

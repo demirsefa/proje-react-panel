@@ -5,11 +5,11 @@ import { Screen } from "../../types/Screen";
 
 interface ListProps<T> {
 	data: T[];
-	cells: CellOptions<T>[];
+	cells: CellOptions[];
 	screen: Screen;
 }
 
-export function List<T>({ data, cells, screen }: ListProps<T>) {
+export function List<T>({ data, cells }: ListProps<T>) {
 	if (!data || data.length === 0) {
 		return <div>No items available</div>;
 	}
@@ -59,9 +59,11 @@ export function List<T>({ data, cells, screen }: ListProps<T>) {
 										break;
 								}
 								let render = formattedValue;
+								/*
 								if (cellOptions.linkTo) {
 									render = <Link to={cellOptions.linkTo(item)}>{formattedValue}</Link>;
 								}
+*/
 								return <td key={cellOptions.name}>{render}</td>;
 							})}
 							<td>

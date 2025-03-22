@@ -23,7 +23,7 @@ export const CrudApi = {
 		});
 	},
 	edit: (fetchSettings: { baseUrl: string }, api: string, data: any) => {
-		return fetch(`${fetchSettings?.baseUrl ?? ""}${api}/${data.id}`, {
+		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}/${data.id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),

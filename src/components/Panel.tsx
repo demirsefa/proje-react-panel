@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
-import { useAppStore } from "../store/store";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { initPanel } from "../initPanel";
+import { InitPanelOptions } from "../types/initPanelOptions";
 
 type AppProps = {
 	children: React.ReactNode;
-	setFetchSettings: () => { baseUrl: string };
+	init: () => InitPanelOptions;
 };
 
-export function Panel({ children, setFetchSettings }: AppProps) {
+export function Panel({ children, init }: AppProps) {
 	useEffect(() => {
-		useAppStore.setState({ fetchSettings: setFetchSettings() });
-	}, [setFetchSettings]);
+		const options = init();
+		initPanel(options);
+	}, [init]);
 
 	return <ErrorBoundary>{children}</ErrorBoundary>;
 }

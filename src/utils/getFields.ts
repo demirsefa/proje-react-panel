@@ -5,7 +5,7 @@ import { getCellFields } from "../decorators/Cell";
 import { ScreenCreatorData } from "../types/ScreenCreatorData";
 import { getInputFields } from "../decorators/Input";
 
-export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
+export function getFields<T>(key: string, entityClass: T): ScreenCreatorData {
 	const metadataStorage = getMetadataStorage();
 	const targetMetadata = metadataStorage.getTargetValidationMetadatas(entityClass as any, "", false, false);
 	const crud = getClassCrudData(entityClass);
@@ -14,6 +14,7 @@ export function getFields<T>(entityClass: T): ScreenCreatorData<T> {
 		fields: Array.from(new Set(targetMetadata.map((meta) => meta.propertyName))),
 		inputs: getInputFields(entityClass),
 		cells: getCellFields(entityClass),
-		crud: crud!,
+		crud: crud,
+		path: "/" + (crud?.controller ?? key),
 	};
 }

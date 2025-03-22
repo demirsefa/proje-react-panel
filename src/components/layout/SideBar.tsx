@@ -3,12 +3,18 @@ import { Link } from "react-router";
 import { ScreenCreatorData } from "../../types/ScreenCreatorData";
 import { useAppStore } from "../../store/store";
 
+type GetMenuFunction<IconType> = (
+	screens: Record<string, ScreenCreatorData>
+) => { name: string; path: string; iconType: IconType }[];
+
+type GetIconsFunction<IconType> = (iconType: IconType) => React.ReactNode;
+
 export function SideBar<IconType>({
 	menu,
 	getIcons,
 }: {
-	menu?: (screens: Record<string, ScreenCreatorData<any>>) => { name: string; path: string; iconType: IconType }[];
-	getIcons?: (iconType: IconType) => React.ReactNode;
+	menu?: GetMenuFunction<IconType>;
+	getIcons?: GetIconsFunction<IconType>;
 }) {
 	const screens = useAppStore((s) => s.screens ?? {});
 	const [isOpen, setIsOpen] = useState(true);

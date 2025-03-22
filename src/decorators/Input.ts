@@ -3,7 +3,7 @@ import "reflect-metadata";
 const INPUT_KEY = Symbol("input");
 
 const isFieldSensitive = (fieldName: string): boolean => {
-	return !["password"].some((term) => fieldName.toLowerCase().includes(term));
+	return ["password"].some((term) => fieldName.toLowerCase().includes(term));
 };
 
 export interface InputOptions {
@@ -11,8 +11,10 @@ export interface InputOptions {
 	label?: string;
 	placeholder?: string;
 	editable?: boolean;
-	sensitive?: boolean;
 	inputType?: "text" | "email" | "tel" | "password" | "number" | "date";
+	type?: "input" | "select" | "textarea";
+	selectOptions?: string[]; //TODO: label/value
+	cancelPasswordValidationOnEdit?: boolean;
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {
@@ -32,14 +34,17 @@ export function getInputFields(entityClass: any): InputOptions[] {
 	const inputFields: string[] = Reflect.getMetadata(INPUT_KEY, prototype) || [];
 	return inputFields.map((field) => {
 		const fields = Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};
+		const inputType = fields?.inputType ?? (isFieldSensitive(field) ? "password" : "text");
 		return {
 			...fields,
 			editable: fields.editable ?? true,
-			sensitive: fields.sensitive ?? !isFieldSensitive(field),
+			sensitive: fields.sensitive,
 			name: fields?.name ?? field,
 			label: fields?.label ?? field,
 			placeholder: fields?.placeholder ?? field,
-			inputType: fields?.inputType ?? "text", //TODO: use class-validator to add extra control
+			inputType: inputType,
+			selectOptions: fields?.selectOptions ?? [],
+			cancelPasswordValidationOnEdit: fields?.cancelPasswordValidationOnEdit ?? inputType === "password",
 		};
 	});
 }
