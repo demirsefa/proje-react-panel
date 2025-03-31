@@ -1,5 +1,5 @@
 import React from "react";
-import { Panel, Layout, ScreenCreatorData, useScreens, InitPanelOptions } from "proje-react-panel";
+import { Panel, Layout, useScreens, Login } from "proje-react-panel";
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +8,13 @@ import { Admin } from "./types/Admin";
 import { User } from "./types/User";
 import { Message } from "./types/Message";
 import { Thread } from "./types/Thread";
+import type { InitPanelOptions, ScreenCreatorData } from "proje-react-panel";
 
 function init(): InitPanelOptions {
 	return {
+		screenPaths: {
+			login: "/login",
+		},
 		fetch: {
 			baseURL: "http://localhost:8080",
 		},
@@ -63,6 +67,7 @@ function AuthLayout() {
 
 export function App() {
 	const screens = useScreens();
+
 	return (
 		<Panel init={init}>
 			<Router>
@@ -71,6 +76,7 @@ export function App() {
 						<Route path={"/dashboard"} index element={<Dashboard />} />
 						{screens}
 					</Route>
+					<Route path="/login" element={<Login />} />
 				</Routes>
 			</Router>
 		</Panel>

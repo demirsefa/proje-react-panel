@@ -19,7 +19,6 @@ export function useScreens() {
 						key,
 						controller: controllerName,
 					};
-					console.log("path", screenData, routePath);
 					return (
 						<React.Fragment key={"index"}>
 							<Route path={routePath + "/create"} element={<ControllerCreate screen={screen} />} />

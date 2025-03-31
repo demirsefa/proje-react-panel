@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import React, { useEffect, useState } from "react";
-import { CrudApi } from "../../api/crudApi";
+import { CrudApi } from "../../api/CrudApi";
 import { Screen } from "../../types/Screen";
 import { useAppStore } from "../../store/store";
 import { ErrorComponent } from "../ErrorComponent";

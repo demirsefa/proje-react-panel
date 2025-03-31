@@ -1,23 +1,29 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FormField } from "../FormField";
-import { Screen } from "../../types/Screen";
-import "../../styles/login.scss";
+import { AuthApi } from "../../api/AuthApi";
+import { useAppStore } from "../../store/store";
+import { useNavigate } from "react-router";
 
 interface LoginFormData {
-	email: string;
+	username: string;
 	password: string;
 }
-function Login() {
+
+export function Login() {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<LoginFormData>();
-
+	const { fetchSettings } = useAppStore((s) => ({ fetchSettings: s.fetchSettings }));
+	const navigate = useNavigate();
 	const onSubmit = async (data: LoginFormData) => {
-		// TODO: Implement login logic
-		console.log("Login attempt:", data);
+		AuthApi.login(fetchSettings!, data.username, data.password).then((dataInner) => {
+			const { access_token, admin } = dataInner;
+			useAppStore.setState({ user: admin, token: access_token });
+			navigate("/");
+		});
 	};
 
 	return (
@@ -30,14 +36,14 @@ function Login() {
 				<form onSubmit={handleSubmit(onSubmit)} className="login-form">
 					<FormField
 						input={{
-							name: "email",
-							label: "Email",
-							inputType: "email",
-							placeholder: "Enter your email",
+							name: "username",
+							label: "Username",
+							inputType: "text",
+							placeholder: "Enter your username",
 						}}
 						register={register}
 						isEditForm={false}
-						error={errors.email}
+						error={errors.username}
 					/>
 					<FormField
 						input={{
@@ -60,5 +66,3 @@ function Login() {
 		</div>
 	);
 }
-
-export default Login;

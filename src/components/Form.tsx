@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Screen } from "../types/Screen";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { CrudApi } from "../api/crudApi";
+import { CrudApi } from "../api/CrudApi";
 import { useAppStore } from "../store/store";
 import { InputOptions } from "../decorators/Input";
 import { FormField } from "./FormField";

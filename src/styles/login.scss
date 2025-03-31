@@ -3,15 +3,15 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
     padding: 20px;
 
     .login-panel {
         width: 100%;
         max-width: 400px;
-        background: white;
+        background: #2c2c2c;
         border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         padding: 32px;
     }
 
@@ -21,12 +21,12 @@
 
         h1 {
             font-size: 24px;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 8px;
         }
 
         p {
-            color: #666;
+            color: #b3b3b3;
             font-size: 14px;
         }
     }
@@ -34,30 +34,33 @@
     .login-form {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        align-items: center;    
 
         .form-field {
+            width: 100%;
             margin-bottom: 16px;
 
             label {
                 display: block;
                 margin-bottom: 8px;
-                color: #333;
+                color: #ffffff;
                 font-weight: 500;
             }
 
             input {
                 width: 100%;
-                padding: 12px;
-                border: 1px solid #e1e1e1;
+                box-sizing: border-box;
+                padding: 12px 16px;
+                border: 1px solid #404040;
                 border-radius: 8px;
                 font-size: 14px;
+                background: #363636;
+                color: #ffffff;
                 transition: border-color 0.2s ease;
-
                 &:focus {
                     outline: none;
-                    border-color: #007bff;
-                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+                    border-color: #0066cc;
+                    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
                 }
             }
         }
@@ -68,7 +71,7 @@
             .submit-button {
                 width: 100%;
                 padding: 12px;
-                background: #007bff;
+                background: #0066cc;
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -78,7 +81,7 @@
                 transition: background-color 0.2s ease;
 
                 &:hover {
-                    background: #0056b3;
+                    background: #0052a3;
                 }
 
                 &:active {
@@ -87,4 +90,4 @@
             }
         }
     }
-} 
+}

@@ -1,24 +1,25 @@
 import React from "react";
 import { Screen } from "../../types/Screen";
 import { useEffect, useState } from "react";
-import { CrudApi } from "../../api/crudApi";
+import { CrudApi } from "../../api/CrudApi";
 import { Link } from "react-router";
 import { List } from "../list/List";
 import { useAppStore } from "../../store/store";
 import { ErrorComponent } from "../ErrorComponent";
 
 export function ControllerList({ screen }: { screen: Screen }) {
-	const { screens, fetchSettings } = useAppStore((s) => ({
+	const { screens, fetchSettings, token } = useAppStore((s) => ({
 		screens: s.screens ?? {},
 		fetchSettings: s.fetchSettings,
+		token: s.token,
 	}));
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState<any>(null);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		if (screen.controller && fetchSettings) {
-			CrudApi.getList(fetchSettings, screen.controller)
+		if (screen.controller && fetchSettings && token) {
+			CrudApi.getList({ ...fetchSettings, token }, screen.controller)
 				.then((res) => {
 					setData(res);
 				})

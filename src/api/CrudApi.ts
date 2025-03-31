@@ -1,10 +1,18 @@
+interface FetchOptions {
+	token: string;
+	baseUrl: string;
+}
+
 export const CrudApi = {
-	getList: (fetchSettings: { baseUrl: string }, api: string) => {
-		return fetch(`${fetchSettings.baseUrl}/${api}`, {
+	getList: (options: FetchOptions, api: string) => {
+		return fetch(`${options.baseUrl}/${api}`, {
 			method: "GET",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json", Authorization: `Bearer ${options.token}` },
 		}).then((res) => {
-			return res.json();
+			if (res.ok) {
+				return res.json();
+			}
+			throw res;
 		});
 	},
 	create: (fetchSettings: { baseUrl: string }, api: string, data: any) => {

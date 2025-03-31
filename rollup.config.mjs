@@ -18,6 +18,12 @@ export default {
 			sourcemap: false,
 		},
 	],
-	plugins: [external(), resolve(), commonjs(), typescript({ tsconfig: "./tsconfig.json", clean: true }), terser()],
+	plugins: [
+		external(),
+		resolve(),
+		commonjs(),
+		typescript({ tsconfig: "./tsconfig.json", clean: true }),
+		terser(),
+	],
 	external: ["react", "react-router"],
 };

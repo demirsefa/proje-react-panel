@@ -5,4 +5,5 @@ export interface InitPanelOptions {
 	fetch: {
 		baseURL: string;
 	};
+	screenPaths: Record<string, string>;
 }
