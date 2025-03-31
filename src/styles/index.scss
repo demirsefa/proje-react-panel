@@ -1,9 +1,9 @@
-@use './sidebar';
-@use './form';
-@use './layout';
-@use './list';
-@use './login';
-@use './error-boundary';
+@import './sidebar';
+@import './form';
+@import './layout';
+@import './list';
+@import './login';
+@import './error-boundary';
 
 .layout{
   a {
