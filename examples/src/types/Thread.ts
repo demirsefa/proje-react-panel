@@ -1,8 +1,34 @@
 import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
 import { Message } from "./Message";
-import { Cell } from "proje-react-panel";
+import { Cell, List, Input } from "proje-react-panel";
 
-export class Thread {
+@List({
+	api: "threads",
+})
+export class ThreadListDTO {
+	id: string;
+
+	@Cell({ name: "title", title: "Title" })
+	title: string;
+
+	@Cell({ name: "content", title: "Content" })
+	content: string;
+
+	@Cell({ name: "isApprovedByAdmin", title: "isApprovedByAdmin" })
+	isApprovedByAdmin: boolean;
+
+	approvedBy: object;
+
+	messages: Message[];
+
+	@IsBoolean()
+	isActive: boolean;
+
+	createdAt: Date;
+
+	updatedAt: Date;
+}
+class ThreadList {
 	id: string;
 
 	@IsString()
@@ -15,7 +41,6 @@ export class Thread {
 	@Cell({ name: "content", title: "Content" })
 	content: string;
 
-	@IsBoolean()
 	@Cell({ name: "isApprovedByAdmin", title: "isApprovedByAdmin" })
 	isApprovedByAdmin: boolean;
 

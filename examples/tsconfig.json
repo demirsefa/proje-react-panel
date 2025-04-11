@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": false,
     "target": "esnext",
+    "module": "esnext",
     "sourceMap": true,
     "moduleResolution": "node",
     "jsx": "react",

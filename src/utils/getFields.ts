@@ -1,20 +1,22 @@
 import { getMetadataStorage } from "class-validator";
-import { getClassCrudData } from "../decorators/Crud";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { getCellFields } from "../decorators/Cell";
 import { ScreenCreatorData } from "../types/ScreenCreatorData";
-import { getInputFields } from "../decorators/Input";
+import { getInputFields } from "../decorators/form/Input";
+import { getClassListData } from "../decorators/list/List";
+import { getCellFields } from "../decorators/list/GetCellFields";
+import { AnyClass } from "../types/AnyClass";
 
-export function getFields<T>(key: string, entityClass: T): ScreenCreatorData {
+export function getFields<T extends AnyClass>(key: string, entityClass: T): ScreenCreatorData {
 	const metadataStorage = getMetadataStorage();
 	const targetMetadata = metadataStorage.getTargetValidationMetadatas(entityClass as any, "", false, false);
-	const crud = getClassCrudData(entityClass);
+	const listData = getClassListData(entityClass);
 	return {
 		resolver: classValidatorResolver(entityClass as any),
-		fields: Array.from(new Set(targetMetadata.map((meta) => meta.propertyName))),
-		inputs: getInputFields(entityClass),
 		cells: getCellFields(entityClass),
-		crud: crud,
-		path: "/" + (crud?.controller ?? key),
+		list: listData,
+		fields: Array.from(new Set(targetMetadata.map((meta) => meta.propertyName))),
+		inputs: getInputFields<T>(entityClass),
+		crud: { controller: "" },
+		path: "/" + key,
 	};
 }

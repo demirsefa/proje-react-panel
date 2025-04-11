@@ -1,9 +1,12 @@
-@import './sidebar';
-@import './form';
-@import './layout';
-@import './list';
-@import './login';
-@import './error-boundary';
+@forward './sidebar';
+@forward './form';
+@forward './layout';
+@forward './list';
+@forward './login';
+@forward './error-boundary';
+@forward './image-uploader';
+@forward './counter';
+@forward './loading-screen';
 
 .layout{
   a {

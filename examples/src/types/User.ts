@@ -1,5 +1,30 @@
 import { IsEmail, IsString, MinLength, IsBoolean, IsOptional } from "class-validator";
-import { Cell } from "proje-react-panel";
+import { Cell, List, Input } from "proje-react-panel";
+
+@List({
+	api: "users",
+})
+export class UserListDTO {
+	id: string;
+
+	@Cell({ name: "username", title: "Username" })
+	username: string;
+
+	email: string;
+
+	password: string;
+
+	firstName: string;
+
+	lastName: string;
+
+	isActive: boolean;
+
+	createdAt: Date;
+
+	updatedAt: Date;
+}
+
 export class User {
 	id: string;
 

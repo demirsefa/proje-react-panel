@@ -1,4 +1,4 @@
-@import "proje-react-panel/src/styles/index.scss";
+@forward "proje-react-panel/src/styles/index.scss";
 
 body {
   margin: 0;
@@ -12,5 +12,14 @@ body {
 
   > * {
     box-sizing: border-box;
+  }
+}
+
+.dashboard{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
+  .counter-container {
+    width: 100%;
   }
 }

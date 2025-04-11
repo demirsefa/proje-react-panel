@@ -1,6 +1,22 @@
 import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
-import { Thread } from "./Thread";
-import { Cell } from "proje-react-panel";
+import { Cell, List, Input } from "proje-react-panel";
+
+@List({
+	api: "messages",
+})
+export class MessageListDTO {
+	id: string;
+
+	@Cell({ name: "content", title: "content" })
+	content: string;
+
+	@Cell({ name: "isActive", title: "isActive" })
+	isActive: boolean;
+
+	createdAt: Date;
+
+	updatedAt: Date;
+}
 
 export class Message {
 	id: string;

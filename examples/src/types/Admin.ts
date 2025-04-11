@@ -1,32 +1,44 @@
-import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, IsOptional, IsEmpty, ValidateIf } from "class-validator";
-import { Cell, Crud, Input } from "proje-react-panel";
+import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, ValidateIf } from "class-validator";
+import { Cell, List, Input } from "proje-react-panel";
 
-@Crud({
-	controller: "admins",
+@List({
+	api: "admins",
 })
-export class Admin {
+export class AdminListDTO {
 	@Cell({
 		title: "ID",
 	})
-	@Input({
-		label: "Id",
-		editable: false,
-	})
 	id: string;
-	@IsString()
-	@MinLength(3)
 	@Cell({
 		title: "Username",
 	})
+	username: string;
+
+	@Cell({
+		title: "email",
+	})
+	email: string;
+
+	password: string;
+	@Input({
+		label: "Role",
+		type: "select",
+		selectOptions: ["super-admin", "admin"],
+	})
+	role: string;
+	isActive: boolean;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+export class AdminFormDTO {
+	@MinLength(3)
 	@Input({
 		label: "Username",
 	})
 	username: string;
 
 	@IsEmail()
-	@Cell({
-		title: "email",
-	})
 	@Input({
 		label: "Email",
 		inputType: "email",
@@ -49,9 +61,6 @@ export class Admin {
 		selectOptions: ["super-admin", "admin"],
 	})
 	role: string;
-
-	@IsBoolean()
-	isActive: boolean;
 
 	createdAt: Date;
 

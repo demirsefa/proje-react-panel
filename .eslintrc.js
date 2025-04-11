@@ -3,6 +3,11 @@ module.exports = {
 	extends: ["eslint:recommended", "plugin:react/recommended"],
 	parser: "@typescript-eslint/parser",
 	plugins: ["@typescript-eslint"],
+	settings: {
+		react: {
+			version: "detect"
+		}
+	},
 	overrides: [
 		{
 			files: ["*.ts", "*.tsx"],

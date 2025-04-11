@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import { ErrorBoundary } from "./ErrorBoundary";
-import { initPanel } from "../initPanel";
-import { InitPanelOptions } from "../types/initPanelOptions";
+import React, { useEffect } from 'react';
+import { ErrorBoundary } from './components';
+import { initPanel } from '../initPanel';
+import { InitPanelOptions } from '../types/initPanelOptions';
 
 type AppProps = {
-	children: React.ReactNode;
-	init: () => InitPanelOptions;
+  children: React.ReactNode;
+  init: () => InitPanelOptions;
 };
 
 export function Panel({ children, init }: AppProps) {
-	useEffect(() => {
-		const options = init();
-		initPanel(options);
-	}, [init]);
+  useEffect(() => {
+    const options = init();
+    initPanel(options);
+  }, [init]);
 
-	return <ErrorBoundary>{children}</ErrorBoundary>;
+  return <ErrorBoundary>{children}</ErrorBoundary>;
 }

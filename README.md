@@ -1,32 +1,66 @@
-#  React Panel
+# React Panel Library
 
-## Overview
-React Panel is a web application built using as the backend framework and React for the frontend. It features a customizable sidebar and supports CRUD operations on entities. This project is designed to be a foundational template for building admin panels or other web-based interfaces.
+A powerful and flexible React-based panel library for building administrative interfaces and data management systems.
 
----
 ## Features
-- **Entity CRUD Operations**: Easily create, read, update, and delete entities through the panel.
-- **Sidebar Navigation**: The application includes a sidebar for easy navigation, which is fully customizable.
-- **Single Design Template**: Comes with a default design that can be customized to fit your needs.
-- **NestJS Integration**: It's designed especially for NestJS applications.
-- **Class-validator Support**: If you work with class-validator, you can easily copy-paste entity definitions to create tables and forms based on your entities.
----
 
-## Getting Started
-### Installation
-1. Install dependencies:
-   ```bash
-   yarn add
-   ```
+- **List Page Component**: Built-in list view with customizable cells and image handling
+- **Form Page Component**: Flexible form creation and management
+- **Login Component**: Authentication handling
+- **Layout System**: Consistent layout management
+- **Panel Component**: Core panel functionality
+- **Counter Component**: Utility component for counting operations
 
-### TypeScript Configuration
-Add these options to your `tsconfig.json` file:
-```json
-{
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "strictPropertyInitialization": false
-    // other compiler options...
-  }
-}
+## Decorators
+
+The library provides several decorators for enhanced functionality:
+
+### List Decorators
+- `@List`: Main list decorator for creating list views
+- `@ImageCell`: Specialized cell for handling images in lists
+- `@Cell`: Base cell decorator for list items
+
+### Form Decorators
+- `@Input`: Form input decorator
+- `@Crud`: CRUD operations decorator
+
+## Installation
+
+```bash
+npm install proje-react-panel
+# or
+yarn add proje-react-panel
 ```
+
+## Usage
+
+```typescript
+import { Panel, ListPage, FormPage, Login, Layout } from 'proje-react-panel';
+
+// Initialize the panel
+const panel = new Panel({
+  // configuration options
+});
+
+// Use components
+<Layout>
+  <ListPage />
+  <FormPage />
+  <Login />
+</Layout>
+```
+
+## Type Definitions
+
+The library includes TypeScript definitions for better development experience:
+
+- `InitPanelOptions`: Configuration options for panel initialization
+- `ScreenCreatorData`: Data structure for screen creation
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

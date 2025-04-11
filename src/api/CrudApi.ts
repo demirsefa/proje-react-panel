@@ -15,26 +15,45 @@ export const CrudApi = {
 			throw res;
 		});
 	},
-	create: (fetchSettings: { baseUrl: string }, api: string, data: any) => {
-		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}`, {
+	create: (options: FetchOptions, api: string, data: any) => {
+		const headers: HeadersInit = { Authorization: `Bearer ${options.token}` };
+		// Don't set Content-Type for FormData
+		if (!(data instanceof FormData)) {
+			headers["Content-Type"] = "application/json";
+		}
+
+		return fetch(`${options?.baseUrl ?? ""}/${api}`, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data),
+			headers,
+			body: data instanceof FormData ? data : JSON.stringify(data),
 		}).then((res) => res.json());
 	},
-	details: (fetchSettings: { baseUrl: string }, api: string, id: any) => {
-		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}/${id}`, {
+	details: (options: FetchOptions, api: string, id: any) => {
+		return fetch(`${options?.baseUrl ?? ""}/${api}/${id}`, {
 			method: "GET",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json", Authorization: `Bearer ${options.token}` },
 		}).then((res) => {
 			return res.json();
 		});
 	},
-	edit: (fetchSettings: { baseUrl: string }, api: string, data: any) => {
-		return fetch(`${fetchSettings?.baseUrl ?? ""}/${api}/${data.id}`, {
+	edit: (options: FetchOptions, api: string, data: any) => {
+		const headers: HeadersInit = { Authorization: `Bearer ${options.token}` };
+		// Don't set Content-Type for FormData
+		if (!(data instanceof FormData)) {
+			headers["Content-Type"] = "application/json";
+		}
+		return fetch(`${options?.baseUrl ?? ""}/${api}/${data.id}`, {
 			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(data),
+			headers,
+			body: data instanceof FormData ? data : JSON.stringify(data),
 		}).then((res) => res.json());
+	},
+	delete: (options: FetchOptions, api: string, id: string) => {
+		return fetch(`${options?.baseUrl ?? ""}/${api}/${id}`, {
+			method: "DELETE",
+			headers: { "Content-Type": "application/json", Authorization: `Bearer ${options.token}` },
+		}).then((res) => {
+			return res.clone().json();
+		});
 	},
 };
