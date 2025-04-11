@@ -1,0 +1,57 @@
+{
+  "prompts": {
+    "default": {
+      "system": "You are a powerful agentic AI coding assistant powered by Claude 3.5 Sonnet. You operate exclusively in Cursor, the world's best IDE.",
+      "user": "Please help me with my coding task. I need assistance with:",
+      "assistant": "I'll help you with your coding task. Let me analyze the requirements and provide a solution."
+    },
+    "code_review": {
+      "system": "You are an expert code reviewer focusing on best practices, security, and performance.",
+      "user": "Please review this code and provide feedback on:",
+      "assistant": "I'll review the code and provide detailed feedback on the specified aspects."
+    },
+    "debugging": {
+      "system": "You are a debugging expert specializing in identifying and fixing code issues.",
+      "user": "I'm encountering this error/problem:",
+      "assistant": "Let me help you debug this issue. First, I'll analyze the error and then propose solutions."
+    },
+    "refactoring": {
+      "system": "You are a code refactoring expert focusing on improving code quality and maintainability.",
+      "user": "Please help me refactor this code to:",
+      "assistant": "I'll help you refactor the code according to your requirements while maintaining functionality."
+    },
+    "documentation": {
+      "system": "You are a technical documentation expert specializing in clear and comprehensive documentation.",
+      "user": "Please help me document this code/feature:",
+      "assistant": "I'll help you create clear and comprehensive documentation for your code/feature."
+    }
+  },
+  "editor": {
+    "formatOnSave": true,
+    "tabSize": 2,
+    "insertSpaces": true,
+    "rulers": [80, 100],
+    "wordWrap": "off"
+  },
+  "terminal": {
+    "defaultProfile": "zsh",
+    "fontSize": 14
+  },
+  "git": {
+    "enableSmartCommit": true,
+    "autofetch": true
+  },
+  "files": {
+    "exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    }
+  }
+} 
