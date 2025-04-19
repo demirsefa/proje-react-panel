@@ -18,19 +18,14 @@ export class MessageListDTO {
 	updatedAt: Date;
 }
 
-export class Message {
+export class MessageFormDTO {
 	id: string;
-
 	@IsString()
 	@MinLength(1)
-	@Cell({ name: "content", title: "content" })
+	@Input({ label: "Content", type: "textarea" })
 	content: string;
 
 	@IsBoolean()
-	@Cell({ name: "isActive", title: "isActive" })
+	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }

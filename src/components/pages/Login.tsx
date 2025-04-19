@@ -31,8 +31,8 @@ export function Login({ onLogin }: LoginProps) {
   const navigate = useNavigate();
   const onSubmit = async (data: LoginFormData) => {
     onLogin.login(data.username, data.password).then((dataInner: LoginResponse) => {
-      const { user, token   } = dataInner;
-      localStorage.setItem("token", token);
+      const { user, token } = dataInner;
+      localStorage.setItem('token', token);
       useAppStore.setState({ user });
       navigate('/');
     });
@@ -54,7 +54,6 @@ export function Login({ onLogin }: LoginProps) {
               type: 'input',
             }}
             register={register}
-            isEditForm={false}
             error={errors.username}
           />
           <FormField
@@ -66,7 +65,6 @@ export function Login({ onLogin }: LoginProps) {
               type: 'input',
             }}
             register={register}
-            isEditForm={false}
             error={errors.password}
           />
           <div className="form-actions">

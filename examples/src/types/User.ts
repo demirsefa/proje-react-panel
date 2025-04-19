@@ -1,5 +1,6 @@
 import { IsEmail, IsString, MinLength, IsBoolean, IsOptional } from "class-validator";
 import { Cell, List, Input } from "proje-react-panel";
+import { DataType } from "./data";
 
 @List({
 	api: "users",
@@ -25,33 +26,36 @@ export class UserListDTO {
 	updatedAt: Date;
 }
 
-export class User {
+export class UserFormDTO implements DataType {
+	@Input({
+		label: "ID",
+	})
 	id: string;
-
 	@IsString()
 	@MinLength(3)
-	@Cell({ name: "username", title: "Username" })
+	@Input({ label: "Username" })
 	username: string;
 
 	@IsEmail()
+	@Input({ label: "Email", inputType: "email" })
 	email: string;
 
 	@IsString()
 	@MinLength(6)
+	@Input({ label: "Password", inputType: "password" })
 	password: string;
 
 	@IsString()
 	@IsOptional()
+	@Input({ label: "First Name" })
 	firstName: string;
 
 	@IsString()
 	@IsOptional()
+	@Input({ label: "Last Name" })
 	lastName: string;
 
 	@IsBoolean()
+	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }

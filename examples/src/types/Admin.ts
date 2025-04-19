@@ -1,8 +1,15 @@
 import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, ValidateIf } from "class-validator";
 import { Cell, List, Input } from "proje-react-panel";
-
+import { DataType } from "./data";
 @List({
-	api: "admins",
+	headers: {
+		create: { path: "create", label: "Create" },
+	},
+	utilCells: {
+		details: { path: "details", label: "Details" },
+		edit: { path: "edit", label: "Edit" },
+		delete: { path: "delete", label: "Delete" },
+	},
 })
 export class AdminListDTO {
 	@Cell({
@@ -65,4 +72,11 @@ export class AdminFormDTO {
 	createdAt: Date;
 
 	updatedAt: Date;
+}
+
+export class AdminDetailsFormDTO extends AdminFormDTO implements DataType {
+	@Input({
+		label: "ID",
+	})
+	id: string;
 }

@@ -1,12 +1,13 @@
-export type { OnSubmitFN } from './components/pages/FormPage';
-export type { GetDataForList } from './components/pages/ListPage';
-export type { PaginatedResponse, PaginationParams } from './components/pages/ListPage';
+export type { OnSubmitFN, GetDetailsDataFN } from './components/pages/FormPage';
 export type { InitPanelOptions } from './types/initPanelOptions';
 export type { ScreenCreatorData } from './types/ScreenCreatorData';
 export type { OnLogin } from './components/pages/Login';
+export type { AnyClass } from './types/AnyClass';
+export type { GetDataForList, PaginatedResponse, PaginationParams } from './components/pages/ListPage';
 
 export { ListPage } from './components/pages/ListPage';
 export { FormPage } from './components/pages/FormPage';
+export type { FormPageProps } from './components/pages/FormPage';
 export { Login } from './components/pages/Login';
 export { Layout } from './components/layout/Layout';
 export { Panel } from './components/Panel';

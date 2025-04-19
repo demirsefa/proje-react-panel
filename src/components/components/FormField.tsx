@@ -3,31 +3,24 @@ import { InputOptions } from '../../decorators/form/Input';
 import { Label } from './Label';
 import { UseFormRegister } from 'react-hook-form';
 import { ImageUploader } from './ImageUploader';
+import { Checkbox } from './Checkbox';
 
 interface FormFieldProps {
   input: InputOptions;
   register: UseFormRegister<any>;
-  isEditForm: boolean;
   error?: { message?: string };
 }
 
-export function FormField({ input, register, isEditForm, error }: FormFieldProps) {
+export function FormField({ input, register, error }: FormFieldProps) {
   const fieldName = input.name || '';
 
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
-        return (
-          <textarea
-            {...register(fieldName)}
-            placeholder={input.placeholder}
-            id={fieldName}
-            disabled={isEditForm}
-          />
-        );
+        return <textarea {...register(fieldName)} placeholder={input.placeholder} id={fieldName} />;
       case 'select':
         return (
-          <select {...register(fieldName)} id={fieldName} disabled={isEditForm}>
+          <select {...register(fieldName)} id={fieldName}>
             <option value="">Select {fieldName}</option>
             {input.selectOptions?.map(option => (
               <option key={option} value={option}>
@@ -43,12 +36,15 @@ export function FormField({ input, register, isEditForm, error }: FormFieldProps
             {...register(fieldName)}
             placeholder={input.placeholder}
             id={fieldName}
-            disabled={isEditForm}
           />
         );
       }
       case 'file-upload':
         return <ImageUploader />;
+      case 'checkbox':
+        return <Checkbox {...register(fieldName)} id={fieldName} />;
+      case 'hidden':
+        return <input type="hidden" {...register(fieldName)} id={fieldName} />;
       default:
         null;
     }

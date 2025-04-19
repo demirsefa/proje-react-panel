@@ -1,40 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InputOptions } from '../../decorators/form/Input';
 import { FormField } from './FormField';
 import { FormOptions } from '../../decorators/form/FormOptions';
 import { AnyClass } from '../../types/AnyClass';
-import { OnSubmitFN } from '../pages/FormPage';
+import { OnSubmitFN, GetDetailsDataFN } from '../pages/FormPage';
+import { DefaultValues } from 'react-hook-form';
+import { useParams } from 'react-router';
+
 interface InnerFormProps<T extends AnyClass> {
-  data?: any;
   formOptions: FormOptions;
   onSubmit: OnSubmitFN<T>;
   redirect?: string;
+  getDetailsData?: GetDetailsDataFN<T>;
 }
 
 export function InnerForm<T extends AnyClass>({
-  data,
   formOptions,
   onSubmit,
   redirect,
+  getDetailsData,
 }: InnerFormProps<T>) {
-  const isEditForm = !!data;
+  const params = useParams();
   const form = useForm<T>({
     resolver: formOptions.resolver,
-    //TODO: remove __formEdit from api
-    defaultValues: { ...data, __formEdit: isEditForm },
   });
+
   const inputs = formOptions.inputs;
   useEffect(() => {
-    form.reset({ ...data, __formEdit: isEditForm });
-  }, [isEditForm, data, form.reset]);
+    if (getDetailsData) {
+      getDetailsData(params.id as string).then(data => {
+        form.reset({ ...data });
+      });
+    }
+  }, [, form.reset]);
 
   return (
     <div className="form-wrapper">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(
-            async (dataForm) => {
+            async dataForm => {
               await onSubmit(dataForm);
               if (redirect) {
                 window.location.href = redirect;
@@ -51,7 +57,6 @@ export function InnerForm<T extends AnyClass>({
                 key={input.name || ''}
                 input={input}
                 register={form.register}
-                isEditForm={isEditForm}
                 error={
                   input.name
                     ? { message: (form.formState.errors[input.name as keyof T] as any)?.message }

@@ -28,32 +28,23 @@ export class ThreadListDTO {
 
 	updatedAt: Date;
 }
-class ThreadList {
-	id: string;
 
+export class ThreadFormDTO {
+	@Input({
+		label: "ID",
+	})
+	id: string;
 	@IsString()
 	@MinLength(3)
-	@Cell({ name: "title", title: "Title" })
+	@Input({ label: "Title" })
 	title: string;
 
 	@IsString()
 	@MinLength(10)
-	@Cell({ name: "content", title: "Content" })
+	@Input({ label: "Content", type: "textarea" })
 	content: string;
 
-	@Cell({ name: "isApprovedByAdmin", title: "isApprovedByAdmin" })
-	isApprovedByAdmin: boolean;
-
-	@ValidateNested()
-	approvedBy: object;
-
-	@ValidateNested({ each: true })
-	messages: Message[];
-
 	@IsBoolean()
+	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }

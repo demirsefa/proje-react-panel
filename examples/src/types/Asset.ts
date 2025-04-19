@@ -21,9 +21,11 @@ export class AssetListDTO {
 	url: string;
 }
 
-export class Asset {
-	id: number;
-
+export class AssetFormDTO {
+	@Input({
+		label: "ID",
+	})
+	id: string;
 	@Input({
 		label: "File",
 		type: "file-upload",

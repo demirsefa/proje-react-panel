@@ -3,28 +3,32 @@ import { CellOptions } from '../../decorators/list/Cell';
 import { Link } from 'react-router';
 import { useAppStore } from '../../store/store';
 import { ImageCellOptions } from '../../decorators/list/ImageCell';
+import { ListData } from '../../decorators/list/ListData';
 
-interface ListProps<T> {
+interface ListProps<T extends { id: string }> {
   data: T[];
-  cells: CellOptions[];
+  listData: ListData;
 }
 
-export function Datagrid<T>({ data, cells }: ListProps<T>) {
+export function Datagrid<T extends { id: string }>({ data, listData }: ListProps<T>) {
+  const cells = listData.cells;
+  const utilCells = listData.list?.utilCells;
+
   if (!data || data.length === 0) {
     return <div>No items available</div>;
   }
 
   return (
-    <div className="list-wrapper">
-      <div className="header">List</div>
-      <table className="list-table">
+    <div className="datagrid">
+      <table className="datagrid-table">
         <thead>
           <tr>
             {cells.map(cellOptions => (
               <th key={cellOptions.name}>{cellOptions.title ?? cellOptions.name}</th>
             ))}
-            <th />
-            <th>Delete</th>
+            {utilCells?.details && <th>Details</th>}
+            {utilCells?.edit && <th>Edit</th>}
+            {utilCells?.delete && <th>Delete</th>}
           </tr>
         </thead>
         <tbody>
@@ -77,22 +81,21 @@ export function Datagrid<T>({ data, cells }: ListProps<T>) {
 */
                 return <td key={cellOptions.name}>{render}</td>;
               })}
-              <td>
-                {/*@ts-ignore*/}
-                <Link to={'edit/' + (item?.id ?? '-')}>Edit</Link>
-                {/*@ts-ignore*/}
-                <Link to={'details/' + (item?.id ?? '-')}>Details</Link>
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    /*@ts-ignore*/
-                    //CrudApi.delete({ ...fetchSettings, token }, screen.controller, item?.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+              {utilCells?.details && (
+                <td>
+                  <Link to={`${utilCells.details.path}/${item.id}`}>{utilCells.details.label}</Link>
+                </td>
+              )}
+              {utilCells?.edit && (
+                <td>
+                  <Link to={`${utilCells.edit.path}/${item.id}`}>{utilCells.edit.label}</Link>
+                </td>
+              )}
+              {utilCells?.delete && (
+                <td>
+                  <Link to={`${utilCells.delete.path}/${item.id}`}>{utilCells.delete.label}</Link>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

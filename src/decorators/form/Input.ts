@@ -12,7 +12,7 @@ export interface InputOptions {
   label?: string;
   placeholder?: string;
   inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
-  type?: 'input' | 'select' | 'textarea' | 'file-upload';
+  type?: 'input' | 'select' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden';
   selectOptions?: string[]; //TODO: label/value
   cancelPasswordValidationOnEdit?: boolean;
 }

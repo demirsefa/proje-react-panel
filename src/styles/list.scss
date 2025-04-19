@@ -1,20 +1,79 @@
-.list-wrapper {
+@import './scrollbar';
+$header-height: 60px;
+$footer-height: 60px;
+$datagrid-height: calc(100vh - ($header-height + $footer-height));
+.list {
   width: 100%;
-  padding: 16px;
+  padding: 0 0 0 16px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #2b2b2b;
   color: #e0e0e0;
+  max-height: 100vh;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden !important;
 
-  .header {
+  .list-header {
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: linear-gradient(90deg, #2b2b2b 0%, #3c3c3c 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+
+      .create-button {
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+  }
+  .list-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $footer-height;
     font-size: 24px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
     color: #ffffff;
   }
+  .datagrid {
+    height: $datagrid-height;
+    min-height: $datagrid-height;
+    max-height: $datagrid-height;
+    width: 100%;
+    overflow: auto;
 
-  .list-table {
+    @include custom-scrollbar;
+  }
+
+  .datagrid-table {
     width: 100%;
     border-collapse: collapse;
 
