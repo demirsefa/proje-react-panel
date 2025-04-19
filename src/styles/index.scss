@@ -1,14 +1,16 @@
-@forward './sidebar';
-@forward './form';
-@forward './layout';
-@forward './list';
-@forward './login';
-@forward './error-boundary';
-@forward './image-uploader';
-@forward './counter';
-@forward './loading-screen';
-@forward './pagination';
-@forward './fonts';
+@use './layout';
+// Imported styles will be scoped under .layout
+@use './sidebar';
+@use './form';
+@use './list';
+@use './login';
+@use './error-boundary';
+@use './image-uploader';
+@use './counter';
+@use './loading-screen';
+@use './pagination';
+@use './scrollbar';
+@use './fonts';
 
 .layout {
   display: flex;
@@ -33,16 +35,5 @@
     box-sizing: border-box;
   }
 
-  // Imported styles will be scoped under .layout
-  @import './sidebar';
-  @import './form';
-  @import './list';
-  @import './login';
-  @import './error-boundary';
-  @import './image-uploader';
-  @import './counter';
-  @import './loading-screen';
-  @import './pagination';
-  @import './scrollbar';
-  @import './fonts';
+
 }
