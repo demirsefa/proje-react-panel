@@ -1,9 +1,10 @@
-import { create, getAll, getOne, update } from "./crud";
+import { create, getAll, getOne, update, updateSimple } from "./crud";
 import { AdminDetailsFormDTO, AdminFormDTO, AdminListDTO } from "../types/Admin";
 import { AssetFormDTO, AssetListDTO } from "../types/Asset";
 import { ThreadFormDTO, ThreadListDTO } from "../types/Thread";
 import { MessageFormDTO, MessageListDTO } from "../types/Message";
 import { UserFormDTO, UserListDTO } from "../types/User";
+import { LocalizationAllFormDTO, LocalizationFormDTO, LocalizationListDTO } from "../types/Localization";
 import { login } from "./auth";
 
 export const dataFetchers = Object.freeze({
@@ -32,6 +33,16 @@ export const dataFetchers = Object.freeze({
 		getAll: getAll<typeof UserListDTO>("users"),
 		create: create<typeof UserFormDTO>("users"),
 		update: update<typeof UserFormDTO>("users"),
+	},
+	localization: {
+		getAll: getAll<typeof LocalizationListDTO>("localization"),
+		details: getOne<typeof LocalizationFormDTO>("localization"),
+		create: create<typeof LocalizationFormDTO>("localization"),
+		update: update<typeof LocalizationFormDTO>("localization"),
+	},
+	localizationAll: {
+		details: getOne<typeof LocalizationAllFormDTO>("localizationAll", "language"),
+		update: updateSimple<typeof LocalizationAllFormDTO>("localizationAll"),
 	},
 	auth: {
 		login: login(),

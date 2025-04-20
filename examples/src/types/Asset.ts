@@ -1,7 +1,14 @@
 import { Cell, List, Input, ImageCell } from "proje-react-panel";
 
 @List({
-	api: "assets",
+	headers: {
+		create: { path: "create", label: "Create" },
+	},
+	utilCells: {
+		details: { path: "details", label: "Details" },
+		edit: { path: "edit", label: "Edit" },
+		delete: { path: "delete", label: "Delete" },
+	},
 })
 export class AssetListDTO {
 	@Cell({

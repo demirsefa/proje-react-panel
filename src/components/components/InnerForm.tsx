@@ -5,35 +5,34 @@ import { FormField } from './FormField';
 import { FormOptions } from '../../decorators/form/FormOptions';
 import { AnyClass } from '../../types/AnyClass';
 import { OnSubmitFN, GetDetailsDataFN } from '../pages/FormPage';
-import { DefaultValues } from 'react-hook-form';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 
 interface InnerFormProps<T extends AnyClass> {
   formOptions: FormOptions;
   onSubmit: OnSubmitFN<T>;
-  redirect?: string;
   getDetailsData?: GetDetailsDataFN<T>;
+  redirectBackOnSuccess?: boolean;
 }
 
 export function InnerForm<T extends AnyClass>({
   formOptions,
   onSubmit,
-  redirect,
   getDetailsData,
+  redirectBackOnSuccess,
 }: InnerFormProps<T>) {
   const params = useParams();
   const form = useForm<T>({
     resolver: formOptions.resolver,
   });
-
+  const navigate = useNavigate();
   const inputs = formOptions.inputs;
   useEffect(() => {
     if (getDetailsData) {
-      getDetailsData(params.id as string).then(data => {
+      getDetailsData(params as Record<string, string>).then(data => {
         form.reset({ ...data });
       });
     }
-  }, [, form.reset]);
+  }, [params, form.reset]);
 
   return (
     <div className="form-wrapper">
@@ -42,8 +41,8 @@ export function InnerForm<T extends AnyClass>({
           onSubmit={form.handleSubmit(
             async dataForm => {
               await onSubmit(dataForm);
-              if (redirect) {
-                window.location.href = redirect;
+              if (redirectBackOnSuccess) {
+                navigate(-1);
               }
             },
             (errors, event) => {

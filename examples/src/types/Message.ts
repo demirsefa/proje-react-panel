@@ -2,7 +2,14 @@ import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator"
 import { Cell, List, Input } from "proje-react-panel";
 
 @List({
-	api: "messages",
+	headers: {
+		create: { path: "create", label: "Create" },
+	},
+	utilCells: {
+		details: { path: "details", label: "Details" },
+		edit: { path: "edit", label: "Edit" },
+		delete: { path: "delete", label: "Delete" },
+	},
 })
 export class MessageListDTO {
 	id: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputOptions } from '../../decorators/form/Input';
 import { Label } from './Label';
-import { UseFormRegister } from 'react-hook-form';
+import { useFormContext, UseFormRegister } from 'react-hook-form';
 import { ImageUploader } from './ImageUploader';
 import { Checkbox } from './Checkbox';
 
@@ -9,11 +9,43 @@ interface FormFieldProps {
   input: InputOptions;
   register: UseFormRegister<any>;
   error?: { message?: string };
+  baseName?: string;
 }
 
-export function FormField({ input, register, error }: FormFieldProps) {
-  const fieldName = input.name || '';
+interface NestedFormFieldsProps {
+  input: InputOptions;
+  register: UseFormRegister<any>;
+}
 
+function NestedFormFields({ input, register }: NestedFormFieldsProps) {
+  const form = useFormContext();
+  //TODO: inputOptions İnputResult seperate
+  const data = form.getValues(input.name!);
+  return (
+    <div>
+      {data?.map((value: any, index: number) => (
+        <div key={index}>
+          {input.nestedFields?.map((nestedInput: InputOptions) => (
+            <FormField
+              key={nestedInput.name?.toString() ?? ''}
+              baseName={input.name + '[' + index + ']'}
+              input={nestedInput}
+              register={register}
+              error={
+                input.name
+                  ? { message: (form.formState.errors[input.name] as any)?.message }
+                  : undefined
+              }
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function FormField({ input, register, error, baseName }: FormFieldProps) {
+  const fieldName = (baseName ? baseName.toString() + '.' : '') + input.name || '';
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
@@ -22,14 +54,14 @@ export function FormField({ input, register, error }: FormFieldProps) {
         return (
           <select {...register(fieldName)} id={fieldName}>
             <option value="">Select {fieldName}</option>
-            {input.selectOptions?.map(option => (
-              <option key={option} value={option}>
-                {option}
+            {input.options?.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
               </option>
             ))}
           </select>
         );
-      case 'input': {
+      case 'input': { 
         return (
           <input
             type={input.inputType}
@@ -45,6 +77,8 @@ export function FormField({ input, register, error }: FormFieldProps) {
         return <Checkbox {...register(fieldName)} id={fieldName} />;
       case 'hidden':
         return <input type="hidden" {...register(fieldName)} id={fieldName} />;
+      case 'nested':
+        return <NestedFormFields input={input} register={register} />;
       default:
         null;
     }

@@ -9,8 +9,7 @@
 @use './counter';
 @use './loading-screen';
 @use './pagination';
-@use './scrollbar';
-@use './fonts';
+@use './filter-popup';
 
 .layout {
   display: flex;
@@ -34,6 +33,10 @@
   *::after {
     box-sizing: border-box;
   }
-
-
+}
+.icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: currentColor;
 }

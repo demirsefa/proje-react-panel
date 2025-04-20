@@ -3,9 +3,13 @@ export type { InitPanelOptions } from './types/initPanelOptions';
 export type { ScreenCreatorData } from './types/ScreenCreatorData';
 export type { OnLogin } from './components/pages/Login';
 export type { AnyClass } from './types/AnyClass';
-export type { GetDataForList, PaginatedResponse, PaginationParams } from './components/pages/ListPage';
+export type {
+  GetDataForList,
+  PaginatedResponse,
+  GetDataParams,
+} from './components/components/list/ListPage';
 
-export { ListPage } from './components/pages/ListPage';
+export { ListPage } from './components/components/list/ListPage';
 export { FormPage } from './components/pages/FormPage';
 export type { FormPageProps } from './components/pages/FormPage';
 export { Login } from './components/pages/Login';
@@ -20,3 +24,5 @@ export { Crud } from './decorators/Crud';
 export { Cell } from './decorators/list/Cell';
 export { Input } from './decorators/form/Input';
 // Export page components
+export { getFormFields } from './decorators/form/getFormFields';
+export { getInputFields } from './decorators/form/Input';

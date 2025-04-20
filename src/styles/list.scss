@@ -1,12 +1,9 @@
-@import './scrollbar';
+@import 'utils/scrollbar';
 $header-height: 60px;
 $footer-height: 60px;
 $datagrid-height: calc(100vh - ($header-height + $footer-height));
 .list {
   width: 100%;
-  padding: 0 0 0 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #2b2b2b;
   color: #e0e0e0;
   max-height: 100vh;
@@ -50,9 +47,17 @@ $datagrid-height: calc(100vh - ($header-height + $footer-height));
         &:hover {
           background-color: #45a049;
         }
+        .icon-create {
+          fill: currentColor;
+          stroke: none;
+          position: relative;
+          top: 2px;
+          right: 2px;
+        }
       }
     }
   }
+
   .list-footer {
     display: flex;
     justify-content: space-between;
@@ -64,6 +69,7 @@ $datagrid-height: calc(100vh - ($header-height + $footer-height));
     color: #ffffff;
   }
   .datagrid {
+    padding: 0 0 0 8px;
     height: $datagrid-height;
     min-height: $datagrid-height;
     max-height: $datagrid-height;
@@ -96,5 +102,108 @@ $datagrid-height: calc(100vh - ($header-height + $footer-height));
     tr:hover {
       background-color: #444444;
     }
+  }
+
+  .empty-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+
+    .empty-list-content {
+      text-align: center;
+      color: #888;
+
+      svg {
+        margin-bottom: 1rem;
+        color: #666;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #fff;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #888;
+      }
+    }
+  }
+}
+
+.util-cell-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #333;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    stroke: none;
+    &.icon-trash {
+      fill: #ff0000;
+      stroke: none;
+    }
+  }
+
+  .util-cell-label {
+    font-size: 14px;
+  }
+}
+
+.filter-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+  .icon-filter {
+    position: relative;
+    top: 2px;
+    right: 2px;
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    &.active {
+      fill: currentColor;
+    }
+  }
+}
+.header-custom {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 24px;
+  gap: 16px;
+  a {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
   }
 }

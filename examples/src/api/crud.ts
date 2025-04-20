@@ -1,22 +1,22 @@
 import {
 	GetDataForList,
-	PaginationParams,
 	PaginatedResponse,
 	OnSubmitFN,
 	AnyClass,
 	GetDetailsDataFN,
+	GetDataParams,
 } from "proje-react-panel";
 import { getAxiosInstance } from "./apiConfig";
 import { DataType } from "../types/data";
 export function getAll<T>(endpoint: string): GetDataForList<T> {
-	return async (params: PaginationParams): Promise<PaginatedResponse<T>> => {
+	return async (params: GetDataParams): Promise<PaginatedResponse<T>> => {
 		const axiosInstance = getAxiosInstance();
 		const { page = 1, limit = 10 } = params;
 		const response = await axiosInstance.get<{
 			data: T[];
 			total: number;
 		}>(`/${endpoint}`, {
-			params: { page, limit },
+			params: { page, limit, ...(params.filters ?? {}) },
 		});
 		return {
 			data: response.data.data,
@@ -27,29 +27,36 @@ export function getAll<T>(endpoint: string): GetDataForList<T> {
 	};
 }
 
-export function getOne<T>(endpoint: string): GetDetailsDataFN<T> {
-	return async (param: string): Promise<T> => {
+export function getOne<T>(endpoint: string, key: string = "id"): GetDetailsDataFN<T> {
+	return async (params: Record<string, string>): Promise<T> => {
+		console.log("getOne", params, key, params[key]);
 		const axiosInstance = getAxiosInstance();
-		const response = await axiosInstance.get<T>(`/${endpoint}/${param}`);
+		const response = await axiosInstance.get<T>(`/${endpoint}/${params[key]}`);
 		return response.data;
 	};
 }
 
 export function create<T>(endpoint: string): OnSubmitFN<T> {
 	return async (data: T): Promise<T> => {
-		console.log("create", data);
 		const axiosInstance = getAxiosInstance();
 		await axiosInstance.post<T>(`/${endpoint}`, data);
 		return data;
 	};
 }
 
-export function update<T extends AnyClass>(endpoint: string): OnSubmitFN<T> {
+export function update<T extends AnyClass>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
 	return async (data: T): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
-		//TODO: fix
-		const id = (data as any as DataType).id;
+		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data);
+		return response.data;
+	};
+}
+
+export function updateSimple<T extends AnyClass>(endpoint: string): OnSubmitFN<T> {
+	return async (data: T): Promise<T> => {
+		const axiosInstance = getAxiosInstance();
+		const response = await axiosInstance.put<T>(`/${endpoint}`, data);
 		return response.data;
 	};
 }

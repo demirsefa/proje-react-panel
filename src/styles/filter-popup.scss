@@ -1,0 +1,134 @@
+.filter-popup {
+  position: absolute;
+  top: 60px; //TODO: make this variable $list-header-height
+  //TODO: make this variable
+  left: 260px;
+  right: 10px;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  z-index: 10;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #ffffff;
+    }
+  }
+
+  &-content {
+    max-height: 400px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #2d2d2d;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  color: #999;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.filter-field {
+  margin-bottom: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #bbb;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: #2d2d2d;
+    color: #ffffff;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #0066cc;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+    }
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+}
+
+.cancel-button,
+.apply-button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.cancel-button {
+  background: #2d2d2d;
+  border: 1px solid #444;
+  color: #bbb;
+
+  &:hover {
+    background: #333;
+    border-color: #555;
+    color: #fff;
+  }
+}
+
+.apply-button {
+  background: #0066cc;
+  border: 1px solid #0056b3;
+  color: white;
+
+  &:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+  }
+}

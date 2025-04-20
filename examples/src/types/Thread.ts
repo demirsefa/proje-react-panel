@@ -1,9 +1,15 @@
 import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
-import { Message } from "./Message";
 import { Cell, List, Input } from "proje-react-panel";
 
 @List({
-	api: "threads",
+	headers: {
+		create: { path: "create", label: "Create" },
+	},
+	utilCells: {
+		details: { path: "details", label: "Details" },
+		edit: { path: "edit", label: "Edit" },
+		delete: { path: "delete", label: "Delete" },
+	},
 })
 export class ThreadListDTO {
 	id: string;
@@ -19,7 +25,7 @@ export class ThreadListDTO {
 
 	approvedBy: object;
 
-	messages: Message[];
+	messages: any[];
 
 	@IsBoolean()
 	isActive: boolean;

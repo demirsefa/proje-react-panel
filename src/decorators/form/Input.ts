@@ -8,13 +8,14 @@ const isFieldSensitive = (fieldName: string): boolean => {
 };
 
 export interface InputOptions {
+  type?: 'input' | 'select' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden' | 'nested';
+  inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
   name?: string;
   label?: string;
   placeholder?: string;
-  inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
-  type?: 'input' | 'select' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden';
-  selectOptions?: string[]; //TODO: label/value
   cancelPasswordValidationOnEdit?: boolean;
+  options?: { value: string; label: string }[];
+  nestedFields?: InputOptions[];
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {

@@ -7,13 +7,14 @@ import {
 	faDashboard,
 	faEnvelope,
 	faImage,
+	faLanguage,
 	faMessage,
 	faUserAlt,
 	faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { setAuthLogout } from "./api/apiConfig";
 
-export type IconType = "dashboard" | "admin" | "user" | "message" | "thread" | "assets";
+export type IconType = "dashboard" | "admin" | "user" | "message" | "thread" | "assets" | "localization";
 function getIcons(iconType: IconType) {
 	switch (iconType) {
 		case "dashboard":
@@ -28,6 +29,8 @@ function getIcons(iconType: IconType) {
 			return <FontAwesomeIcon icon={faMessage} />;
 		case "assets":
 			return <FontAwesomeIcon icon={faImage} />;
+		case "localization":
+			return <FontAwesomeIcon icon={faLanguage} />;
 	}
 }
 
@@ -43,14 +46,18 @@ function getMenu(screens: Record<string, ScreenCreatorData>): {
 		{ name: "Threads", path: "threads", iconType: "thread" },
 		{ name: "Messages", path: "messages", iconType: "message" },
 		{ name: "Assets", path: "assets", iconType: "assets" },
+		{ name: "Localization", path: "localization?language=tr", iconType: "localization" },
 	];
 }
 
 export function AuthLayout() {
 	return (
-		<Layout logout={() => {
-			setAuthLogout();
-		}} getIcons={getIcons} menu={getMenu}>
+		<Layout
+			logout={() => {
+				setAuthLogout();
+			}}
+			getIcons={getIcons}
+			menu={getMenu}>
 			<Outlet />
 		</Layout>
 	);
