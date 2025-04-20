@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { InputOptions } from '../../decorators/form/Input';
 import { Label } from './Label';
 import { useFormContext, UseFormRegister } from 'react-hook-form';
@@ -10,6 +10,7 @@ interface FormFieldProps {
   register: UseFormRegister<any>;
   error?: { message?: string };
   baseName?: string;
+  onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
 }
 
 interface NestedFormFieldsProps {
@@ -44,8 +45,16 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
   );
 }
 
-export function FormField({ input, register, error, baseName }: FormFieldProps) {
+export function FormField({ input, register, error, baseName, onSelectPreloader }: FormFieldProps) {
   const fieldName = (baseName ? baseName.toString() + '.' : '') + input.name || '';
+  const [options, setOptions] = useState<{ label: string; value: string }[]>(input.options || []);
+  useEffect(() => {
+    if (input.optionsPreload && onSelectPreloader) {
+      onSelectPreloader(input).then(option => {
+        setOptions(option);
+      });
+    }
+  }, [input]);
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
@@ -54,14 +63,14 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
         return (
           <select {...register(fieldName)} id={fieldName}>
             <option value="">Select {fieldName}</option>
-            {input.options?.map(option => (
+            {options?.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
           </select>
         );
-      case 'input': { 
+      case 'input': {
         return (
           <input
             type={input.inputType}

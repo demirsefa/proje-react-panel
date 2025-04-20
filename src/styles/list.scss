@@ -143,7 +143,9 @@ $datagrid-height: calc(100vh - ($header-height + $footer-height));
   color: #666;
   text-decoration: none;
   transition: color 0.2s ease;
-
+  &.util-cell-link-remove {
+    cursor: pointer;
+  }
   &:hover {
     color: #333;
   }

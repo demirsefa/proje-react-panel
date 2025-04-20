@@ -7,21 +7,25 @@ import { AnyClass } from '../../types/AnyClass';
 import { OnSubmitFN, GetDetailsDataFN } from '../pages/FormPage';
 import { useParams, useNavigate } from 'react-router';
 
-interface InnerFormProps<T extends AnyClass> {
+interface InnerFormProps<T> {
   formOptions: FormOptions;
   onSubmit: OnSubmitFN<T>;
   getDetailsData?: GetDetailsDataFN<T>;
   redirectBackOnSuccess?: boolean;
+  onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
 }
 
-export function InnerForm<T extends AnyClass>({
+export function InnerForm<T>({
   formOptions,
   onSubmit,
   getDetailsData,
   redirectBackOnSuccess,
+  onSelectPreloader,
 }: InnerFormProps<T>) {
   const params = useParams();
-  const form = useForm<T>({
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  //TODO: any is not a good solution, we need to find a better way to do this
+  const form = useForm<any>({
     resolver: formOptions.resolver,
   });
   const navigate = useNavigate();
@@ -40,22 +44,38 @@ export function InnerForm<T extends AnyClass>({
         <form
           onSubmit={form.handleSubmit(
             async dataForm => {
-              await onSubmit(dataForm);
-              if (redirectBackOnSuccess) {
-                navigate(-1);
+              try {
+                await onSubmit(dataForm);
+                setErrorMessage(null);
+                if (redirectBackOnSuccess) {
+                  navigate(-1);
+                }
+              } catch (error: any) {
+                const message =
+                  error?.response?.data?.message ||
+                  (error instanceof Error ? error.message : 'An error occurred');
+                setErrorMessage(message);
+                console.error(error);
               }
             },
             (errors, event) => {
+              //TOOD: put error if useer choose global error
               console.log('error creating creation', errors, event);
             }
           )}
         >
           <div>
+            {errorMessage && (
+              <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
+                {errorMessage}
+              </div>
+            )}
             {inputs?.map((input: InputOptions) => (
               <FormField
                 key={input.name || ''}
                 input={input}
                 register={form.register}
+                onSelectPreloader={onSelectPreloader}
                 error={
                   input.name
                     ? { message: (form.formState.errors[input.name as keyof T] as any)?.message }

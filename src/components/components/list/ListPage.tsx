@@ -26,7 +26,7 @@ export interface PaginatedResponse<T> {
 
 export type GetDataForList<T> = (params: GetDataParams) => Promise<PaginatedResponse<T>>;
 
-const ListHeader = <T extends AnyClass>({
+function ListHeader<T extends AnyClass>({
   listData,
   filtered,
   onFilterClick,
@@ -36,7 +36,7 @@ const ListHeader = <T extends AnyClass>({
   filtered: boolean;
   onFilterClick: () => void;
   customHeader?: React.ReactNode;
-}) => {
+}) {
   const fields = useMemo(() => listData.cells.filter(cell => !!cell.filter), [listData.cells]);
 
   const header = listData.list?.headers;
@@ -60,7 +60,7 @@ const ListHeader = <T extends AnyClass>({
       </div>
     </div>
   );
-};
+}
 
 export function ListPage<T extends AnyClass>({
   model,
@@ -68,7 +68,7 @@ export function ListPage<T extends AnyClass>({
   onRemoveItem,
   customHeader,
 }: {
-  model: T;
+  model: any;
   getData: GetDataForList<T>;
   customHeader?: React.ReactNode;
   onRemoveItem?: (item: T) => Promise<void>;
@@ -151,15 +151,13 @@ export function ListPage<T extends AnyClass>({
         data={data}
         onRemoveItem={async (item: T) => {
           if (onRemoveItem) {
-            alert({
-              title: 'Are you sure you want to delete this item?',
-              message: 'This action cannot be undone.',
-              onConfirm: async () => {
-                await onRemoveItem(item);
-                //setData(data.filter((d: T) => d.id !== item.id));
-                await fetchData(pagination.page);
-              },
-            });
+            if (
+              confirm('Are you sure you want to delete this item? This action cannot be undone.')
+            ) {
+              await onRemoveItem(item);
+              //setData(data.filter((d: T) => d.id !== item.id));
+              await fetchData(pagination.page);
+            }
           }
         }}
       />

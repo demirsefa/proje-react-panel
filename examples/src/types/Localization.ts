@@ -1,18 +1,17 @@
 import { IsString, MinLength } from "class-validator";
 import { Cell, List, Input } from "proje-react-panel";
 import { getInputFields } from "proje-react-panel";
-import { DataType } from "./data";
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: LocalizationListDTO) => ({
+	cells: (item: LocalizationList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class LocalizationListDTO {
+export class LocalizationList {
 	@Cell({ name: "id", title: "Key" })
 	id: string;
 
@@ -42,7 +41,7 @@ export class LocalizationListDTO {
 	updatedAt: Date;
 }
 
-export class LocalizationFormDTO {
+export class LocalizationForm {
 	@IsString()
 	@MinLength(1)
 	@Input({ label: "Key", type: "input" })
@@ -54,7 +53,7 @@ export class LocalizationFormDTO {
 	explanation: string;
 }
 
-export class SimpleLocalizationFormDTO {
+export class SimpleLocalizationForm {
 	@IsString()
 	@MinLength(1)
 	@Input({ label: "Key", type: "input" })
@@ -74,10 +73,10 @@ export class SimpleLocalizationFormDTO {
 	language: string;
 }
 
-export class LocalizationAllFormDTO {
+export class LocalizationAllForm {
 	@Input({ type: "hidden" })
 	language: string;
 
-	@Input({ label: "Inputs", type: "nested", nestedFields: getInputFields(SimpleLocalizationFormDTO) })
-	keys: SimpleLocalizationFormDTO[];
+	@Input({ label: "Inputs", type: "nested", nestedFields: getInputFields(SimpleLocalizationForm) })
+	keys: SimpleLocalizationForm[];
 }

@@ -1,23 +1,19 @@
 import { IsString, MinLength, IsBoolean } from "class-validator";
 import { Cell, List, Input } from "proje-react-panel";
+import { HardCodedLanguageOptions } from "./HardCodedLanguageOptions";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: LanguageList) => ({
-		edit: { path: "edit/" + item.id, label: "Edit" },
+		edit: { path: "edit/" + item.code, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
 export class LanguageList {
-	id: string;
-
 	@Cell({ name: "code", title: "Code" })
 	code: string;
-
-	@Cell({ name: "name", title: "Name" })
-	name: string;
 
 	@Cell({ name: "isDefault", title: "Default Language" })
 	isDefault: boolean;
@@ -32,13 +28,8 @@ export class LanguageForm {
 
 	@IsString()
 	@MinLength(2)
-	@Input({ label: "Language Code", type: "input" })
+	@Input({ label: "Language Code", type: "select", options: HardCodedLanguageOptions })
 	code: string;
-
-	@IsString()
-	@MinLength(2)
-	@Input({ label: "Language Name", type: "input" })
-	name: string;
 
 	@IsBoolean()
 	@Input({ label: "Default Language", type: "checkbox" })

@@ -15,6 +15,7 @@ export interface InputOptions {
   placeholder?: string;
   cancelPasswordValidationOnEdit?: boolean;
   options?: { value: string; label: string }[];
+  optionsPreload?: boolean;
   nestedFields?: InputOptions[];
 }
 
@@ -31,7 +32,8 @@ export function Input(options?: InputOptions): PropertyDecorator {
 }
 
 export function getInputFields<T extends AnyClass>(entityClass: T): InputOptions[] {
-  const prototype = entityClass.prototype;
+  //TODO2: ANY IS NOT A GOOD SOLUTION, WE NEED TO FIND A BETTER WAY TO DO THIS
+  const prototype = (entityClass as any).prototype;
   const inputFields: string[] = Reflect.getMetadata(INPUT_KEY, prototype) || [];
   return inputFields.map(field => {
     const fields = Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};

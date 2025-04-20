@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faDashboard,
 	faEnvelope,
+	faGlobe,
 	faImage,
 	faLanguage,
 	faMessage,
@@ -14,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { setAuthLogout } from "./api/apiConfig";
 
-export type IconType = "dashboard" | "admin" | "user" | "message" | "thread" | "assets" | "localization";
+export type IconType = "dashboard" | "admin" | "user" | "message" | "thread" | "assets" | "localization" | "language";
 function getIcons(iconType: IconType) {
 	switch (iconType) {
 		case "dashboard":
@@ -31,6 +32,8 @@ function getIcons(iconType: IconType) {
 			return <FontAwesomeIcon icon={faImage} />;
 		case "localization":
 			return <FontAwesomeIcon icon={faLanguage} />;
+		case "language":
+			return <FontAwesomeIcon icon={faGlobe} />;
 	}
 }
 
@@ -47,6 +50,7 @@ function getMenu(screens: Record<string, ScreenCreatorData>): {
 		{ name: "Messages", path: "messages", iconType: "message" },
 		{ name: "Assets", path: "assets", iconType: "assets" },
 		{ name: "Localization", path: "localization?language=tr", iconType: "localization" },
+		{ name: "Languages", path: "languages", iconType: "language" },
 	];
 }
 

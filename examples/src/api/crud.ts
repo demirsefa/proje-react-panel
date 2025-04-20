@@ -7,7 +7,7 @@ import {
 	GetDataParams,
 } from "proje-react-panel";
 import { getAxiosInstance } from "./apiConfig";
-import { DataType } from "../types/data";
+
 export function getAll<T>(endpoint: string): GetDataForList<T> {
 	return async (params: GetDataParams): Promise<PaginatedResponse<T>> => {
 		const axiosInstance = getAxiosInstance();
@@ -29,7 +29,6 @@ export function getAll<T>(endpoint: string): GetDataForList<T> {
 
 export function getOne<T>(endpoint: string, key: string = "id"): GetDetailsDataFN<T> {
 	return async (params: Record<string, string>): Promise<T> => {
-		console.log("getOne", params, key, params[key]);
 		const axiosInstance = getAxiosInstance();
 		const response = await axiosInstance.get<T>(`/${endpoint}/${params[key]}`);
 		return response.data;
@@ -44,7 +43,7 @@ export function create<T>(endpoint: string): OnSubmitFN<T> {
 	};
 }
 
-export function update<T extends AnyClass>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
+export function update<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
 	return async (data: T): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const id = (data as any)[key];
@@ -53,7 +52,7 @@ export function update<T extends AnyClass>(endpoint: string, key: string = "id")
 	};
 }
 
-export function updateSimple<T extends AnyClass>(endpoint: string): OnSubmitFN<T> {
+export function updateSimple<T>(endpoint: string): OnSubmitFN<T> {
 	return async (data: T): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const response = await axiosInstance.put<T>(`/${endpoint}`, data);
@@ -61,9 +60,12 @@ export function updateSimple<T extends AnyClass>(endpoint: string): OnSubmitFN<T
 	};
 }
 
-export async function remove<T>(endpoint: string, id: number): Promise<void> {
-	const axiosInstance = getAxiosInstance();
-	await axiosInstance.delete(`/${endpoint}/${id}`);
+export function remove<T>(endpoint: string, key: string = "id"): (data: T) => Promise<void> {
+	return async (data: T): Promise<void> => {
+		const axiosInstance = getAxiosInstance();
+		const id = (data as any)[key];
+		await axiosInstance.delete<T>(`/${endpoint}/${id}`);
+	};
 }
 
 // Example usage:

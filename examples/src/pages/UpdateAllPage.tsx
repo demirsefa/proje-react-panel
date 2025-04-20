@@ -1,22 +1,34 @@
-import React, { useState } from "react";
-import { LocalizationAllFormDTO, LocalizationFormDTO } from "../types/Localization";
+import React, { useEffect, useState } from "react";
+import { LocalizationAllForm, LocalizationForm } from "../types/Localization";
 import { dataFetchers } from "../api/dataFetchers";
 import { FormPage } from "proje-react-panel";
 import Select from "react-select";
 import { useNavigate, useParams } from "react-router";
-
-const languageOptions = [
-	{ value: "tr", label: "Türkçe" },
-	{ value: "en", label: "English" },
-	{ value: "fr", label: "Français" },
-	{ value: "es", label: "Español" },
-];
+import { LanguageForm, LanguageList } from "../types/Language";
+import { HardCodedLanguageOptions } from "../types/HardCodedLanguageOptions";
 
 export function UpdateAllPage() {
 	const params = useParams();
+	const [fetchedLanguageOptions, setFetchedLanguageOptions] = useState<{ label: string; value: string }[]>([]);
+	useEffect(() => {
+		dataFetchers.languages.getAll({ page: 1, limit: 200 }).then((response) => {
+			setFetchedLanguageOptions(
+				(response.data as LanguageList[]).map((language: LanguageList) => {
+					const label =
+						HardCodedLanguageOptions.find((option) => option.value === language.code)?.label ||
+						language.code;
+					return {
+						value: language.code,
+						label: label,
+					};
+				})
+			);
+		});
+	}, []);
 	const [selectedLanguage, setSelectedLanguage] = useState(() =>
-		languageOptions.find((option) => option.value === params.language)
+		fetchedLanguageOptions.find((option) => option.value === params.language)
 	);
+
 	const navigate = useNavigate();
 	const [key, setKey] = useState<number>(0);
 
@@ -26,11 +38,11 @@ export function UpdateAllPage() {
 				<Select
 					value={selectedLanguage}
 					onChange={(option) => {
-						setSelectedLanguage(option as (typeof languageOptions)[0]);
+						setSelectedLanguage(option as (typeof fetchedLanguageOptions)[0]);
 						navigate(`/localization/update-all/${option?.value}`);
 						setKey(key + 1);
 					}}
-					options={languageOptions}
+					options={fetchedLanguageOptions}
 					styles={{
 						control: (baseStyles, state) => ({
 							...baseStyles,
@@ -103,8 +115,8 @@ export function UpdateAllPage() {
 			<FormPage
 				getDetailsData={dataFetchers.localizationAll.details}
 				onSubmit={dataFetchers.localizationAll.update}
-				redirect={"/localization"}
-				model={LocalizationAllFormDTO}
+				redirectBackOnSuccess
+				model={LocalizationAllForm}
 			/>
 		</div>
 	);

@@ -1,55 +1,62 @@
-import { create, getAll, getOne, update, updateSimple } from "./crud";
+import { create, getAll, getOne, update, updateSimple, remove } from "./crud";
 import { AdminDetailsForrm, AdminForm, AdminList } from "../types/Admin";
 import { AssetForm, AssetList } from "../types/Asset";
 import { ThreadForm, ThreadList } from "../types/Thread";
 import { MessageForm, MessageList } from "../types/Message";
 import { UserForm, UserList } from "../types/User";
-import { LocalizationAllFormDTO, LocalizationFormDTO, LocalizationListDTO } from "../types/Localization";
+import { LocalizationAllForm, LocalizationForm, LocalizationList } from "../types/Localization";
 import { LanguageForm, LanguageList } from "../types/Language";
 import { login } from "./auth";
 
 export const dataFetchers = Object.freeze({
 	admins: {
-		getAll: getAll<typeof AdminList>("admins"),
-		details: getOne<typeof AdminDetailsForrm>("admins"),
-		create: create<typeof AdminForm>("admins"),
-		update: update<typeof AdminForm>("admins"),
+		getAll: getAll<AdminList>("admins"),
+		details: getOne<AdminDetailsForrm>("admins"),
+		create: create<AdminForm>("admins"),
+		update: update<AdminForm>("admins"),
+		remove: remove("admins", "id"),
 	},
 	assets: {
-		getAll: getAll<typeof AssetList>("assets"),
-		create: create<typeof AssetForm>("assets"),
-		update: update<typeof AssetForm>("assets"),
+		getAll: getAll<AssetList>("assets"),
+		create: create<AssetForm>("assets"),
+		update: update<AssetForm>("assets"),
+		remove: remove("assets", "id"),
 	},
 	threads: {
-		getAll: getAll<typeof ThreadList>("threads"),
-		create: create<typeof ThreadForm>("threads"),
-		update: update<typeof ThreadForm>("threads"),
+		getAll: getAll<ThreadList>("threads"),
+		create: create<ThreadForm>("threads"),
+		update: update<ThreadForm>("threads"),
+		remove: remove("threads", "id"),
 	},
 	messages: {
-		getAll: getAll<typeof MessageList>("messages"),
-		create: create<typeof MessageForm>("messages"),
-		update: update<typeof MessageForm>("messages"),
+		getAll: getAll<MessageList>("messages"),
+		create: create<MessageForm>("messages"),
+		update: update<MessageForm>("messages"),
+		remove: remove("messages", "id"),
 	},
 	users: {
-		getAll: getAll<typeof UserList>("users"),
-		create: create<typeof UserForm>("users"),
-		update: update<typeof UserForm>("users"),
+		getAll: getAll<UserList>("users"),
+		create: create<UserForm>("users"),
+		update: update<UserForm>("users"),
+		remove: remove("users", "id"),
 	},
 	localization: {
-		getAll: getAll<typeof LocalizationListDTO>("localization"),
-		details: getOne<typeof LocalizationFormDTO>("localization"),
-		create: create<typeof LocalizationFormDTO>("localization"),
-		update: update<typeof LocalizationFormDTO>("localization"),
+		getAll: getAll<LocalizationList>("localization"),
+		details: getOne<LocalizationForm>("localization"),
+		create: create<LocalizationForm>("localization"),
+		update: update<LocalizationForm>("localization"),
+		remove: remove("localization", "id"),
 	},
 	localizationAll: {
-		details: getOne<typeof LocalizationAllFormDTO>("localizationAll", "language"),
-		update: updateSimple<typeof LocalizationAllFormDTO>("localizationAll"),
+		details: getOne<LocalizationAllForm>("localizationAll", "language"),
+		update: updateSimple<LocalizationAllForm>("localizationAll"),
 	},
 	languages: {
-		getAll: getAll<typeof LanguageList>("languages"),
-		details: getOne<typeof LanguageForm>("languages"),
-		create: create<typeof LanguageForm>("languages"),
-		update: update<typeof LanguageForm>("languages"),
+		getAll: getAll<LanguageList>("languages"),
+		details: getOne<LanguageForm>("languages"),
+		create: create<LanguageForm>("languages"),
+		update: update<LanguageForm>("languages", "code"),
+		remove: remove("languages", "code"),
 	},
 	auth: {
 		login: login(),

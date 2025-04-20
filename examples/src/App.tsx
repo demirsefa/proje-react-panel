@@ -11,7 +11,7 @@ import { MessageForm, MessageList } from "./types/Message";
 import { UserForm, UserList } from "./types/User";
 import { dataFetchers } from "./api/dataFetchers";
 import { initApi, initAuthToken } from "./api/apiConfig";
-import { LocalizationFormDTO, LocalizationListDTO } from "./types/Localization";
+import { LocalizationForm, LocalizationList } from "./types/Localization";
 import { UpdateAllPage } from "./pages/UpdateAllPage";
 import { LanguageForm, LanguageList } from "./types/Language";
 
@@ -38,7 +38,13 @@ export function App() {
 						<Route path={"admins"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.admins.getAll} model={AdminList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.admins.getAll}
+										onRemoveItem={dataFetchers.admins.remove}
+										model={AdminList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
@@ -58,7 +64,13 @@ export function App() {
 						<Route path={"assets"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.assets.getAll} model={AssetList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.assets.getAll}
+										onRemoveItem={dataFetchers.assets.remove}
+										model={AssetList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
@@ -72,7 +84,13 @@ export function App() {
 						<Route path={"messages"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.messages.getAll} model={MessageList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.messages.getAll}
+										onRemoveItem={dataFetchers.messages.remove}
+										model={MessageList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
@@ -86,7 +104,13 @@ export function App() {
 						<Route path={"threads"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.threads.getAll} model={ThreadList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.threads.getAll}
+										onRemoveItem={dataFetchers.threads.remove}
+										model={ThreadList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
@@ -100,7 +124,13 @@ export function App() {
 						<Route path={"users"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.users.getAll} model={UserList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.users.getAll}
+										onRemoveItem={dataFetchers.users.remove}
+										model={UserList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
@@ -122,20 +152,21 @@ export function App() {
 											</>
 										}
 										getData={dataFetchers.localization.getAll}
-										model={LocalizationListDTO}
+										onRemoveItem={dataFetchers.localization.remove}
+										model={LocalizationList}
 									/>
 								}
 							/>
 							<Route
 								path={"create"}
 								element={
-									<FormPage onSubmit={dataFetchers.localization.create} model={LocalizationFormDTO} />
+									<FormPage onSubmit={dataFetchers.localization.create} model={LocalizationForm} />
 								}
 							/>
 							<Route
 								path={"edit/:id"}
 								element={
-									<FormPage onSubmit={dataFetchers.localization.update} model={LocalizationFormDTO} />
+									<FormPage onSubmit={dataFetchers.localization.update} model={LocalizationForm} />
 								}
 							/>
 							<Route path={"update-all/:language"} element={<UpdateAllPage />} />
@@ -143,7 +174,13 @@ export function App() {
 						<Route path={"languages"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.languages.getAll} model={LanguageList} />}
+								element={
+									<ListPage
+										getData={dataFetchers.languages.getAll}
+										onRemoveItem={dataFetchers.languages.remove}
+										model={LanguageList}
+									/>
+								}
 							/>
 							<Route
 								path={"create"}
