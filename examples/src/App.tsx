@@ -4,15 +4,16 @@ import { Login, Panel, ListPage, FormPage } from "proje-react-panel";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { AuthLayout } from "./AuthLayout";
-import { AdminFormDTO, AdminListDTO } from "./types/Admin";
-import { AssetFormDTO, AssetListDTO } from "./types/Asset";
-import { ThreadFormDTO, ThreadListDTO } from "./types/Thread";
-import { MessageFormDTO, MessageListDTO } from "./types/Message";
-import { UserFormDTO, UserListDTO } from "./types/User";
+import { AdminForm, AdminList } from "./types/Admin";
+import { AssetForm, AssetList } from "./types/Asset";
+import { ThreadForm, ThreadList } from "./types/Thread";
+import { MessageForm, MessageList } from "./types/Message";
+import { UserForm, UserList } from "./types/User";
 import { dataFetchers } from "./api/dataFetchers";
 import { initApi, initAuthToken } from "./api/apiConfig";
 import { LocalizationFormDTO, LocalizationListDTO } from "./types/Localization";
 import { UpdateAllPage } from "./pages/UpdateAllPage";
+import { LanguageForm, LanguageList } from "./types/Language";
 
 initApi({
 	baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
@@ -37,11 +38,11 @@ export function App() {
 						<Route path={"admins"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.admins.getAll} model={AdminListDTO} />}
+								element={<ListPage getData={dataFetchers.admins.getAll} model={AdminList} />}
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.admins.create} model={AdminFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.admins.create} model={AdminForm} />}
 							/>
 							<Route
 								path={"edit/:id"}
@@ -49,7 +50,7 @@ export function App() {
 									<FormPage
 										getDetailsData={dataFetchers.admins.details}
 										onSubmit={dataFetchers.admins.update}
-										model={AdminFormDTO}
+										model={AdminForm}
 									/>
 								}
 							/>
@@ -57,57 +58,57 @@ export function App() {
 						<Route path={"assets"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.assets.getAll} model={AssetListDTO} />}
+								element={<ListPage getData={dataFetchers.assets.getAll} model={AssetList} />}
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.assets.create} model={AssetFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.assets.create} model={AssetForm} />}
 							/>
 							<Route
 								path={"update"}
-								element={<FormPage onSubmit={dataFetchers.assets.update} model={AssetFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.assets.update} model={AssetForm} />}
 							/>
 						</Route>
 						<Route path={"messages"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.messages.getAll} model={MessageListDTO} />}
+								element={<ListPage getData={dataFetchers.messages.getAll} model={MessageList} />}
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.messages.create} model={MessageFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.messages.create} model={MessageForm} />}
 							/>
 							<Route
 								path={"edit/:id"}
-								element={<FormPage onSubmit={dataFetchers.messages.update} model={MessageFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.messages.update} model={MessageForm} />}
 							/>
 						</Route>
 						<Route path={"threads"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.threads.getAll} model={ThreadListDTO} />}
+								element={<ListPage getData={dataFetchers.threads.getAll} model={ThreadList} />}
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.threads.create} model={ThreadFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.threads.create} model={ThreadForm} />}
 							/>
 							<Route
 								path={"edit/:id"}
-								element={<FormPage onSubmit={dataFetchers.threads.update} model={ThreadFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.threads.update} model={ThreadForm} />}
 							/>
 						</Route>
 						<Route path={"users"}>
 							<Route
 								path={""}
-								element={<ListPage getData={dataFetchers.users.getAll} model={UserListDTO} />}
+								element={<ListPage getData={dataFetchers.users.getAll} model={UserList} />}
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.users.create} model={UserFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.users.create} model={UserForm} />}
 							/>
 							<Route
 								path={"edit/:id"}
-								element={<FormPage onSubmit={dataFetchers.users.update} model={UserFormDTO} />}
+								element={<FormPage onSubmit={dataFetchers.users.update} model={UserForm} />}
 							/>
 						</Route>
 						<Route path={"localization"}>
@@ -138,6 +139,26 @@ export function App() {
 								}
 							/>
 							<Route path={"update-all/:language"} element={<UpdateAllPage />} />
+						</Route>
+						<Route path={"languages"}>
+							<Route
+								path={""}
+								element={<ListPage getData={dataFetchers.languages.getAll} model={LanguageList} />}
+							/>
+							<Route
+								path={"create"}
+								element={<FormPage onSubmit={dataFetchers.languages.create} model={LanguageForm} />}
+							/>
+							<Route
+								path={"edit/:id"}
+								element={
+									<FormPage
+										getDetailsData={dataFetchers.languages.details}
+										onSubmit={dataFetchers.languages.update}
+										model={LanguageForm}
+									/>
+								}
+							/>
 						</Route>
 					</Route>
 

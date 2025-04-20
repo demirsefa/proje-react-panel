@@ -4,13 +4,13 @@ import { Cell, List, Input, ImageCell } from "proje-react-panel";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: AssetListDTO) => ({
+	cells: (item: AssetList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class AssetListDTO {
+export class AssetList {
 	@Cell({
 		title: "ID",
 	})
@@ -28,7 +28,7 @@ export class AssetListDTO {
 	url: string;
 }
 
-export class AssetFormDTO {
+export class AssetForm {
 	@Input({
 		label: "ID",
 	})

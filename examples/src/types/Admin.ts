@@ -5,13 +5,13 @@ import { DataType } from "./data";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: AdminListDTO) => ({
+	cells: (item: AdminList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class AdminListDTO {
+export class AdminList {
 	@Cell({
 		title: "ID",
 	})
@@ -41,7 +41,7 @@ export class AdminListDTO {
 	updatedAt: Date;
 }
 
-export class AdminFormDTO {
+export class AdminForm {
 	@MinLength(3)
 	@Input({
 		label: "Username",
@@ -80,7 +80,7 @@ export class AdminFormDTO {
 	updatedAt: Date;
 }
 
-export class AdminDetailsFormDTO extends AdminFormDTO implements DataType {
+export class AdminDetailsForrm extends AdminForm implements DataType {
 	@Input({
 		label: "ID",
 	})

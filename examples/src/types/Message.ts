@@ -5,13 +5,13 @@ import { Cell, List, Input } from "proje-react-panel";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: MessageListDTO) => ({
+	cells: (item: MessageList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class MessageListDTO {
+export class MessageList {
 	id: string;
 
 	@Cell({ name: "content", title: "content" })
@@ -25,7 +25,7 @@ export class MessageListDTO {
 	updatedAt: Date;
 }
 
-export class MessageFormDTO {
+export class MessageForm {
 	id: string;
 	@IsString()
 	@MinLength(1)

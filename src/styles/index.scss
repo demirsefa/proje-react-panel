@@ -1,15 +1,14 @@
-@use './layout';
-// Imported styles will be scoped under .layout
-@use './sidebar';
-@use './form';
-@use './list';
-@use './login';
-@use './error-boundary';
-@use './image-uploader';
-@use './counter';
-@use './loading-screen';
-@use './pagination';
-@use './filter-popup';
+@import './layout';
+@import './sidebar';
+@import './form';
+@import './list';
+@import './login';
+@import './error-boundary';
+@import './image-uploader';
+@import './counter';
+@import './loading-screen';
+@import './pagination';
+@import './filter-popup';
 
 .layout {
   display: flex;

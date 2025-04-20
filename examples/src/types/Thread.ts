@@ -5,13 +5,13 @@ import { Cell, List, Input } from "proje-react-panel";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: ThreadListDTO) => ({
+	cells: (item: ThreadList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class ThreadListDTO {
+export class ThreadList {
 	id: string;
 
 	@Cell({ name: "title", title: "Title" })
@@ -35,7 +35,7 @@ export class ThreadListDTO {
 	updatedAt: Date;
 }
 
-export class ThreadFormDTO {
+export class ThreadForm {
 	@Input({
 		label: "ID",
 	})

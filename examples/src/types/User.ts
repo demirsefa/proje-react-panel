@@ -1,18 +1,17 @@
 import { IsEmail, IsString, MinLength, IsBoolean, IsOptional } from "class-validator";
 import { Cell, List, Input } from "proje-react-panel";
-import { DataType } from "./data";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: UserListDTO) => ({
+	cells: (item: UserList) => ({
 		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete" },
 	}),
 })
-export class UserListDTO {
+export class UserList {
 	id: string;
 
 	@Cell({ name: "username", title: "Username" })
@@ -33,7 +32,7 @@ export class UserListDTO {
 	updatedAt: Date;
 }
 
-export class UserFormDTO implements DataType {
+export class UserForm {
 	@Input({
 		label: "ID",
 	})

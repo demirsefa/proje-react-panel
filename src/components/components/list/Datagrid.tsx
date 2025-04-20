@@ -17,10 +17,11 @@ interface DatagridProps<T> {
 
 export function Datagrid<T>({ data, listData, onRemoveItem }: DatagridProps<T>) {
   const cells = listData.cells;
-  const listGeneralCells =
-    typeof listData.list?.cells === 'function'
+  const listGeneralCells = data?.[0]
+    ? typeof listData.list?.cells === 'function'
       ? listData.list?.cells?.(data[0])
-      : listData.list?.cells;
+      : listData.list?.cells
+    : null;
 
   return (
     <div className="datagrid">
