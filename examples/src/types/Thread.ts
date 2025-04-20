@@ -5,11 +5,11 @@ import { Cell, List, Input } from "proje-react-panel";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	utilCells: {
-		details: { path: "details", label: "Details" },
-		edit: { path: "edit", label: "Edit" },
-		delete: { path: "delete", label: "Delete" },
-	},
+	cells: (item: ThreadListDTO) => ({
+		details: { path: "details/" + item.id, label: "Details" },
+		edit: { path: "edit/" + item.id, label: "Edit" },
+		delete: { label: "Delete" },
+	}),
 })
 export class ThreadListDTO {
 	id: string;

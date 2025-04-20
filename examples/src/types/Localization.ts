@@ -6,11 +6,11 @@ import { DataType } from "./data";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	utilCells: {
-		details: { path: "details", label: "Details" },
-		edit: { path: "edit", label: "Edit" },
-		delete: { path: "delete", label: "Delete" },
-	},
+	cells: (item: LocalizationListDTO) => ({
+		details: { path: "details/" + item.id, label: "Details" },
+		edit: { path: "edit/" + item.id, label: "Edit" },
+		delete: { label: "Delete" },
+	}),
 })
 export class LocalizationListDTO {
 	@Cell({ name: "id", title: "Key" })

@@ -1,7 +1,7 @@
-import { ListOptions } from "./List";
-import { CellOptions } from "./Cell";
+import { ListOptions } from './List';
+import { CellOptions } from './Cell';
 
-export interface ListData {
-	list?: ListOptions;
-	cells: CellOptions[];
+export interface ListData<T> {
+  list?: ListOptions<T>;
+  cells: CellOptions[];
 }

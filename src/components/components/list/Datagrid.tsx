@@ -9,15 +9,18 @@ import SearchIcon from '../../../assets/icons/svg/search.svg';
 import PencilIcon from '../../../assets/icons/svg/pencil.svg';
 import TrashIcon from '../../../assets/icons/svg/trash.svg';
 
-interface DatagridProps<T extends { id: string }> {
+interface DatagridProps<T> {
   data: T[];
-  listData: ListData;
+  listData: ListData<T>;
   onRemoveItem?: (item: T) => Promise<void>;
 }
 
-export function Datagrid<T extends { id: string }>({ data, listData, onRemoveItem }: DatagridProps<T>) {
+export function Datagrid<T>({ data, listData, onRemoveItem }: DatagridProps<T>) {
   const cells = listData.cells;
-  const utilCells = listData.list?.utilCells;
+  const listGeneralCells =
+    typeof listData.list?.cells === 'function'
+      ? listData.list?.cells?.(data[0])
+      : listData.list?.cells;
 
   return (
     <div className="datagrid">
@@ -30,9 +33,9 @@ export function Datagrid<T extends { id: string }>({ data, listData, onRemoveIte
               {cells.map(cellOptions => (
                 <th key={cellOptions.name}>{cellOptions.title ?? cellOptions.name}</th>
               ))}
-              {utilCells?.details && <th>Details</th>}
-              {utilCells?.edit && <th>Edit</th>}
-              {utilCells?.delete && <th>Delete</th>}
+              {listGeneralCells?.details && <th>Details</th>}
+              {listGeneralCells?.edit && <th>Edit</th>}
+              {listGeneralCells?.delete && <th>Delete</th>}
             </tr>
           </thead>
           <tbody>
@@ -85,29 +88,32 @@ export function Datagrid<T extends { id: string }>({ data, listData, onRemoveIte
 */
                   return <td key={cellOptions.name}>{render}</td>;
                 })}
-                {utilCells?.details && (
+                {listGeneralCells?.details && (
                   <td>
-                    <Link to={`${utilCells.details.path}/${item.id}`} className="util-cell-link">
+                    <Link to={listGeneralCells.details.path} className="util-cell-link">
                       <SearchIcon className="icon icon-search" />
-                      <span className="util-cell-label">{utilCells.details.label}</span>
+                      <span className="util-cell-label">{listGeneralCells.details.label}</span>
                     </Link>
                   </td>
                 )}
-                {utilCells?.edit && (
+                {listGeneralCells?.edit && (
                   <td>
-                    <Link to={`${utilCells.edit.path}/${item.id}`} className="util-cell-link">
+                    <Link to={listGeneralCells.edit.path} className="util-cell-link">
                       <PencilIcon className="icon icon-pencil" />
-                      <span className="util-cell-label">{utilCells.edit.label}</span>
+                      <span className="util-cell-label">{listGeneralCells.edit.label}</span>
                     </Link>
                   </td>
                 )}
-                {utilCells?.delete && (
+                {listGeneralCells?.delete && (
                   <td>
-                    <a onClick={() => {
-                      onRemoveItem?.(item)
-                    }} className="util-cell-link">
+                    <a
+                      onClick={() => {
+                        onRemoveItem?.(item);
+                      }}
+                      className="util-cell-link"
+                    >
                       <TrashIcon className="icon icon-trash" />
-                      <span className="util-cell-label">{utilCells.delete.label}</span>
+                      <span className="util-cell-label">{listGeneralCells.delete.label}</span>
                     </a>
                   </td>
                 )}

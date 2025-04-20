@@ -26,13 +26,13 @@ export interface PaginatedResponse<T> {
 
 export type GetDataForList<T> = (params: GetDataParams) => Promise<PaginatedResponse<T>>;
 
-const ListHeader = ({
+const ListHeader = <T extends AnyClass>({
   listData,
   filtered,
   onFilterClick,
   customHeader,
 }: {
-  listData: ListData;
+  listData: ListData<T>;
   filtered: boolean;
   onFilterClick: () => void;
   customHeader?: React.ReactNode;
@@ -62,7 +62,7 @@ const ListHeader = ({
   );
 };
 
-export function ListPage<T extends AnyClass & { id: string }>({
+export function ListPage<T extends AnyClass>({
   model,
   getData,
   onRemoveItem,
@@ -156,7 +156,7 @@ export function ListPage<T extends AnyClass & { id: string }>({
               message: 'This action cannot be undone.',
               onConfirm: async () => {
                 await onRemoveItem(item);
-                setData(data.filter((d: T) => d.id !== item.id));
+                //setData(data.filter((d: T) => d.id !== item.id));
                 await fetchData(pagination.page);
               },
             });

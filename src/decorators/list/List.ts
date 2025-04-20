@@ -7,18 +7,18 @@ export interface ListHeaderOptions {
   create?: { path: string; label: string };
 }
 
-export interface ListUtilCellOptions {
+export interface ListCellOptions<T> {
   details?: { path: string; label: string };
   edit?: { path: string; label: string };
-  delete?: { path: string; label: string };
+  delete?: { label: string };
 }
 
-export interface ListOptions {
+export interface ListOptions<T> {
   headers?: ListHeaderOptions;
-  utilCells?: ListUtilCellOptions;
+  cells?: ((item: T) => ListCellOptions<T>) | ListCellOptions<T>;
 }
 
-export function List(options?: ListOptions): ClassDecorator {
+export function List<T>(options?: ListOptions<T> | ((item: T) => ListOptions<T>)): ClassDecorator {
   return (target: Function) => {
     if (options) {
       Reflect.defineMetadata(LIST_KEY, options, target);
@@ -26,6 +26,7 @@ export function List(options?: ListOptions): ClassDecorator {
   };
 }
 
-export function getClassListData(entityClass: any): ListOptions | undefined {
-  return Reflect.getMetadata(LIST_KEY, entityClass);
+export function getClassListData<T>(entityClass: T): ListOptions<T> | undefined {
+  //TODO: try to remove any
+  return Reflect.getMetadata(LIST_KEY, entityClass as any);
 }

@@ -3,11 +3,11 @@ import { ListData } from '../../../decorators/list/ListData';
 import { CellOptions, StaticSelectFilter } from '../../../decorators/list/Cell';
 import Select from 'react-select';
 
-interface FilterPopupProps {
+interface FilterPopupProps<T> {
   isOpen: boolean;
   onClose: () => void;
   onApplyFilters: (filters: Record<string, string>) => void;
-  listData: ListData;
+  listData: ListData<T>;
   activeFilters?: Record<string, string>;
 }
 
@@ -126,13 +126,13 @@ function FilterField({ field, value, onChange }: FilterFieldProps): React.ReactE
   }
 }
 
-export function FilterPopup({
+export function FilterPopup<T>({
   isOpen,
   onClose,
   onApplyFilters,
   listData,
   activeFilters,
-}: FilterPopupProps): React.ReactElement | null {
+}: FilterPopupProps<T>): React.ReactElement | null {
   const [filters, setFilters] = React.useState<Record<string, any>>(activeFilters ?? {});
   const popupRef = useRef<HTMLDivElement>(null);
   const fields = useMemo(() => listData.cells.filter(cell => !!cell.filter), [listData.cells]);

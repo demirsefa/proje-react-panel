@@ -3,7 +3,14 @@ import { Cell, List, Input } from "proje-react-panel";
 import { DataType } from "./data";
 
 @List({
-	api: "users",
+	headers: {
+		create: { path: "create", label: "Create" },
+	},
+	cells: (item: UserListDTO) => ({
+		details: { path: "details/" + item.id, label: "Details" },
+		edit: { path: "edit/" + item.id, label: "Edit" },
+		delete: { label: "Delete" },
+	}),
 })
 export class UserListDTO {
 	id: string;

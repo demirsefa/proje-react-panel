@@ -5,11 +5,11 @@ import { DataType } from "./data";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	utilCells: {
-		details: { path: "details", label: "Details" },
-		edit: { path: "edit", label: "Edit" },
-		delete: { path: "delete", label: "Delete" },
-	},
+	cells: (item: AdminListDTO) => ({
+		details: { path: "details/" + item.id, label: "Details" },
+		edit: { path: "edit/" + item.id, label: "Edit" },
+		delete: { label: "Delete" },
+	}),
 })
 export class AdminListDTO {
 	@Cell({
@@ -30,7 +30,10 @@ export class AdminListDTO {
 	@Input({
 		label: "Role",
 		type: "select",
-		selectOptions: ["super-admin", "admin"],
+		options: [
+			{ value: "super-admin", label: "Super Admin" },
+			{ value: "admin", label: "Admin" },
+		],
 	})
 	role: string;
 	isActive: boolean;
@@ -65,7 +68,10 @@ export class AdminFormDTO {
 	@Input({
 		label: "Role",
 		type: "select",
-		selectOptions: ["super-admin", "admin"],
+		options: [
+			{ value: "super-admin", label: "Super Admin" },
+			{ value: "admin", label: "Admin" },
+		],
 	})
 	role: string;
 
