@@ -14,6 +14,7 @@ export interface FormPageProps<T extends AnyClass> {
   onSubmit: OnSubmitFN<T>;
   onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
   redirectBackOnSuccess?: boolean;
+  type?: 'json' | 'formData';
 }
 
 export function FormPage<T extends AnyClass>({
@@ -23,6 +24,7 @@ export function FormPage<T extends AnyClass>({
   redirect,
   onSelectPreloader,
   redirectBackOnSuccess = true,
+  type = 'json',
   ...rest
 }: FormPageProps<T>) {
   const formOptions = useMemo(() => getFormFields(model), [model]);
@@ -33,6 +35,7 @@ export function FormPage<T extends AnyClass>({
       formOptions={formOptions}
       redirectBackOnSuccess={redirectBackOnSuccess}
       onSelectPreloader={onSelectPreloader}
+      type={type}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InputOptions } from '../../decorators/form/Input';
 import { FormField } from './FormField';
@@ -13,6 +13,7 @@ interface InnerFormProps<T> {
   getDetailsData?: GetDetailsDataFN<T>;
   redirectBackOnSuccess?: boolean;
   onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
+  type?: 'json' | 'formData';
 }
 
 export function InnerForm<T>({
@@ -21,6 +22,7 @@ export function InnerForm<T>({
   getDetailsData,
   redirectBackOnSuccess,
   onSelectPreloader,
+  type,
 }: InnerFormProps<T>) {
   const params = useParams();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -28,13 +30,14 @@ export function InnerForm<T>({
   const form = useForm<any>({
     resolver: formOptions.resolver,
   });
+  const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
   const inputs = formOptions.inputs;
   useEffect(() => {
     if (getDetailsData) {
       getDetailsData(params as Record<string, string>).then(data => {
         form.reset({ ...data });
-      });
+      }); 
     }
   }, [params, form.reset]);
 
@@ -42,10 +45,26 @@ export function InnerForm<T>({
     <div className="form-wrapper">
       <FormProvider {...form}>
         <form
+          ref={formRef}
           onSubmit={form.handleSubmit(
             async dataForm => {
               try {
-                await onSubmit(dataForm);
+                console.log('dataForm', dataForm);
+                const data =
+                  type === 'json'
+                    ? dataForm
+                    : (() => {
+                        const formData = new FormData(formRef.current!);
+                        for (const key in dataForm) {
+                          if (!formData.get(key)) {
+                            formData.append(key, dataForm[key]);
+                          }
+                        }
+                        console.log('formData', formData);
+                        return formData;
+                      })();
+                console.log('data', data);
+                await onSubmit(data);
                 setErrorMessage(null);
                 if (redirectBackOnSuccess) {
                   navigate(-1);

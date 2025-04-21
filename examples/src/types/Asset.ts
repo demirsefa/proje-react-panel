@@ -30,12 +30,8 @@ export class AssetList {
 
 export class AssetForm {
 	@Input({
-		label: "ID",
-	})
-	id: string;
-	@Input({
 		label: "File",
 		type: "file-upload",
 	})
-	filename: string;
+	file: any;
 }

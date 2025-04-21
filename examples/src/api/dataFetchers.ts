@@ -1,4 +1,4 @@
-import { create, getAll, getOne, update, updateSimple, remove } from "./crud";
+import { create, getAll, getOne, update, updateSimple, remove, createFormData, updateFormData } from "./crud";
 import { AdminDetailsForrm, AdminForm, AdminList } from "../types/Admin";
 import { AssetForm, AssetList } from "../types/Asset";
 import { ThreadForm, ThreadList } from "../types/Thread";
@@ -18,8 +18,8 @@ export const dataFetchers = Object.freeze({
 	},
 	assets: {
 		getAll: getAll<AssetList>("assets"),
-		create: create<AssetForm>("assets"),
-		update: update<AssetForm>("assets"),
+		create: createFormData<AssetForm>("assets"),
+		update: updateFormData<AssetForm>("assets"),
 		remove: remove("assets", "id"),
 	},
 	threads: {

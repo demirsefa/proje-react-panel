@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { InputOptions } from '../../decorators/form/Input';
 import { Label } from './Label';
 import { useFormContext, UseFormRegister } from 'react-hook-form';
-import { ImageUploader } from './ImageUploader';
+import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
 
 interface FormFieldProps {
@@ -81,7 +81,7 @@ export function FormField({ input, register, error, baseName, onSelectPreloader 
         );
       }
       case 'file-upload':
-        return <ImageUploader />;
+        return <Uploader input={input} />;
       case 'checkbox':
         return <Checkbox {...register(fieldName)} id={fieldName} />;
       case 'hidden':

@@ -74,11 +74,15 @@ export function App() {
 							/>
 							<Route
 								path={"create"}
-								element={<FormPage onSubmit={dataFetchers.assets.create} model={AssetForm} />}
+								element={
+									<FormPage type="formData" onSubmit={dataFetchers.assets.create} model={AssetForm} />
+								}
 							/>
 							<Route
 								path={"update"}
-								element={<FormPage onSubmit={dataFetchers.assets.update} model={AssetForm} />}
+								element={
+									<FormPage type="formData" onSubmit={dataFetchers.assets.update} model={AssetForm} />
+								}
 							/>
 						</Route>
 						<Route path={"messages"}>

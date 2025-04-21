@@ -43,11 +43,36 @@ export function create<T>(endpoint: string): OnSubmitFN<T> {
 	};
 }
 
+export function createFormData<T>(endpoint: string): OnSubmitFN<T> {
+	return async (data: T): Promise<T> => {
+		const axiosInstance = getAxiosInstance();
+		await axiosInstance.post<T>(`/${endpoint}`, data, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
+		return data;
+	};
+}
+
 export function update<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
 	return async (data: T): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data);
+		return response.data;
+	};
+}
+
+export function updateFormData<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
+	return async (data: T): Promise<T> => {
+		const axiosInstance = getAxiosInstance();
+		const id = (data as any)[key];
+		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
 		return response.data;
 	};
 }
@@ -67,32 +92,3 @@ export function remove<T>(endpoint: string, key: string = "id"): (data: T) => Pr
 		await axiosInstance.delete<T>(`/${endpoint}/${id}`);
 	};
 }
-
-// Example usage:
-/*
-// Initialize the API
-initApi({ baseUrl: 'http://api.example.com' });
-
-// Set auth token if needed
-setAuthToken('your-token-here');
-
-// Get all users with pagination
-const users = await getAll<User>('users', { page: 1, limit: 10 });
-
-// Get a single user
-const user = await getOne<User>('users', 1);
-
-// Create a new user
-const newUser = await create<User>('users', {
-  name: 'John Doe',
-  email: 'john@example.com'
-});
-
-// Update a user
-const updatedUser = await update<User>('users', 1, {
-  name: 'Jane Doe'
-});
-
-// Delete a user
-await remove<User>('users', 1);
-*/
