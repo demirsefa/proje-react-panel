@@ -4,13 +4,12 @@
 @import './list';
 @import './login';
 @import './error-boundary';
-@import './image-uploader';
 @import './counter';
 @import './loading-screen';
 @import './pagination';
 @import './filter-popup';
-@import './uploader';
-
+@import './components/uploader.scss';
+@import './components/checkbox';
 .layout {
   display: flex;
   max-height: 100vh;

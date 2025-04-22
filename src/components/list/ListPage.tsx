@@ -3,12 +3,12 @@ import { Link, useParams, useNavigate } from 'react-router';
 import { Datagrid } from './Datagrid';
 import { ErrorComponent } from '../ErrorComponent';
 import { LoadingScreen } from '../LoadingScreen';
-import { AnyClass } from '../../../types/AnyClass';
-import { getListFields } from '../../../decorators/list/getListFields';
+import { AnyClass } from '../../types/AnyClass';
+import { getListFields } from '../../decorators/list/getListFields';
 import { Pagination } from './Pagination';
-import { ListData } from '../../../decorators/list/ListData';
-import CreateIcon from '../../../assets/icons/svg/create.svg';
-import FilterIcon from '../../../assets/icons/svg/filter.svg';
+import { ListData } from '../../decorators/list/ListData';
+import CreateIcon from '../../assets/icons/svg/create.svg';
+import FilterIcon from '../../assets/icons/svg/filter.svg';
 import { FilterPopup } from './FilterPopup';
 
 export interface GetDataParams {

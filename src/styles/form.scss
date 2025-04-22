@@ -12,13 +12,6 @@
   .form-field {
     margin-bottom: 16px;
 
-    label {
-      font-weight: bold;
-      margin-bottom: 6px;
-      display: block;
-      color: #f2f2f2;
-    }
-
     input[type='text'],
     input[type='password'],
     input[type='email'],
@@ -85,4 +78,11 @@
       background-color: #0056b3;
     }
   }
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  display: block;
+  color: #f2f2f2;
 }

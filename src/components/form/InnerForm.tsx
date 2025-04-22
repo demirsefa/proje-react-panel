@@ -4,7 +4,7 @@ import { InputOptions } from '../../decorators/form/Input';
 import { FormField } from './FormField';
 import { FormOptions } from '../../decorators/form/FormOptions';
 import { AnyClass } from '../../types/AnyClass';
-import { OnSubmitFN, GetDetailsDataFN } from '../pages/FormPage';
+import { OnSubmitFN, GetDetailsDataFN } from './FormPage';
 import { useParams, useNavigate } from 'react-router';
 
 interface InnerFormProps<T> {
@@ -37,7 +37,7 @@ export function InnerForm<T>({
     if (getDetailsData) {
       getDetailsData(params as Record<string, string>).then(data => {
         form.reset({ ...data });
-      }); 
+      });
     }
   }, [params, form.reset]);
 

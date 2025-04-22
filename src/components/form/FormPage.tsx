@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { InnerForm } from '../components';
+import { InnerForm } from './InnerForm';
 import { AnyClass } from '../../types/AnyClass';
 import { getFormFields } from '../../decorators/form/getFormFields';
 import { InputOptions } from '../../decorators/form/Input';

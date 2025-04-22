@@ -58,10 +58,10 @@ export function FormField({ input, register, error, baseName, onSelectPreloader 
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
-        return <textarea {...register(fieldName)} placeholder={input.placeholder} id={fieldName} />;
+        return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
       case 'select':
         return (
-          <select {...register(fieldName)} id={fieldName}>
+          <select {...register(fieldName)}>
             <option value="">Select {fieldName}</option>
             {options?.map(option => (
               <option key={option.value} value={option.value}>
@@ -72,20 +72,15 @@ export function FormField({ input, register, error, baseName, onSelectPreloader 
         );
       case 'input': {
         return (
-          <input
-            type={input.inputType}
-            {...register(fieldName)}
-            placeholder={input.placeholder}
-            id={fieldName}
-          />
+          <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
         );
       }
       case 'file-upload':
         return <Uploader input={input} />;
       case 'checkbox':
-        return <Checkbox {...register(fieldName)} id={fieldName} />;
+        return <Checkbox input={input} />;
       case 'hidden':
-        return <input type="hidden" {...register(fieldName)} id={fieldName} />;
+        return <input type="hidden" {...register(fieldName)} />;
       case 'nested':
         return <NestedFormFields input={input} register={register} />;
       default:
@@ -95,7 +90,9 @@ export function FormField({ input, register, error, baseName, onSelectPreloader 
 
   return (
     <div className="form-field">
-      <Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
+      {input.type !== 'checkbox' && (
+        <Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
+      )}
       {renderField()}
       {error && <span className="error-message">{error.message}</span>}
     </div>

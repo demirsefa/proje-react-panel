@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FormField } from '../components/FormField';
+import { FormField } from './form/FormField';
 import { useNavigate } from 'react-router';
-import { useAppStore } from '../../store/store';
+import { useAppStore } from '../store/store';
 
 interface LoginFormData {
   username: string;

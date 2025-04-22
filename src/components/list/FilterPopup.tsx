@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { ListData } from '../../../decorators/list/ListData';
-import { CellOptions, StaticSelectFilter } from '../../../decorators/list/Cell';
+import { ListData } from '../../decorators/list/ListData';
+import { CellOptions, StaticSelectFilter } from '../../decorators/list/Cell';
 import Select from 'react-select';
 
 interface FilterPopupProps<T> {

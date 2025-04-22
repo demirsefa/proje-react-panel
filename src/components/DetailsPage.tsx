@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import React, { useEffect, useState } from 'react';
-import { Screen } from '../../types/Screen';
+import { Screen } from '../types/Screen';
 import { ErrorComponent } from '../components/ErrorComponent';
 
 export function ControllerDetails({ screen }: { screen: Screen }) {

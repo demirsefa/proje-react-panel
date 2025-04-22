@@ -1,13 +1,11 @@
 import React from 'react';
-import { CellOptions } from '../../../decorators/list/Cell';
 import { Link } from 'react-router';
-import { useAppStore } from '../../../store/store';
-import { ImageCellOptions } from '../../../decorators/list/ImageCell';
-import { ListData } from '../../../decorators/list/ListData';
+import { ImageCellOptions } from '../../decorators/list/ImageCell';
+import { ListData } from '../../decorators/list/ListData';
 import { EmptyList } from './EmptyList';
-import SearchIcon from '../../../assets/icons/svg/search.svg';
-import PencilIcon from '../../../assets/icons/svg/pencil.svg';
-import TrashIcon from '../../../assets/icons/svg/trash.svg';
+import SearchIcon from '../../assets/icons/svg/search.svg';
+import PencilIcon from '../../assets/icons/svg/pencil.svg';
+import TrashIcon from '../../assets/icons/svg/trash.svg';
 
 interface DatagridProps<T> {
   data: T[];
