@@ -1,11 +1,4 @@
-import {
-	GetDataForList,
-	PaginatedResponse,
-	OnSubmitFN,
-	AnyClass,
-	GetDetailsDataFN,
-	GetDataParams,
-} from "proje-react-panel";
+import { GetDataForList, PaginatedResponse, OnSubmitFN, GetDetailsDataFN, GetDataParams } from "proje-react-panel";
 import { getAxiosInstance } from "./apiConfig";
 
 export function getAll<T>(endpoint: string): GetDataForList<T> {
@@ -36,7 +29,7 @@ export function getOne<T>(endpoint: string, key: string = "id"): GetDetailsDataF
 }
 
 export function create<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T): Promise<T> => {
+	return async (data: T | FormData): Promise<T | FormData> => {
 		const axiosInstance = getAxiosInstance();
 		await axiosInstance.post<T>(`/${endpoint}`, data);
 		return data;
@@ -44,7 +37,7 @@ export function create<T>(endpoint: string): OnSubmitFN<T> {
 }
 
 export function createFormData<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T): Promise<T> => {
+	return async (data: T | FormData): Promise<T | FormData> => {
 		const axiosInstance = getAxiosInstance();
 		await axiosInstance.post<T>(`/${endpoint}`, data, {
 			headers: {
@@ -56,7 +49,7 @@ export function createFormData<T>(endpoint: string): OnSubmitFN<T> {
 }
 
 export function update<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
-	return async (data: T): Promise<T> => {
+	return async (data: T | FormData): Promise<T | FormData> => {
 		const axiosInstance = getAxiosInstance();
 		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data);
@@ -65,7 +58,7 @@ export function update<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
 }
 
 export function updateFormData<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
-	return async (data: T): Promise<T> => {
+	return async (data: T | FormData): Promise<T | FormData> => {
 		const axiosInstance = getAxiosInstance();
 		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data, {

@@ -1,85 +1,30 @@
 import React, { useMemo, useCallback, useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { Datagrid } from './Datagrid';
 import { ErrorComponent } from '../ErrorComponent';
 import { LoadingScreen } from '../LoadingScreen';
-import { AnyClass } from '../../types/AnyClass';
-import { getListFields } from '../../decorators/list/getListFields';
+import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
 import { Pagination } from './Pagination';
-import { ListData } from '../../decorators/list/ListData';
-import CreateIcon from '../../assets/icons/svg/create.svg';
-import FilterIcon from '../../assets/icons/svg/filter.svg';
+import { ListHeader } from './ListHeader';
 import { FilterPopup } from './FilterPopup';
-
-export interface GetDataParams {
-  page?: number;
-  limit?: number;
-  filters?: Record<string, any>;
-}
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-}
-
-export type GetDataForList<T> = (params: GetDataParams) => Promise<PaginatedResponse<T>>;
-
-function ListHeader<T extends AnyClass>({
-  listData,
-  filtered,
-  onFilterClick,
-  customHeader,
-}: {
-  listData: ListData<T>;
-  filtered: boolean;
-  onFilterClick: () => void;
-  customHeader?: React.ReactNode;
-}) {
-  const fields = useMemo(() => listData.cells.filter(cell => !!cell.filter), [listData.cells]);
-
-  const header = listData.list?.headers;
-  return (
-    <div className="list-header">
-      <div className="header-title">{header?.title || 'List'}</div>
-      {customHeader && <div className="header-custom">{customHeader}</div>}
-      <div className="header-actions">
-        {!!fields.length && (
-          <button onClick={onFilterClick} className="filter-button">
-            <FilterIcon className={`icon icon-filter ${filtered ? 'active' : ''}`} />
-            Filter
-          </button>
-        )}
-        {header?.create && (
-          <Link to={header.create.path} className="create-button">
-            <CreateIcon className="icon icon-create" />
-            {header.create.label}
-          </Link>
-        )}
-      </div>
-    </div>
-  );
-}
+import { getListPageMeta } from '../../decorators/list/getListPageMeta';
 
 export function ListPage<T extends AnyClass>({
   model,
-  getData,
-  onRemoveItem,
   customHeader,
 }: {
-  model: any;
-  getData: GetDataForList<T>;
+  model: AnyClassConstructor<T>;
   customHeader?: React.ReactNode;
-  onRemoveItem?: (item: T) => Promise<void>;
 }) {
+  const listPageMeta = useMemo(() => getListPageMeta(model), [model]);
+
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState({ total: 0, page: 0, limit: 0 });
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<unknown>(null);
+
+  const [pagination, setPagination] = useState({ total: 0, page: 0, limit: 0 });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>();
-  const listData = useMemo(() => getListFields(model), [model]);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -87,7 +32,10 @@ export function ListPage<T extends AnyClass>({
     async (page: number, filters?: Record<string, string>) => {
       setLoading(true);
       try {
-        const result = await getData({ page, filters: filters ?? activeFilters ?? {} });
+        const result = await listPageMeta.class.getData({
+          page,
+          filters: filters ?? activeFilters ?? {},
+        });
         setData(result.data);
         setPagination({
           total: result.total,
@@ -101,7 +49,7 @@ export function ListPage<T extends AnyClass>({
         setLoading(false);
       }
     },
-    [getData, activeFilters]
+    [activeFilters, listPageMeta.class.getData]
   );
 
   useEffect(() => {
@@ -117,7 +65,7 @@ export function ListPage<T extends AnyClass>({
     if (activeFilters) {
       fetchData(parseInt(params.page as string) || 1, activeFilters);
     }
-  }, [fetchData, params.page, activeFilters]);
+  }, [fetchData, params.page, activeFilters, listPageMeta.class.getData]);
 
   const handleFilterApply = (filters: Record<string, any>) => {
     setActiveFilters(filters);
@@ -141,24 +89,16 @@ export function ListPage<T extends AnyClass>({
   return (
     <div className="list">
       <ListHeader
-        listData={listData}
+        listPageMeta={listPageMeta}
         filtered={!!(activeFilters && !!Object.keys(activeFilters).length)}
         onFilterClick={() => setIsFilterOpen(true)}
         customHeader={customHeader}
       />
       <Datagrid
-        listData={listData}
+        listPageMeta={listPageMeta}
         data={data}
-        onRemoveItem={async (item: T) => {
-          if (onRemoveItem) {
-            if (
-              confirm('Are you sure you want to delete this item? This action cannot be undone.')
-            ) {
-              await onRemoveItem(item);
-              //setData(data.filter((d: T) => d.id !== item.id));
-              await fetchData(pagination.page);
-            }
-          }
+        onRemoveItem={async () => {
+          await fetchData(pagination.page);
         }}
       />
       <div className="list-footer">
@@ -169,7 +109,7 @@ export function ListPage<T extends AnyClass>({
         activeFilters={activeFilters}
         onClose={() => setIsFilterOpen(false)}
         onApplyFilters={handleFilterApply}
-        listData={listData}
+        listPageMeta={listPageMeta}
       />
     </div>
   );

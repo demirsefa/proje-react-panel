@@ -1,19 +1,21 @@
 import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, ValidateIf } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
-import { DataType } from "./data";
+import { Cell, List, Input, DetailsItem, Details, Form } from "proje-react-panel";
+import { dataFetchers } from "../api/dataFetchers";
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: AdminList) => ({
-		details: { path: "details/" + item.id, label: "Details" },
+		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.admins.remove },
 	}),
+	getData: dataFetchers.admins.getAll,
 })
 export class AdminList {
 	@Cell({
 		title: "ID",
+		type: "uuid",
 	})
 	id: string;
 	@Cell({
@@ -25,23 +27,9 @@ export class AdminList {
 		title: "email",
 	})
 	email: string;
-
-	password: string;
-	@Input({
-		label: "Role",
-		type: "select",
-		options: [
-			{ value: "super-admin", label: "Super Admin" },
-			{ value: "admin", label: "Admin" },
-		],
-	})
-	role: string;
-	isActive: boolean;
-	createdAt: Date;
-	updatedAt: Date;
 }
 
-export class AdminForm {
+class AdminForm {
 	@MinLength(3)
 	@Input({
 		label: "Username",
@@ -74,15 +62,32 @@ export class AdminForm {
 		],
 	})
 	role: string;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }
 
-export class AdminDetailsForrm extends AdminForm implements DataType {
-	@Input({
-		label: "ID",
-	})
-	id: string;
+@Form({
+	onSubmit: dataFetchers.admins.create,
+})
+export class CreateAdminForm extends AdminForm {}
+
+@Form({
+	onSubmit: dataFetchers.admins.update,
+	getDetailsData: dataFetchers.admins.details,
+})
+export class EditAdminForm extends AdminForm {}
+
+@Details({
+	getDetailsData: dataFetchers.admins.details,
+})
+export class AdminDetails {
+	@DetailsItem()
+	username: string;
+
+	@DetailsItem()
+	email: string;
+
+	@DetailsItem()
+	password: string;
+
+	@DetailsItem()
+	role: string;
 }

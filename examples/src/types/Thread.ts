@@ -1,15 +1,17 @@
 import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
+import { Cell, List, Input, Form, Details, DetailsItem } from "proje-react-panel";
+import { dataFetchers } from "../api/dataFetchers";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: ThreadList) => ({
-		details: { path: "details/" + item.id, label: "Details" },
+		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.threads.remove },
 	}),
+	getData: dataFetchers.threads.getAll,
 })
 export class ThreadList {
 	id: string;
@@ -23,21 +25,19 @@ export class ThreadList {
 	@Cell({ name: "isApprovedByAdmin", title: "isApprovedByAdmin" })
 	isApprovedByAdmin: boolean;
 
-	approvedBy: object;
-
-	messages: any[];
-
 	@IsBoolean()
 	isActive: boolean;
 
+	@Cell({ name: "createdAt", title: "Created At" })
 	createdAt: Date;
 
+	@Cell({ name: "updatedAt", title: "Updated At" })
 	updatedAt: Date;
 }
 
-export class ThreadForm {
+class ThreadForm {
 	@Input({
-		label: "ID",
+		type: "hidden",
 	})
 	id: string;
 	@IsString()
@@ -53,4 +53,38 @@ export class ThreadForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
+}
+
+@Form({
+	onSubmit: dataFetchers.threads.create,
+})
+export class CreateThreadForm extends ThreadForm {}
+
+@Form({
+	onSubmit: dataFetchers.threads.update,
+	getDetailsData: dataFetchers.threads.details,
+})
+export class EditThreadForm extends ThreadForm {}
+
+@Details({
+	getDetailsData: dataFetchers.threads.details,
+})
+export class DetailsThreadForm {
+	@DetailsItem()
+	id: string;
+
+	@DetailsItem()	
+	title: string;
+
+	@DetailsItem()
+	content: string;
+
+	@DetailsItem()
+	isActive: boolean;
+
+	@DetailsItem()
+	createdAt: Date;
+
+	@DetailsItem()
+	updatedAt: Date;
 }

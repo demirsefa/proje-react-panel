@@ -1,18 +1,19 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { ListData } from '../../decorators/list/ListData';
-import { CellOptions, StaticSelectFilter } from '../../decorators/list/Cell';
+import { CellConfiguration, StaticSelectFilter } from '../../decorators/list/Cell';
 import Select from 'react-select';
+import { ListPageMeta } from '../../decorators/list/getListPageMeta';
+import { AnyClass } from '../../types/AnyClass';
 
-interface FilterPopupProps<T> {
+interface FilterPopupProps<T extends AnyClass> {
   isOpen: boolean;
   onClose: () => void;
   onApplyFilters: (filters: Record<string, string>) => void;
-  listData: ListData<T>;
+  listPageMeta: ListPageMeta<T>;
   activeFilters?: Record<string, string>;
 }
 
 interface FilterFieldProps {
-  field: CellOptions;
+  field: CellConfiguration;
   value: string;
   onChange: (value: string) => void;
 }
@@ -126,16 +127,19 @@ function FilterField({ field, value, onChange }: FilterFieldProps): React.ReactE
   }
 }
 
-export function FilterPopup<T>({
+export function FilterPopup<T extends AnyClass>({
   isOpen,
   onClose,
   onApplyFilters,
-  listData,
+  listPageMeta,
   activeFilters,
 }: FilterPopupProps<T>): React.ReactElement | null {
   const [filters, setFilters] = React.useState<Record<string, any>>(activeFilters ?? {});
   const popupRef = useRef<HTMLDivElement>(null);
-  const fields = useMemo(() => listData.cells.filter(cell => !!cell.filter), [listData.cells]);
+  const fields = useMemo(
+    () => listPageMeta.cells.filter(cell => !!cell.filter),
+    [listPageMeta.cells]
+  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -177,7 +181,7 @@ export function FilterPopup<T>({
           </button>
         </div>
         <div className="filter-popup-content">
-          {fields.map((field: CellOptions) => (
+          {fields.map((field: CellConfiguration) => (
             <div key={field.name} className="filter-field">
               <label htmlFor={field.name}>{field.title || field.name}</label>
               <FilterField

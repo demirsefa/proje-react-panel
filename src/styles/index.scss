@@ -10,6 +10,9 @@
 @import './filter-popup';
 @import './components/uploader.scss';
 @import './components/checkbox';
+@import './details';
+
+//TODO: import deprecated
 .layout {
   display: flex;
   max-height: 100vh;
@@ -38,4 +41,16 @@
   height: 14px;
   stroke: currentColor;
   fill: currentColor;
+  &.icon-true {
+    width: 20px;
+    height: 20px;
+    stroke: #4caf50;
+    fill: none;
+  }
+  &.icon-false {
+    width: 20px;
+    height: 20px;
+    stroke: #ff0000;
+    fill: none;
+  }
 }

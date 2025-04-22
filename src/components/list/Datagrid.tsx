@@ -1,24 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { ImageCellOptions } from '../../decorators/list/ImageCell';
-import { ListData } from '../../decorators/list/ListData';
 import { EmptyList } from './EmptyList';
 import SearchIcon from '../../assets/icons/svg/search.svg';
 import PencilIcon from '../../assets/icons/svg/pencil.svg';
 import TrashIcon from '../../assets/icons/svg/trash.svg';
+import { ListPageMeta } from '../../decorators/list/getListPageMeta';
+import { ImageCellOptions } from '../../decorators/list/cells/ImageCell';
+import { AnyClass } from '../../types/AnyClass';
+import { CellField } from './CellField';
 
-interface DatagridProps<T> {
+interface DatagridProps<T extends AnyClass> {
   data: T[];
-  listData: ListData<T>;
+  listPageMeta: ListPageMeta<T>;
   onRemoveItem?: (item: T) => Promise<void>;
 }
 
-export function Datagrid<T>({ data, listData, onRemoveItem }: DatagridProps<T>) {
-  const cells = listData.cells;
+export function Datagrid<T extends AnyClass>({
+  data,
+  listPageMeta,
+  onRemoveItem,
+}: DatagridProps<T>) {
+  const cells = listPageMeta.cells;
   const listGeneralCells = data?.[0]
-    ? typeof listData.list?.cells === 'function'
-      ? listData.list?.cells?.(data[0])
-      : listData.list?.cells
+    ? typeof listPageMeta.class.cells === 'function'
+      ? listPageMeta.class.cells?.(data[0])
+      : listPageMeta.class.cells
     : null;
 
   return (
@@ -40,58 +46,23 @@ export function Datagrid<T>({ data, listData, onRemoveItem }: DatagridProps<T>) 
           <tbody>
             {data.map((item, index) => {
               const listCells = item
-                ? typeof listData.list?.cells === 'function'
-                  ? listData.list?.cells?.(item)
-                  : listData.list?.cells
+                ? typeof listPageMeta.class.cells === 'function'
+                  ? listPageMeta.class.cells?.(item)
+                  : listPageMeta.class.cells
                 : null;
               return (
                 <tr key={index}>
                   {cells.map(cellOptions => {
                     // @ts-ignore
                     const value = item[cellOptions.name];
-                    let render = value ?? '-'; // Default value if the field is undefined or null
-
-                    switch (cellOptions.type) {
-                      case 'date':
-                        if (value) {
-                          const date = new Date(value);
-                          render = `${date.getDate().toString().padStart(2, '0')}/${(
-                            date.getMonth() + 1
-                          )
-                            .toString()
-                            .padStart(
-                              2,
-                              '0'
-                            )}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date
-                            .getMinutes()
-                            .toString()
-                            .padStart(2, '0')}`;
-                        }
-                        break;
-
-                      case 'image': {
-                        const imageCellOptions = cellOptions as ImageCellOptions;
-                        render = (
-                          <img
-                            width={100}
-                            height={100}
-                            src={imageCellOptions.baseUrl + value}
-                            style={{ objectFit: 'contain' }}
-                          />
-                        );
-                        break;
-                      }
-                      case 'string':
-                      default:
-                        render = value ? value.toString() : (cellOptions?.placeHolder ?? '-'); // Handles string type or default fallback
-                        break;
-                    }
-                    /*
-								if (cellOptions.linkTo) {
-									render = <Link to={cellOptions.linkTo(item)}>{formattedValue}</Link>;
-								}
-*/
-                    return <td key={cellOptions.name}>{render}</td>;
+                    return (
+                      <CellField
+                        key={cellOptions.name}
+                        cellOptions={cellOptions}
+                        item={item}
+                        value={value}
+                      />
+                    );
                   })}
                   {listCells?.details && (
                     <td>
@@ -113,7 +84,9 @@ export function Datagrid<T>({ data, listData, onRemoveItem }: DatagridProps<T>) 
                     <td>
                       <a
                         onClick={() => {
-                          onRemoveItem?.(item);
+                          listCells.delete?.onRemoveItem?.(item).then(() => {
+                            onRemoveItem?.(item);
+                          });
                         }}
                         className="util-cell-link util-cell-link-remove"
                       >

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { LocalizationAllForm, LocalizationForm } from "../types/Localization";
+import { LocalizationAllForm } from "../types/Localization";
 import { dataFetchers } from "../api/dataFetchers";
 import { FormPage } from "proje-react-panel";
 import Select from "react-select";
 import { useNavigate, useParams } from "react-router";
-import { LanguageForm, LanguageList } from "../types/Language";
-import { HardCodedLanguageOptions } from "../types/HardCodedLanguageOptions";
+import { LanguageList } from "../types/Language";
+import { HardCodedLanguageOptions } from "../constants/HardCodedLanguageOptions";
 
 export function UpdateAllPage() {
 	const params = useParams();
@@ -113,9 +113,6 @@ export function UpdateAllPage() {
 				/>
 			</div>
 			<FormPage
-				getDetailsData={dataFetchers.localizationAll.details}
-				onSubmit={dataFetchers.localizationAll.update}
-				redirectBackOnSuccess
 				model={LocalizationAllForm}
 			/>
 		</div>

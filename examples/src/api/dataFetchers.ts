@@ -1,50 +1,58 @@
-import { create, getAll, getOne, update, updateSimple, remove, createFormData, updateFormData } from "./crud";
-import { AdminDetailsForrm, AdminForm, AdminList } from "../types/Admin";
-import { AssetForm, AssetList } from "../types/Asset";
-import { ThreadForm, ThreadList } from "../types/Thread";
-import { MessageForm, MessageList } from "../types/Message";
-import { UserForm, UserList } from "../types/User";
-import { LocalizationAllForm, LocalizationForm, LocalizationList } from "../types/Localization";
-import { LanguageForm, LanguageList } from "../types/Language";
+import { create, getAll, getOne, update, updateSimple, remove, createFormData } from "./crud";
+import { AssetList, CreateAssetForm, DetailsAssetForm } from "../types/Asset";
+import { EditThreadForm, CreateThreadForm, DetailsThreadForm, ThreadList } from "../types/Thread";
+import { CreateMessageForm, DetailsMessageForm, EditMessageForm, MessageList } from "../types/Message";
+import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "../types/User";
+import {
+	CreateLocalizationForm,
+	EditLocalizationForm,
+	LocalizationAllForm,
+	LocalizationList,
+} from "../types/Localization";
+import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "../types/Language";
 import { login } from "./auth";
+import { AdminDetails, AdminList, CreateAdminForm, EditAdminForm } from "../types/Admin";
 
 export const dataFetchers = Object.freeze({
 	admins: {
 		getAll: getAll<AdminList>("admins"),
-		details: getOne<AdminDetailsForrm>("admins"),
-		create: create<AdminForm>("admins"),
-		update: update<AdminForm>("admins"),
+		details: getOne<AdminDetails>("admins"),
+		create: create<CreateAdminForm>("admins"),
+		update: update<EditAdminForm>("admins"),
 		remove: remove("admins", "id"),
 	},
 	assets: {
 		getAll: getAll<AssetList>("assets"),
-		create: createFormData<AssetForm>("assets"),
-		update: updateFormData<AssetForm>("assets"),
+		create: createFormData<CreateAssetForm>("assets"),
+		details: getOne<DetailsAssetForm>("assets"),
 		remove: remove("assets", "id"),
 	},
 	threads: {
 		getAll: getAll<ThreadList>("threads"),
-		create: create<ThreadForm>("threads"),
-		update: update<ThreadForm>("threads"),
+		details: getOne<DetailsThreadForm>("threads"),
+		create: create<CreateThreadForm>("threads"),
+		update: update<EditThreadForm>("threads"),
 		remove: remove("threads", "id"),
 	},
 	messages: {
 		getAll: getAll<MessageList>("messages"),
-		create: create<MessageForm>("messages"),
-		update: update<MessageForm>("messages"),
+		details: getOne<DetailsMessageForm>("messages"),
+		create: create<CreateMessageForm>("messages"),
+		update: update<EditMessageForm>("messages"),
 		remove: remove("messages", "id"),
 	},
 	users: {
 		getAll: getAll<UserList>("users"),
-		create: create<UserForm>("users"),
-		update: update<UserForm>("users"),
+		details: getOne<DetailsUserForm>("users"),
+		create: create<CreateUserForm>("users"),
+		update: update<EditUserForm>("users"),
 		remove: remove("users", "id"),
 	},
 	localization: {
 		getAll: getAll<LocalizationList>("localization"),
-		details: getOne<LocalizationForm>("localization"),
-		create: create<LocalizationForm>("localization"),
-		update: update<LocalizationForm>("localization"),
+		details: getOne<EditLocalizationForm>("localization"),
+		create: create<CreateLocalizationForm>("localization"),
+		update: update<EditLocalizationForm>("localization"),
 		remove: remove("localization", "id"),
 	},
 	localizationAll: {
@@ -53,9 +61,9 @@ export const dataFetchers = Object.freeze({
 	},
 	languages: {
 		getAll: getAll<LanguageList>("languages"),
-		details: getOne<LanguageForm>("languages"),
-		create: create<LanguageForm>("languages"),
-		update: update<LanguageForm>("languages", "code"),
+		details: getOne<DetailsLanguageForm>("languages"),
+		create: create<CreateLanguageForm>("languages"),
+		update: update<EditLanguageForm>("languages", "code"),
 		remove: remove("languages", "code"),
 	},
 	auth: {

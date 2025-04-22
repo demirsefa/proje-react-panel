@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AnyClass } from '../../types/AnyClass';
+import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
 
 const INPUT_KEY = Symbol('input');
 
@@ -16,7 +16,11 @@ export interface InputOptions {
   cancelPasswordValidationOnEdit?: boolean;
   options?: { value: string; label: string }[];
   optionsPreload?: boolean;
-  nestedFields?: InputOptions[];
+  nestedFields?: InputConfiguration[];
+}
+
+export interface InputConfiguration extends InputOptions {
+  name: string;
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {
@@ -31,8 +35,9 @@ export function Input(options?: InputOptions): PropertyDecorator {
   };
 }
 
-export function getInputFields<T extends AnyClass>(entityClass: T): InputOptions[] {
-  //TODO2: ANY IS NOT A GOOD SOLUTION, WE NEED TO FIND A BETTER WAY TO DO THIS
+export function getInputFields<T extends AnyClass>(
+  entityClass: AnyClassConstructor<T>
+): InputConfiguration[] {
   const prototype = (entityClass as any).prototype;
   const inputFields: string[] = Reflect.getMetadata(INPUT_KEY, prototype) || [];
   return inputFields.map(field => {

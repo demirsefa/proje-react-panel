@@ -1,15 +1,15 @@
 import { IsString, MinLength } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
-import { getInputFields } from "proje-react-panel";
+import { Cell, List, Input, getInputFields, Form, Details } from "proje-react-panel";
+import { dataFetchers } from "../api/dataFetchers";
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: LocalizationList) => ({
-		details: { path: "details/" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.localization.remove },
 	}),
+	getData: dataFetchers.localization.getAll,
 })
 export class LocalizationList {
 	@Cell({ name: "id", title: "Key" })
@@ -41,7 +41,7 @@ export class LocalizationList {
 	updatedAt: Date;
 }
 
-export class LocalizationForm {
+class LocalizationForm {
 	@IsString()
 	@MinLength(1)
 	@Input({ label: "Key", type: "input" })
@@ -73,6 +73,10 @@ export class SimpleLocalizationForm {
 	language: string;
 }
 
+@Form({
+	onSubmit: dataFetchers.localizationAll.update,
+	getDetailsData: dataFetchers.localizationAll.details,
+})
 export class LocalizationAllForm {
 	@Input({ type: "hidden" })
 	language: string;
@@ -80,3 +84,14 @@ export class LocalizationAllForm {
 	@Input({ label: "Inputs", type: "nested", nestedFields: getInputFields(SimpleLocalizationForm) })
 	keys: SimpleLocalizationForm[];
 }
+
+@Form({
+	onSubmit: dataFetchers.localization.create,
+})
+export class CreateLocalizationForm extends LocalizationForm {}
+
+@Form({
+	onSubmit: dataFetchers.localization.update,
+	getDetailsData: dataFetchers.localization.details,
+})
+export class EditLocalizationForm extends LocalizationForm {}

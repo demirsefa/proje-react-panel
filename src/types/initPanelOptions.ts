@@ -1,3 +1,1 @@
-export interface InitPanelOptions {
-  screenPaths: Record<string, string>;
-}
+export interface InitPanelOptions {}

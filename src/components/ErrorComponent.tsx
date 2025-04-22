@@ -22,7 +22,7 @@ export function ErrorComponent({ error }: { error: unknown | Response }) {
 	};
 
 	return (
-		<div className="error-container">
+		<div  className="error-container">
 			<div className="error-icon">
 				<i className="fa fa-exclamation-circle" />
 			</div>

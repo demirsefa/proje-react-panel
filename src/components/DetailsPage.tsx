@@ -1,37 +1,55 @@
 import { useParams } from 'react-router';
-import React, { useEffect, useState } from 'react';
-import { Screen } from '../types/Screen';
-import { ErrorComponent } from '../components/ErrorComponent';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ErrorComponent } from './ErrorComponent';
+import { AnyClass } from '../types/AnyClass';
+import { getDetailsPageMeta } from '../decorators/details/getDetailsPageMeta';
+import { LoadingScreen } from './LoadingScreen';
 
-export function ControllerDetails({ screen }: { screen: Screen }) {
-  const { id } = useParams();
+interface DetailsPageProps<T extends AnyClass> {
+  model: new (...args: any[]) => T;
+}
+
+export function DetailsPage<T extends AnyClass>({ model }: DetailsPageProps<T>) {
+  const { class: detailsClass, items } = useMemo(() => getDetailsPageMeta(model), [model]);
+  const params = useParams();
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (screen.controller && id) {
-      /*
-      CrudApi.details({ ...fetchSettings, token }, screen.controller, id)
-        .then(res => {
-          setData(res);
-        })
-        .catch((e: any) => {
-          setError(e);
-          console.error(e);
-        });
-*/
-    }
-  }, [id, screen]);
+    detailsClass
+      .getDetailsData(params as Record<string, string>)
+      .then(data => {
+        setData(data);
+      })
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, [params, detailsClass?.getDetailsData]);
 
   if (error) {
-    return <ErrorComponent error={error} />;
+    return (
+      <div className="error-container">
+        <ErrorComponent error={error} />
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <LoadingScreen />
+      </div>
+    );
   }
 
   return (
-    <p
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data, null, '   ' + '<br/>'),
-      }}
-    />
+    <div className="details-page">
+      {items.map(item => (
+        <div key={item.name} className="details-item">
+          <div className="item-label">{item.name}</div>
+          <div className="item-value">{data[item.name]}</div>
+        </div>
+      ))}
+    </div>
   );
 }

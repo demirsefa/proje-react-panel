@@ -1,41 +1,32 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { InnerForm } from './InnerForm';
-import { AnyClass } from '../../types/AnyClass';
-import { getFormFields } from '../../decorators/form/getFormFields';
-import { InputOptions } from '../../decorators/form/Input';
-
-export type GetDetailsDataFN<T> = (param: Record<string, string>) => Promise<T>;
-export type OnSubmitFN<T> = (data: T) => Promise<T>;
+import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
+import { useParams } from 'react-router';
+import { FormProvider, Resolver, useForm } from 'react-hook-form';
+import { getFormPageMeta } from '../../decorators/form/getFormPageMeta';
 
 export interface FormPageProps<T extends AnyClass> {
-  model: any; //TODO: use T not typeof T
-  getDetailsData?: GetDetailsDataFN<T>;
-  redirect?: string;
-  onSubmit: OnSubmitFN<T>;
-  onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
-  redirectBackOnSuccess?: boolean;
-  type?: 'json' | 'formData';
+  model: AnyClassConstructor<T>;
 }
 
-export function FormPage<T extends AnyClass>({
-  model,
-  getDetailsData,
-  onSubmit,
-  redirect,
-  onSelectPreloader,
-  redirectBackOnSuccess = true,
-  type = 'json',
-  ...rest
-}: FormPageProps<T>) {
-  const formOptions = useMemo(() => getFormFields(model), [model]);
+export function FormPage<T extends AnyClass>({ model }: FormPageProps<T>) {
+  const { class: formClass, inputs, resolver } = useMemo(() => getFormPageMeta(model), [model]);
+  const form = useForm<T>({
+    resolver: resolver as Resolver<T>,
+  });
+
+  const params = useParams();
+  useEffect(() => {
+    if (formClass.getDetailsData) {
+      formClass.getDetailsData(params as Record<string, string>).then(data => {
+        form.reset(data as any);
+      });
+    }
+  }, [params, form.reset, formClass.getDetailsData]);
+
   return (
-    <InnerForm
-      getDetailsData={getDetailsData}
-      onSubmit={onSubmit}
-      formOptions={formOptions}
-      redirectBackOnSuccess={redirectBackOnSuccess}
-      onSelectPreloader={onSelectPreloader}
-      type={type}
-    />
+    <FormProvider {...form}>
+      <InnerForm inputs={inputs} formClass={formClass} />
+    </FormProvider>
   );
 }

@@ -5,14 +5,13 @@ import { ErrorBoundary } from './ErrorBoundary';
 
 type AppProps = {
   children: React.ReactNode;
-  init: () => InitPanelOptions;
 };
 
-export function Panel({ children, init }: AppProps) {
-  useEffect(() => {
+export function Panel({ children }: AppProps) {
+  /*useEffect(() => {
     const options = init();
     initPanel(options);
-  }, [init]);
+  }, [init]);*/
 
   return <ErrorBoundary>{children}</ErrorBoundary>;
 }

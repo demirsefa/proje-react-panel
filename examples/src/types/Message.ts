@@ -1,17 +1,20 @@
 import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
+import { Cell, List, Input, Form, Details, DetailsItem } from "proje-react-panel";
+import { dataFetchers } from "../api/dataFetchers";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: MessageList) => ({
-		details: { path: "details/" + item.id, label: "Details" },
+		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.messages.remove },
 	}),
+	getData: dataFetchers.messages.getAll,
 })
 export class MessageList {
+	@Cell({ name: "id", title: "id" })
 	id: string;
 
 	@Cell({ name: "content", title: "content" })
@@ -19,14 +22,9 @@ export class MessageList {
 
 	@Cell({ name: "isActive", title: "isActive" })
 	isActive: boolean;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }
 
-export class MessageForm {
-	id: string;
+class MessageForm {
 	@IsString()
 	@MinLength(1)
 	@Input({ label: "Content", type: "textarea" })
@@ -34,5 +32,30 @@ export class MessageForm {
 
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
+	isActive: boolean;
+}
+
+@Form({
+	onSubmit: dataFetchers.messages.create,
+})
+export class CreateMessageForm extends MessageForm {}
+
+@Form({
+	onSubmit: dataFetchers.messages.update,
+	getDetailsData: dataFetchers.messages.details,
+})
+export class EditMessageForm extends MessageForm {}
+
+@Details({
+	getDetailsData: dataFetchers.messages.details,
+})
+export class DetailsMessageForm {
+	@DetailsItem()
+	id: string;
+
+	@DetailsItem()
+	content: string;
+
+	@DetailsItem()
 	isActive: boolean;
 }

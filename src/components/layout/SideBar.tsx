@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
-import { ScreenCreatorData } from '../../types/ScreenCreatorData';
-import { useAppStore } from '../../store/store';
 
-type GetMenuFunction<IconType> = (
-  screens: Record<string, ScreenCreatorData>
-) => { name: string; path: string; iconType: IconType }[];
+type GetMenuFunction<IconType> = () => { name: string; path: string; iconType: IconType }[];
 
 type GetIconsFunction<IconType> = (iconType: IconType) => React.ReactNode;
 
@@ -16,12 +12,8 @@ export function SideBar<IconType>({
 }: {
   menu?: GetMenuFunction<IconType>;
   getIcons?: GetIconsFunction<IconType>;
-  onLogout?: () => void;
+  onLogout?: (type: 'redirect' | 'logout') => void;
 }) {
-  const { screens, screenPaths } = useAppStore(s => ({
-    screens: s.screens ?? {},
-    screenPaths: s.screenPaths ?? {},
-  }));
   const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,7 +46,7 @@ export function SideBar<IconType>({
         {isOpen ? '<' : '>'}
       </button>
       <nav className="nav-links">
-        {menu?.(screens).map((item, index) => (
+        {menu?.().map((item, index) => (
           <Link
             key={index}
             to={item.path}
@@ -72,8 +64,7 @@ export function SideBar<IconType>({
             className="logout-button"
             onClick={() => {
               if (onLogout) {
-                onLogout();
-                navigate(screenPaths.login);
+                onLogout('logout');
               }
             }}
             aria-label="Logout"

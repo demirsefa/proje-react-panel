@@ -1,113 +1,85 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { InputOptions } from '../../decorators/form/Input';
+import { FormProvider, useForm, useFormContext, UseFormReturn } from 'react-hook-form';
+import { InputConfiguration } from '../../decorators/form/Input';
 import { FormField } from './FormField';
-import { FormOptions } from '../../decorators/form/FormOptions';
+import { useNavigate } from 'react-router';
+import { FormConfiguration } from '../../decorators/form/Form';
 import { AnyClass } from '../../types/AnyClass';
-import { OnSubmitFN, GetDetailsDataFN } from './FormPage';
-import { useParams, useNavigate } from 'react-router';
 
-interface InnerFormProps<T> {
-  formOptions: FormOptions;
-  onSubmit: OnSubmitFN<T>;
-  getDetailsData?: GetDetailsDataFN<T>;
-  redirectBackOnSuccess?: boolean;
-  onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
-  type?: 'json' | 'formData';
+interface InnerFormProps<T extends AnyClass> {
+  inputs: InputConfiguration[];
+  formClass: FormConfiguration<T>;
 }
 
-export function InnerForm<T>({
-  formOptions,
-  onSubmit,
-  getDetailsData,
-  redirectBackOnSuccess,
-  onSelectPreloader,
-  type,
-}: InnerFormProps<T>) {
-  const params = useParams();
+export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormProps<T>) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   //TODO: any is not a good solution, we need to find a better way to do this
-  const form = useForm<any>({
-    resolver: formOptions.resolver,
-  });
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
-  const inputs = formOptions.inputs;
-  useEffect(() => {
-    if (getDetailsData) {
-      getDetailsData(params as Record<string, string>).then(data => {
-        form.reset({ ...data });
-      });
-    }
-  }, [params, form.reset]);
+  const form = useFormContext<T>();
 
   return (
     <div className="form-wrapper">
-      <FormProvider {...form}>
-        <form
-          ref={formRef}
-          onSubmit={form.handleSubmit(
-            async dataForm => {
-              try {
-                console.log('dataForm', dataForm);
-                const data =
-                  type === 'json'
-                    ? dataForm
-                    : (() => {
-                        const formData = new FormData(formRef.current!);
-                        for (const key in dataForm) {
-                          if (!formData.get(key)) {
-                            formData.append(key, dataForm[key]);
-                          }
+      <form
+        ref={formRef}
+        onSubmit={form.handleSubmit(
+          async (dataForm: T) => {
+            try {
+              const data =
+                formClass.type === 'json'
+                  ? dataForm
+                  : (() => {
+                      const formData = new FormData(formRef.current!);
+                      for (const key in dataForm) {
+                        if (!formData.get(key)) {
+                          formData.append(key, dataForm[key]);
                         }
-                        console.log('formData', formData);
-                        return formData;
-                      })();
-                console.log('data', data);
-                await onSubmit(data);
-                setErrorMessage(null);
-                if (redirectBackOnSuccess) {
-                  navigate(-1);
-                }
-              } catch (error: any) {
-                const message =
-                  error?.response?.data?.message ||
-                  (error instanceof Error ? error.message : 'An error occurred');
-                setErrorMessage(message);
-                console.error(error);
+                      }
+                      return formData;
+                    })();
+              await formClass.onSubmit(data);
+              setErrorMessage(null);
+              if (formClass.redirectBackOnSuccess) {
+                navigate(-1);
               }
-            },
-            (errors, event) => {
-              //TOOD: put error if useer choose global error
-              console.log('error creating creation', errors, event);
+            } catch (error: any) {
+              const message =
+                error?.response?.data?.message ||
+                (error instanceof Error ? error.message : 'An error occurred');
+              setErrorMessage(message);
+              console.error(error);
             }
+          },
+          (errors, event) => {
+            //TOOD: put error if useer choose global error
+            console.log('error creating creation', errors, event);
+          }
+        )}
+      >
+        <div>
+          {errorMessage && (
+            <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
+              {errorMessage}
+            </div>
           )}
-        >
-          <div>
-            {errorMessage && (
-              <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
-                {errorMessage}
-              </div>
-            )}
-            {inputs?.map((input: InputOptions) => (
-              <FormField
-                key={input.name || ''}
-                input={input}
-                register={form.register}
-                onSelectPreloader={onSelectPreloader}
-                error={
-                  input.name
-                    ? { message: (form.formState.errors[input.name as keyof T] as any)?.message }
-                    : undefined
-                }
-              />
-            ))}
-            <button type="submit" className="submit-button">
-              Submit
-            </button>
-          </div>
-        </form>
-      </FormProvider>
+          {inputs?.map((input: InputConfiguration) => (
+            <FormField
+              key={input.name || ''}
+              input={input}
+              register={form.register}
+              onSelectPreloader={formClass.onSelectPreloader}
+              error={
+                input.name
+                  ? { message: (form.formState.errors[input.name as keyof T] as any)?.message }
+                  : undefined
+              }
+            />
+          ))}
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

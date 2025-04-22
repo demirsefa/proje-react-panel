@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { InputOptions } from '../../decorators/form/Input';
-import { Label } from './Label';
+import { InputConfiguration, InputOptions } from '../../decorators/form/Input';
 import { useFormContext, UseFormRegister } from 'react-hook-form';
 import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
+import { Label } from './Label';
 
 interface FormFieldProps {
-  input: InputOptions;
+  input: InputConfiguration;
   register: UseFormRegister<any>;
   error?: { message?: string };
   baseName?: string;
-  onSelectPreloader?: (inputOptions: InputOptions) => Promise<{ label: string; value: string }[]>;
+  onSelectPreloader?: (
+    inputOptions: InputConfiguration
+  ) => Promise<{ label: string; value: string }[]>;
 }
 
 interface NestedFormFieldsProps {
-  input: InputOptions;
+  input: InputConfiguration;
   register: UseFormRegister<any>;
 }
 
@@ -26,7 +28,7 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
     <div>
       {data?.map((value: any, index: number) => (
         <div key={index}>
-          {input.nestedFields?.map((nestedInput: InputOptions) => (
+          {input.nestedFields?.map((nestedInput: InputConfiguration) => (
             <FormField
               key={nestedInput.name?.toString() ?? ''}
               baseName={input.name + '[' + index + ']'}

@@ -1,40 +1,48 @@
 import { IsEmail, IsString, MinLength, IsBoolean, IsOptional } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
+import { Cell, List, Input, Form, Details, DetailsItem } from "proje-react-panel";
+import { dataFetchers } from "../api/dataFetchers";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: UserList) => ({
-		details: { path: "details/" + item.id, label: "Details" },
+		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.users.remove },
 	}),
+	getData: dataFetchers.users.getAll,
 })
 export class UserList {
+	@Cell({ name: "id", title: "id", type: "uuid" })
 	id: string;
 
 	@Cell({ name: "username", title: "Username" })
 	username: string;
 
+	@Cell({ name: "email", title: "Email" })
 	email: string;
 
-	password: string;
-
+	@Cell({ name: "firstName", title: "First Name" })
 	firstName: string;
 
+	@Cell({ name: "lastName", title: "Last Name" })
 	lastName: string;
 
+	@Cell({ name: "isActive", title: "Is Active", type: "boolean" })
 	isActive: boolean;
 
+	@Cell({ name: "createdAt", title: "Created At", type: "date" })
 	createdAt: Date;
 
+	@Cell({ name: "updatedAt", title: "Updated At", type: "date" })
 	updatedAt: Date;
 }
 
-export class UserForm {
+class UserForm {
 	@Input({
 		label: "ID",
+		type: "hidden",
 	})
 	id: string;
 	@IsString()
@@ -64,4 +72,44 @@ export class UserForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
+}
+
+@Form({
+	onSubmit: dataFetchers.users.create,
+})
+export class CreateUserForm extends UserForm {}
+
+@Form({
+	onSubmit: dataFetchers.users.update,
+	getDetailsData: dataFetchers.users.details,
+})
+export class EditUserForm extends UserForm {}
+
+@Details({
+	getDetailsData: dataFetchers.users.details,
+})
+export class DetailsUserForm {
+	@DetailsItem()
+	id: string;
+
+	@DetailsItem()
+	username: string;
+
+	@DetailsItem()
+	email: string;
+
+	@DetailsItem()
+	firstName: string;
+
+	@DetailsItem()
+	lastName: string;
+
+	@DetailsItem()
+	isActive: boolean;
+
+	@DetailsItem()
+	createdAt: Date;
+
+	@DetailsItem()
+	updatedAt: Date;
 }

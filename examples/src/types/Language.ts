@@ -1,29 +1,31 @@
 import { IsString, MinLength, IsBoolean } from "class-validator";
-import { Cell, List, Input } from "proje-react-panel";
-import { HardCodedLanguageOptions } from "./HardCodedLanguageOptions";
+import { Cell, List, Input, Form, Details } from "proje-react-panel";
+import { HardCodedLanguageOptions } from "../constants/HardCodedLanguageOptions";
+import { dataFetchers } from "../api/dataFetchers";
 
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
 	cells: (item: LanguageList) => ({
+		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.code, label: "Edit" },
-		delete: { label: "Delete" },
+		delete: { label: "Delete", onRemoveItem: dataFetchers.languages.remove },
 	}),
+	getData: dataFetchers.languages.getAll,
 })
 export class LanguageList {
+	@Cell({ name: "id", title: "Code" })
+	id: string;
+
 	@Cell({ name: "code", title: "Code" })
 	code: string;
 
-	@Cell({ name: "isDefault", title: "Default Language" })
+	@Cell({ name: "isDefault", title: "Default Language", type: "boolean" })
 	isDefault: boolean;
-
-	createdAt: Date;
-
-	updatedAt: Date;
 }
 
-export class LanguageForm {
+class LanguageForm {
 	id: string;
 
 	@IsString()
@@ -35,3 +37,19 @@ export class LanguageForm {
 	@Input({ label: "Default Language", type: "checkbox" })
 	isDefault: boolean;
 }
+
+@Form({
+	onSubmit: dataFetchers.languages.create,
+})
+export class CreateLanguageForm extends LanguageForm {}
+
+@Form({
+	onSubmit: dataFetchers.languages.update,
+	getDetailsData: dataFetchers.languages.details,
+})
+export class EditLanguageForm extends LanguageForm {}
+
+@Details({
+	getDetailsData: dataFetchers.languages.details,
+})
+export class DetailsLanguageForm extends LanguageForm {}

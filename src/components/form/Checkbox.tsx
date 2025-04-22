@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { InputOptions } from '../../decorators/form/Input';
+import { InputConfiguration } from '../../decorators/form/Input';
 import { useFormContext } from 'react-hook-form';
 import { Label } from './Label';
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  input: InputOptions;
+  input: InputConfiguration;
 }
 
 //TODO2:
 export function Checkbox({ input, ...props }: CheckboxProps) {
-  const { label } = input;
-  //TODO: exclaimation remove this
-  const name = input.name!;
+  const { label, name } = input;
   const form = useFormContext();
   const { register } = form;
 
