@@ -40,6 +40,7 @@ class AssetForm {
 
 @Form({
 	onSubmit: dataFetchers.assets.create,
+	type: "formData",
 })
 export class CreateAssetForm extends AssetForm {}
 

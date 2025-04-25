@@ -15,7 +15,15 @@ export function Checkbox({ input, ...props }: CheckboxProps) {
 
   return (
     <Label className="checkbox-label" htmlFor={name} label={label} fieldName={name}>
-      <input type="checkbox" id={name} className="apple-switch" {...props} {...register(name)} />
+      <input
+        type="checkbox"
+        id={name}
+        className="apple-switch"
+        {...props}
+        {...register(name, {
+          setValueAs: (value: string) => value === 'on',
+        })}
+      />
     </Label>
   );
 }

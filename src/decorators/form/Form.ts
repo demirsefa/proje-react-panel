@@ -29,12 +29,16 @@ export function Form<T extends AnyClass>(options?: FormOptions<T>): ClassDecorat
 export function getFormConfiguration<T extends AnyClass, K extends AnyClassConstructor<T>>(
   entityClass: K
 ): FormConfiguration<T> {
-  const formConfiguration = Reflect.getMetadata(DETAILS_METADATA_KEY, entityClass as Object);
-  if (!formConfiguration) {
+  const formOptions: FormOptions<T> = Reflect.getMetadata(
+    DETAILS_METADATA_KEY,
+    entityClass as Object
+  );
+  if (!formOptions) {
     throw new Error('Form decerator should be used on class');
   }
   return {
-    ...formConfiguration,
-    type: formConfiguration.type ?? 'json',
+    ...formOptions,
+    type: formOptions.type ?? 'json',
+    redirectBackOnSuccess: formOptions.redirectBackOnSuccess ?? true,
   };
 }
