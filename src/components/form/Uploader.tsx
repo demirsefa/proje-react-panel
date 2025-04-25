@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, Controller, useFormContext } from 'react-hook-form';
-import { InputOptions } from '../../decorators/form/Input';
+import { useFormContext } from 'react-hook-form';
+import { InputConfiguration } from '../../decorators/form/Input';
 
 interface UploaderProps {
-  input: InputOptions;
+  input: InputConfiguration;
   maxLength?: number;
 }
 

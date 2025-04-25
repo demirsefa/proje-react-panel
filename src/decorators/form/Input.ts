@@ -7,23 +7,40 @@ const isFieldSensitive = (fieldName: string): boolean => {
   return ['password'].some(term => fieldName.toLowerCase().includes(term));
 };
 
+export type InputTypes = 'input' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden' | 'nested';
+export type ExtendedInputTypes = InputTypes | 'select';
+
 export interface InputOptions {
-  type?: 'input' | 'select' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden' | 'nested';
+  type?: InputTypes;
   inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
   name?: string;
   label?: string;
   placeholder?: string;
-  cancelPasswordValidationOnEdit?: boolean;
-  options?: { value: string; label: string }[];
-  optionsPreload?: boolean;
   nestedFields?: InputConfiguration[];
 }
 
-export interface InputConfiguration extends InputOptions {
+export interface ExtendedInputOptions extends Omit<InputOptions, 'type'> {
+  type: ExtendedInputTypes;
+}
+
+export interface InputConfiguration extends Omit<InputOptions, 'type'> {
   name: string;
+  type: ExtendedInputTypes;
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {
+  return (target, propertyKey) => {
+    const existingInputs: string[] = Reflect.getMetadata(INPUT_KEY, target) || [];
+    Reflect.defineMetadata(INPUT_KEY, [...existingInputs, propertyKey.toString()], target);
+
+    if (options) {
+      const keyString = `${INPUT_KEY.toString()}:${propertyKey.toString()}:options`;
+      Reflect.defineMetadata(keyString, options, target);
+    }
+  };
+}
+
+export function ExtendedInput(options?: ExtendedInputOptions): PropertyDecorator {
   return (target, propertyKey) => {
     const existingInputs: string[] = Reflect.getMetadata(INPUT_KEY, target) || [];
     Reflect.defineMetadata(INPUT_KEY, [...existingInputs, propertyKey.toString()], target);
@@ -53,8 +70,6 @@ export function getInputFields<T extends AnyClass>(
       inputType: inputType,
       type: fields?.type ?? 'input',
       selectOptions: fields?.selectOptions ?? [],
-      cancelPasswordValidationOnEdit:
-        fields?.cancelPasswordValidationOnEdit ?? inputType === 'password',
     };
   });
 }

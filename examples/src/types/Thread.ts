@@ -22,16 +22,16 @@ export class ThreadList {
 	@Cell({ name: "content", title: "Content" })
 	content: string;
 
-	@Cell({ name: "isApprovedByAdmin", title: "isApprovedByAdmin" })
+	@Cell({ name: "isApprovedByAdmin", title: "Admin", type: "boolean" })
 	isApprovedByAdmin: boolean;
 
 	@IsBoolean()
 	isActive: boolean;
 
-	@Cell({ name: "createdAt", title: "Created At" })
+	@Cell({ name: "createdAt", title: "Created At", type: "date" })
 	createdAt: Date;
 
-	@Cell({ name: "updatedAt", title: "Updated At" })
+	@Cell({ name: "updatedAt", title: "Updated At", type: "date" })
 	updatedAt: Date;
 }
 
@@ -73,7 +73,7 @@ export class DetailsThreadForm {
 	@DetailsItem()
 	id: string;
 
-	@DetailsItem()	
+	@DetailsItem()
 	title: string;
 
 	@DetailsItem()

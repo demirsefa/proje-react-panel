@@ -9,9 +9,6 @@ export type OnSubmitFN<T> = (data: T | FormData) => Promise<T | FormData>;
 interface FormOptions<T extends AnyClass> {
   onSubmit: OnSubmitFN<T>;
   getDetailsData?: GetDetailsDataFN<T>;
-  onSelectPreloader?: (
-    inputOptions: InputConfiguration
-  ) => Promise<{ label: string; value: string }[]>;
   redirectBackOnSuccess?: boolean;
   type?: 'json' | 'formData';
 }

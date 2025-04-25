@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, ValidateIf } from "class-validator";
-import { Cell, List, Input, DetailsItem, Details, Form } from "proje-react-panel";
+import { Cell, List, Input, DetailsItem, Details, Form, SelectInput } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 @List({
 	headers: {
@@ -53,25 +53,40 @@ class AdminForm {
 	password: string;
 
 	@IsEnum(["super-admin", "admin"])
-	@Input({
+	@SelectInput({
 		label: "Role",
-		type: "select",
-		options: [
+		defaultOptions: [
 			{ value: "super-admin", label: "Super Admin" },
 			{ value: "admin", label: "Admin" },
 		],
 	})
 	role: string;
+	@SelectInput({
+		label: "Asset",
+		defaultOptions: [],
+		onSelectPreloader: () => {
+			return dataFetchers.assets.getAll({}).then((res) => {
+				return res.data.map((asset) => {
+					return {
+						value: asset.id,
+						label: asset.filename,
+					};
+				});
+			});
+		},
+	})
+	assetId: number;
 }
 
 @Form({
 	onSubmit: dataFetchers.admins.create,
+	type: "formData",
 })
 export class CreateAdminForm extends AdminForm {}
 
 @Form({
 	onSubmit: dataFetchers.admins.update,
-	getDetailsData: dataFetchers.admins.details,
+	getDetailsData: dataFetchers.admins.updateDetails,
 })
 export class EditAdminForm extends AdminForm {}
 

@@ -67,7 +67,6 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
               key={input.name || ''}
               input={input}
               register={form.register}
-              onSelectPreloader={formClass.onSelectPreloader}
               error={
                 input.name
                   ? { message: (form.formState.errors[input.name as keyof T] as any)?.message }

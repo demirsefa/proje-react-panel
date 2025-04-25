@@ -19,6 +19,7 @@ export const dataFetchers = Object.freeze({
 		details: getOne<AdminDetails>("admins"),
 		create: create<CreateAdminForm>("admins"),
 		update: update<EditAdminForm>("admins"),
+		updateDetails: getOne<EditAdminForm>("admins"),
 		remove: remove("admins", "id"),
 	},
 	assets: {

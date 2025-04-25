@@ -4,6 +4,7 @@ import { useFormContext, UseFormRegister } from 'react-hook-form';
 import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
 import { Label } from './Label';
+import { Select } from './Select';
 
 interface FormFieldProps {
   input: InputConfiguration;
@@ -49,29 +50,12 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
 
 export function FormField({ input, register, error, baseName, onSelectPreloader }: FormFieldProps) {
   const fieldName = (baseName ? baseName.toString() + '.' : '') + input.name || '';
-  const [options, setOptions] = useState<{ label: string; value: string }[]>(input.options || []);
-  useEffect(() => {
-    if (input.optionsPreload && onSelectPreloader) {
-      onSelectPreloader(input).then(option => {
-        setOptions(option);
-      });
-    }
-  }, [input]);
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
         return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
       case 'select':
-        return (
-          <select {...register(fieldName)}>
-            <option value="">Select {fieldName}</option>
-            {options?.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        );
+        return <Select input={input} fieldName={fieldName} />;
       case 'input': {
         return (
           <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
