@@ -1,17 +1,18 @@
-import 'reflect-metadata';
-import { Cell, CellConfiguration, CellOptions, ExtendedCell } from '../Cell';
+import { CellConfiguration, CellOptions } from '../Cell';
+import { ExtendedCell, ExtendedCellOptions } from '../ExtendedCell';
 
-export interface ImageCellOptions extends CellOptions {
+export interface ImageCellOptions extends Omit<CellOptions, 'type'> {
   baseUrl: string;
 }
 
 export interface ImageCellConfiguration extends CellConfiguration {
   type: 'image';
+  baseUrl: string;
 }
 
 export function ImageCell(options?: ImageCellOptions): PropertyDecorator {
-  return ExtendedCell({
+  return ExtendedCell(options, (_, options) => ({
     ...options,
     type: 'image',
-  });
+  }));
 }

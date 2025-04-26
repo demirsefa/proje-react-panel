@@ -5,9 +5,9 @@ import SearchIcon from '../../assets/icons/svg/search.svg';
 import PencilIcon from '../../assets/icons/svg/pencil.svg';
 import TrashIcon from '../../assets/icons/svg/trash.svg';
 import { ListPageMeta } from '../../decorators/list/getListPageMeta';
-import { ImageCellOptions } from '../../decorators/list/cells/ImageCell';
 import { AnyClass } from '../../types/AnyClass';
 import { CellField } from './CellField';
+import { CellConfiguration } from '../../decorators/list/Cell';
 
 interface DatagridProps<T extends AnyClass> {
   data: T[];
@@ -52,13 +52,12 @@ export function Datagrid<T extends AnyClass>({
                 : null;
               return (
                 <tr key={index}>
-                  {cells.map(cellOptions => {
-                    // @ts-ignore
-                    const value = item[cellOptions.name];
+                  {cells.map((configuration: CellConfiguration) => {
+                    const value = item[configuration.name];
                     return (
                       <CellField
-                        key={cellOptions.name}
-                        cellOptions={cellOptions}
+                        key={configuration.name}
+                        configuration={configuration}
                         item={item}
                         value={value}
                       />
@@ -84,9 +83,17 @@ export function Datagrid<T extends AnyClass>({
                     <td>
                       <a
                         onClick={() => {
-                          listCells.delete?.onRemoveItem?.(item).then(() => {
-                            onRemoveItem?.(item);
-                          });
+                          listCells.delete
+                            ?.onRemoveItem?.(item)
+                            .then(() => {
+                              onRemoveItem?.(item);
+                            })
+                            .catch((e: unknown) => {
+                              console.error(e);
+                              const message =
+                                e instanceof Error ? e.message : 'Error deleting item';
+                              alert(message);
+                            });
                         }}
                         className="util-cell-link util-cell-link-remove"
                       >

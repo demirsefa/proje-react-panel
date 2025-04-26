@@ -1,5 +1,6 @@
 import { GetDataForList, PaginatedResponse, OnSubmitFN, GetDetailsDataFN, GetDataParams } from "proje-react-panel";
 import { getAxiosInstance } from "./apiConfig";
+import { AxiosError } from "axios";
 
 export function getAll<T>(endpoint: string): GetDataForList<T> {
 	return async (params: GetDataParams): Promise<PaginatedResponse<T>> => {
@@ -71,17 +72,29 @@ export function updateFormData<T>(endpoint: string, key: string = "id"): OnSubmi
 }
 
 export function updateSimple<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T): Promise<T> => {
+	return async (data: T | FormData): Promise<T | FormData> => {
 		const axiosInstance = getAxiosInstance();
 		const response = await axiosInstance.put<T>(`/${endpoint}`, data);
 		return response.data;
 	};
 }
 
-export function remove<T>(endpoint: string, key: string = "id"): (data: T) => Promise<void> {
+export function remove<T>(
+	endpoint: string,
+	key: string = 'id',
+  ): (data: T) => Promise<void> {
 	return async (data: T): Promise<void> => {
-		const axiosInstance = getAxiosInstance();
-		const id = (data as any)[key];
-		await axiosInstance.delete<T>(`/${endpoint}/${id}`);
+	  const axiosInstance = getAxiosInstance();
+	  const id = (data as any)[key];
+	  await axiosInstance
+		.delete<T>(`/${endpoint}/${id}`)
+		.then((res) => res.data)
+		.catch((err: AxiosError) => {
+		  const messageError = err.response?.data as { message: string };
+		  if (messageError?.message) {
+			throw new Error(messageError.message);
+		  }
+		  throw err;
+		});
 	};
 }

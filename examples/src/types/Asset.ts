@@ -1,4 +1,4 @@
-import { Cell, List, Input, ImageCell, Form, Details, DetailsItem } from "proje-react-panel";
+import { Cell, List, Input, ImageCell, Form, Details, DetailsItem, DownloadCell } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 
 @List({
@@ -26,8 +26,16 @@ export class AssetList {
 	@ImageCell({
 		title: "URL",
 		baseUrl: "http://localhost:8080",
+		name: "url",
 	})
-	url: string;
+	urlForImage: string;
+
+	@DownloadCell({
+		title: "URL",
+		baseUrl: "http://localhost:8080",
+		name: "url",
+	})
+	urlForDownload: string;
 }
 
 class AssetForm {
