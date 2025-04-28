@@ -1,6 +1,6 @@
 {
   "name": "proje-react-panel",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "type": "module",
   "description": "",
   "author": "SEFA DEMİR",
@@ -43,6 +43,7 @@
     "react-hook-form": "^7.54.2",
     "react-router": "^7.3.0",
     "react-select": "^5.10.1",
+    "react-toastify": "^11.0.5",
     "reflect-metadata": "^0.2.2",
     "rollup": "^4.35.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
