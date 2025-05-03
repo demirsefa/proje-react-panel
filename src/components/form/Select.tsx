@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { InputConfiguration } from '../../decorators/form/Input';
-import { useFormContext, Controller, useWatch } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { SelectInputConfiguration } from '../../decorators/form/inputs/SelectInput';
-import ReactSelect, { SingleValue } from 'react-select';
+import ReactSelect from 'react-select';
 import { darkSelectStyles } from './SelectStyles';
 
 interface SelectProps {
@@ -27,7 +27,7 @@ export function Select({ input, fieldName }: SelectProps) {
         setKey(key + 1);
       });
     }
-  }, [input]);
+  }, [inputSelect, inputSelect.onSelectPreloader, key]);
 
   return (
     <Controller

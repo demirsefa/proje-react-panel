@@ -8,10 +8,10 @@ interface DetailsOptions<T extends AnyClass> {
   getDetailsData: GetDetailsDataFN<T>;
 }
 
-export interface DetailsConfiguration<T extends AnyClass> extends DetailsOptions<T> {}
+export type DetailsConfiguration<T extends AnyClass> = DetailsOptions<T>;
 
 export function Details<T extends AnyClass>(options?: DetailsOptions<T>): ClassDecorator {
-  return (target: Function) => {
+  return (target: object) => {
     if (options) {
       Reflect.defineMetadata(DETAILS_METADATA_KEY, options, target);
     }

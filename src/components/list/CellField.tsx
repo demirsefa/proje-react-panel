@@ -1,7 +1,6 @@
 import React from 'react';
-import { ImageCellOptions } from '../../decorators/list/cells/ImageCell';
 import { AnyClass } from '../../types/AnyClass';
-import { CellConfiguration, ExtendedCellTypes } from '../../decorators/list/Cell';
+import { CellConfiguration } from '../../decorators/list/Cell';
 import { BooleanCell } from './cells/BooleanCell';
 import { DateCell } from './cells/DateCell';
 import { ImageCell } from './cells/ImageCell';
@@ -11,13 +10,11 @@ import { DownloadCell } from './cells/DownloadCell';
 
 interface CellFieldProps<T extends AnyClass> {
   configuration: CellConfiguration;
-  item: T;
-  value: any;
+  value: T[keyof T];
 }
 
 export function CellField<T extends AnyClass>({
   configuration,
-  item,
   value,
 }: CellFieldProps<T>): React.ReactElement {
   let render;

@@ -1,9 +1,10 @@
 export type DecoratorMap<T, K> = (
-  { target, propertyKey }: { target: Object; propertyKey: string | symbol },
+  prop: { target: object; propertyKey: string | symbol },
   options: T
 ) => K;
+
 export function createDecorator<T extends { name?: string }, K>(
-  key: Symbol,
+  key: symbol,
   options?: T,
   map?: DecoratorMap<T, K>
 ): PropertyDecorator {

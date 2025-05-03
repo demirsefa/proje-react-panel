@@ -1,25 +1,28 @@
 import 'reflect-metadata';
 import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
 import { GetDetailsDataFN } from '../details/Details';
-import { InputConfiguration } from './Input';
 
 const DETAILS_METADATA_KEY = 'DetailsMetaData';
-export type OnSubmitFN<T> = (data: T | FormData) => Promise<T | FormData>;
+export type OnSubmitFN<T> = (data: T | FormData) => Promise<T>;
 
 interface FormOptions<T extends AnyClass> {
   onSubmit: OnSubmitFN<T>;
   getDetailsData?: GetDetailsDataFN<T>;
+  /** @deprecated */
   redirectBackOnSuccess?: boolean;
   type?: 'json' | 'formData';
+  redirectSuccessUrl?: string;
 }
 
 export interface FormConfiguration<T extends AnyClass> extends FormOptions<T> {
+  /** @deprecated */
   redirectBackOnSuccess: boolean;
   type: 'json' | 'formData';
+  redirectSuccessUrl?: string;
 }
 
 export function Form<T extends AnyClass>(options?: FormOptions<T>): ClassDecorator {
-  return (target: Function) => {
+  return (target: object) => {
     if (options) {
       Reflect.defineMetadata(DETAILS_METADATA_KEY, options, target);
     }
@@ -31,7 +34,7 @@ export function getFormConfiguration<T extends AnyClass, K extends AnyClassConst
 ): FormConfiguration<T> {
   const formOptions: FormOptions<T> = Reflect.getMetadata(
     DETAILS_METADATA_KEY,
-    entityClass as Object
+    entityClass as object
   );
   if (!formOptions) {
     throw new Error('Form decerator should be used on class');

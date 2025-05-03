@@ -6,6 +6,8 @@ const LIST_METADATA_KEY = 'ListMetaData';
 export interface GetDataParams {
   page?: number;
   limit?: number;
+  //TODO: fix this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filters?: Record<string, any>;
 }
 
@@ -35,10 +37,10 @@ export interface ListOptions<T> {
   cells?: ((item: T) => ListCellOptions<T>) | ListCellOptions<T>;
 }
 
-export interface ListConfiguration<T> extends ListOptions<T> {}
+export type ListConfiguration<T> = ListOptions<T>;
 
 export function List<T>(options?: ListOptions<T> | ((item: T) => ListOptions<T>)): ClassDecorator {
-  return (target: Function) => {
+  return (target: object) => {
     if (options) {
       Reflect.defineMetadata(LIST_METADATA_KEY, options, target);
     }

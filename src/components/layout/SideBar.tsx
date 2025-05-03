@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 type GetMenuFunction<IconType> = () => { name: string; path: string; iconType: IconType }[];
 
@@ -16,7 +16,6 @@ export function SideBar<IconType>({
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Helper function to determine if a link is active
   const isActiveLink = (path: string) => {

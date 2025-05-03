@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InputConfiguration } from '../../decorators/form/Input';
 import { useFormContext } from 'react-hook-form';
 import { Label } from './Label';

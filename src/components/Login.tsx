@@ -9,12 +9,14 @@ interface LoginFormData {
   password: string;
 }
 
-export type OnLogin = {
+export interface OnLogin {
   login: (username: string, password: string) => Promise<LoginResponse>;
-};
+}
 
 interface LoginResponse {
-  user: any; // Replace with proper user type if available
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  user: any;
   token: string;
 }
 
@@ -33,7 +35,7 @@ export function Login({ onLogin }: LoginProps) {
     onLogin.login(data.username, data.password).then((dataInner: LoginResponse) => {
       const { user, token } = dataInner;
       localStorage.setItem('token', token);
-      useAppStore.setState({ user });
+      useAppStore.getState().login(user);
       navigate('/');
     });
   };

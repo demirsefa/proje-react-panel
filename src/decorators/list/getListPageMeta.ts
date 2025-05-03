@@ -1,5 +1,4 @@
 import { AnyClass } from '../../types/AnyClass';
-import { getDetailsItemFields } from '../details/DetailsItem';
 import { CellConfiguration, getCellFields } from './Cell';
 import { getListConfiguration, ListConfiguration } from './List';
 

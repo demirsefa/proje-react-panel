@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { initPanel } from '../initPanel';
-import { InitPanelOptions } from '../types/initPanelOptions';
+import React from 'react';
 import { ErrorBoundary } from './ErrorBoundary';
+import { ToastContainer } from 'react-toastify';
 
-type AppProps = {
+interface AppProps {
   children: React.ReactNode;
-};
+}
 
 export function Panel({ children }: AppProps) {
   /*useEffect(() => {
@@ -13,5 +12,10 @@ export function Panel({ children }: AppProps) {
     initPanel(options);
   }, [init]);*/
 
-  return <ErrorBoundary>{children}</ErrorBoundary>;
+  return (
+    <ErrorBoundary>
+      {children}
+      <ToastContainer />
+    </ErrorBoundary>
+  );
 }

@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { InputConfiguration, InputOptions } from '../../decorators/form/Input';
+import React from 'react';
+import { InputConfiguration } from '../../decorators/form/Input';
 import { useFormContext, UseFormRegister } from 'react-hook-form';
 import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
 import { Label } from './Label';
 import { Select } from './Select';
+import { AnyClass } from '../../types/AnyClass';
 
 interface FormFieldProps {
   input: InputConfiguration;
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
   error?: { message?: string };
   baseName?: string;
-  onSelectPreloader?: (
-    inputOptions: InputConfiguration
-  ) => Promise<{ label: string; value: string }[]>;
 }
 
 interface NestedFormFieldsProps {
   input: InputConfiguration;
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
 }
 
@@ -27,6 +29,8 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
   const data = form.getValues(input.name!);
   return (
     <div>
+      {/* TODO: any is not a good solution, we need to find a better way to do this */}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       {data?.map((value: any, index: number) => (
         <div key={index}>
           {input.nestedFields?.map((nestedInput: InputConfiguration) => (
@@ -37,7 +41,7 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
               register={register}
               error={
                 input.name
-                  ? { message: (form.formState.errors[input.name] as any)?.message }
+                  ? { message: (form.formState.errors[input.name] as { message: string })?.message }
                   : undefined
               }
             />
@@ -48,8 +52,13 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
   );
 }
 
-export function FormField({ input, register, error, baseName, onSelectPreloader }: FormFieldProps) {
-  const fieldName = (baseName ? baseName.toString() + '.' : '') + input.name || '';
+export function FormField<T extends AnyClass>({
+  input,
+  register,
+  error,
+  baseName,
+}: FormFieldProps<T>) {
+  const fieldName: string = (baseName ? baseName.toString() + '.' : '') + input.name || '';
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
@@ -70,7 +79,7 @@ export function FormField({ input, register, error, baseName, onSelectPreloader 
       case 'nested':
         return <NestedFormFields input={input} register={register} />;
       default:
-        null;
+        return null;
     }
   };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { SideBar } from './SideBar';
 import { useAppStore } from '../../store/store';
-import { useNavigate } from 'react-router';
 
 export function Layout<IconType>({
   children,
@@ -17,18 +16,13 @@ export function Layout<IconType>({
   const { user } = useAppStore(s => ({
     user: s.user,
   }));
-  const navigate = useNavigate();
   if (!user) {
     logout?.('redirect');
   }
 
   return (
     <div className="layout">
-      <SideBar
-        onLogout={logout}
-        menu={menu}
-        getIcons={getIcons}
-      />
+      <SideBar onLogout={logout} menu={menu} getIcons={getIcons} />
       <main className="content">{children}</main>
     </div>
   );

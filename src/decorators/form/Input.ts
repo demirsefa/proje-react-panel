@@ -55,6 +55,8 @@ export function ExtendedInput(options?: ExtendedInputOptions): PropertyDecorator
 export function getInputFields<T extends AnyClass>(
   entityClass: AnyClassConstructor<T>
 ): InputConfiguration[] {
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const prototype = (entityClass as any).prototype;
   const inputFields: string[] = Reflect.getMetadata(INPUT_KEY, prototype) || [];
   return inputFields.map(field => {

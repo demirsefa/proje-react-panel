@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, useState } from 'react';
+import React, { useMemo, useCallback, useEffect, useState, useId } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { Datagrid } from './Datagrid';
 import { ErrorComponent } from '../ErrorComponent';
@@ -16,10 +16,11 @@ export function ListPage<T extends AnyClass>({
   model: AnyClassConstructor<T>;
   customHeader?: React.ReactNode;
 }) {
+  const id = useId();
   const listPageMeta = useMemo(() => getListPageMeta(model), [model]);
 
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState<unknown>(null);
 
   const [pagination, setPagination] = useState({ total: 0, page: 0, limit: 0 });
@@ -36,7 +37,9 @@ export function ListPage<T extends AnyClass>({
           page,
           filters: filters ?? activeFilters ?? {},
         });
-        setData(result.data);
+        //TODO: any is not a good solution, we need to find a better way to do this
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setData(result.data as any);
         setPagination({
           total: result.total,
           page: result.page,
@@ -49,7 +52,7 @@ export function ListPage<T extends AnyClass>({
         setLoading(false);
       }
     },
-    [activeFilters, listPageMeta.class.getData]
+    [activeFilters, listPageMeta.class]
   );
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export function ListPage<T extends AnyClass>({
       filtersFromUrl[key] = value;
     });
     setActiveFilters(filtersFromUrl);
-  }, [location.search]);
+  }, []);
 
   useEffect(() => {
     if (activeFilters) {
@@ -67,7 +70,7 @@ export function ListPage<T extends AnyClass>({
     }
   }, [fetchData, params.page, activeFilters, listPageMeta.class.getData]);
 
-  const handleFilterApply = (filters: Record<string, any>) => {
+  const handleFilterApply = (filters: Record<string, string>) => {
     setActiveFilters(filters);
 
     // Convert filters to URLSearchParams
@@ -83,8 +86,8 @@ export function ListPage<T extends AnyClass>({
     fetchData(1, filters); // Reset to first page when filters change
   };
 
-  if (loading) return <LoadingScreen />;
-  if (error) return <ErrorComponent error={error} />;
+  if (loading) return <LoadingScreen id={id} />;
+  if (error) return <ErrorComponent id={id} error={error} />;
 
   return (
     <div className="list">

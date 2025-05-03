@@ -1,12 +1,4 @@
-import {
-  CELL_KEY,
-  CellConfiguration,
-  CellOptions,
-  CellTypes,
-  Cell,
-  ExtendedCellTypes,
-  cellMap,
-} from './Cell';
+import { CELL_KEY, CellConfiguration, CellOptions, ExtendedCellTypes, cellMap } from './Cell';
 import { createDecorator, DecoratorMap } from '../../utils/decerators';
 
 export interface ExtendedCellOptions extends Omit<CellOptions, 'type'> {

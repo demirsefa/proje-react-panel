@@ -134,6 +134,8 @@ export function FilterPopup<T extends AnyClass>({
   listPageMeta,
   activeFilters,
 }: FilterPopupProps<T>): React.ReactElement | null {
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [filters, setFilters] = React.useState<Record<string, any>>(activeFilters ?? {});
   const popupRef = useRef<HTMLDivElement>(null);
   const fields = useMemo(
@@ -158,8 +160,8 @@ export function FilterPopup<T extends AnyClass>({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const handleFilterChange = (fieldName: string, value: any) => {
+  
+  const handleFilterChange = (fieldName: string, value: string) => {
     setFilters(prev => ({
       ...prev,
       [fieldName]: value,

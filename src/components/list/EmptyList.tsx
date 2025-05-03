@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const EmptyList: React.FC = () => {
+export function EmptyList() {
   return (
     <div className="empty-list">
       <div className="empty-list-content">
@@ -23,4 +23,4 @@ export const EmptyList: React.FC = () => {
       </div>
     </div>
   );
-};
+}

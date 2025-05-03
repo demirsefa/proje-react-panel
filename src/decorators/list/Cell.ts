@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { AnyClass } from '../../types/AnyClass';
 import { createDecorator, DecoratorMap } from '../../utils/decerators';
 
-export const CELL_KEY: Symbol = Symbol('cell');
+export const CELL_KEY = Symbol('cell');
 
 interface Filter {
   type: 'string' | 'number' | 'date' | 'static-select';
@@ -43,6 +43,7 @@ export function Cell(options?: CellOptions): PropertyDecorator {
 }
 
 export function getCellFields<T extends AnyClass>(entityClass: T): CellConfiguration[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const prototype = (entityClass as any).prototype;
   const inputFields: string[] = Reflect.getMetadata(CELL_KEY, prototype) || [];
 

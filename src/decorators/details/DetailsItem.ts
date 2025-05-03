@@ -26,6 +26,8 @@ export function DetailsItem(options?: DetailsItemOptions): PropertyDecorator {
 export function getDetailsItemFields<T extends AnyClass>(
   entityClass: T
 ): DetailsItemConfiguration[] {
+  //TODO: any is not a good solution, we need to find a better way to do this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const prototype = (entityClass as any).prototype;
   const inputFields: string[] = Reflect.getMetadata(DETAILS_ITEM_KEY, prototype) || [];
 

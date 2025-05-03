@@ -19,10 +19,10 @@ export function FormPage<T extends AnyClass>({ model }: FormPageProps<T>) {
   useEffect(() => {
     if (formClass.getDetailsData) {
       formClass.getDetailsData(params as Record<string, string>).then(data => {
-        form.reset(data as any);
+        form.reset(data as T);
       });
     }
-  }, [params, form.reset, formClass.getDetailsData]);
+  }, [params, form.reset, formClass.getDetailsData, formClass, form]);
 
   return (
     <FormProvider {...form}>

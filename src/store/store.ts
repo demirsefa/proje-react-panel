@@ -8,12 +8,14 @@ interface User {
 
 interface AppState {
   user: User | null;
+  login: (user: User) => void;
 }
 
 export const useAppStore = createWithEqualityFn<AppState>()(
   persist(
-    _ => ({
+    set => ({
       user: null,
+      login: (user: User) => set({ user }),
     }),
     {
       name: 'app-store-1',

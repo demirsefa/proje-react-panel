@@ -1,5 +1,5 @@
 import { CellConfiguration, CellOptions } from '../Cell';
-import { ExtendedCell, ExtendedCellOptions } from '../ExtendedCell';
+import { ExtendedCell } from '../ExtendedCell';
 
 export interface ImageCellOptions extends Omit<CellOptions, 'type'> {
   baseUrl: string;
