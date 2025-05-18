@@ -62,12 +62,14 @@ class ThreadForm {
 
 @Form({
 	onSubmit: dataFetchers.threads.create,
+	redirectSuccessUrl: "/threads",
 })
 export class CreateThreadForm extends ThreadForm {}
 
 @Form({
 	onSubmit: dataFetchers.threads.update,
 	getDetailsData: dataFetchers.threads.updateDetails,
+	redirectSuccessUrl: "/threads",
 })
 export class EditThreadForm extends ThreadForm {}
 

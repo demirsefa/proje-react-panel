@@ -68,7 +68,7 @@ export class SimpleLocalizationForm {
 	@MinLength(1)
 	@Input({ label: "Text", type: "textarea", includeInJSON: true, includeInCSV: true })
 	text: string;
-4
+
 	@IsString()
 	@MinLength(2)
 	@Input({
@@ -88,6 +88,7 @@ export class SimpleLocalizationForm {
 @Form({
 	onSubmit: dataFetchers.localizationAll.update,
 	getDetailsData: dataFetchers.localizationAll.details,
+	redirectSuccessUrl: "/localization",
 })
 export class LocalizationAllForm {
 	@Input({ type: "hidden" })
@@ -110,11 +111,13 @@ export class LocalizationAllForm {
 
 @Form({
 	onSubmit: dataFetchers.localization.create,
+	redirectSuccessUrl: "/localization",
 })
 export class CreateLocalizationForm extends LocalizationForm {}
 
 @Form({
 	onSubmit: dataFetchers.localization.update,
 	getDetailsData: dataFetchers.localization.details,
+	redirectSuccessUrl: "/localization",
 })
 export class EditLocalizationForm extends LocalizationForm {}

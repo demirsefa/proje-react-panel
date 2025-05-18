@@ -54,6 +54,7 @@ class AssetForm {
 @Form({
 	onSubmit: dataFetchers.assets.create,
 	type: "formData",
+	redirectSuccessUrl: "/assets",
 })
 export class CreateAssetForm extends AssetForm {}
 

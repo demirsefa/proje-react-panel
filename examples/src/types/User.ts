@@ -40,11 +40,6 @@ export class UserList {
 }
 
 class UserForm {
-	@Input({
-		label: "ID",
-		type: "hidden",
-	})
-	id: string;
 	@IsString()
 	@MinLength(3)
 	@Input({ label: "Username" })
@@ -81,14 +76,22 @@ class UserForm {
 
 @Form({
 	onSubmit: dataFetchers.users.create,
+	redirectSuccessUrl: "/users",
 })
 export class CreateUserForm extends UserForm {}
 
 @Form({
 	onSubmit: dataFetchers.users.update,
 	getDetailsData: dataFetchers.users.updateDetails,
+	redirectSuccessUrl: "/users",
 })
-export class EditUserForm extends UserForm {}
+export class EditUserForm extends UserForm {
+	@Input({
+		label: "ID",
+		type: "hidden",
+	})
+	id: string;
+}
 
 @Details({
 	getDetailsData: dataFetchers.users.details,

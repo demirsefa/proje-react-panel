@@ -86,12 +86,14 @@ class AdminForm {
 @Form({
 	onSubmit: dataFetchers.admins.create,
 	type: "formData",
+	redirectSuccessUrl: "/admins",
 })
 export class CreateAdminForm extends AdminForm {}
 
 @Form({
 	onSubmit: dataFetchers.admins.update,
 	getDetailsData: dataFetchers.admins.updateDetails,
+	redirectSuccessUrl: "/admins",
 })
 export class EditAdminForm extends AdminForm {}
 

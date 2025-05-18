@@ -42,12 +42,14 @@ class MessageForm {
 
 @Form({
 	onSubmit: dataFetchers.messages.create,
+	redirectSuccessUrl: "/messages",
 })
 export class CreateMessageForm extends MessageForm {}
 
 @Form({
 	onSubmit: dataFetchers.messages.update,
 	getDetailsData: dataFetchers.messages.updateDetails,
+	redirectSuccessUrl: "/messages",
 })
 export class EditMessageForm extends MessageForm {}
 

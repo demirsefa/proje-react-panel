@@ -42,12 +42,14 @@ class LanguageForm {
 
 @Form({
 	onSubmit: dataFetchers.languages.create,
+	redirectSuccessUrl: "/languages",
 })
 export class CreateLanguageForm extends LanguageForm {}
 
 @Form({
 	onSubmit: dataFetchers.languages.update,
 	getDetailsData: dataFetchers.languages.details,
+	redirectSuccessUrl: "/languages",
 })
 export class EditLanguageForm extends LanguageForm {}
 
