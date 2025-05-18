@@ -51,26 +51,38 @@ class LocalizationForm {
 	@MinLength(1)
 	@Input({ label: "Explanation", type: "textarea" })
 	explanation: string;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 export class SimpleLocalizationForm {
 	@IsString()
 	@MinLength(1)
-	@Input({ label: "Key", type: "input" })
+	@Input({ label: "Key", type: "input", includeInJSON: true, includeInCSV: true })
 	id: string;
 
 	@IsString()
 	@MinLength(1)
-	@Input({ label: "Text", type: "textarea" })
+	@Input({ label: "Text", type: "textarea", includeInJSON: true, includeInCSV: true })
 	text: string;
-
+4
 	@IsString()
 	@MinLength(2)
 	@Input({
 		label: "Language",
 		type: "hidden",
+		includeInJSON: true,
+		includeInCSV: true,
 	})
 	language: string;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({
@@ -81,8 +93,19 @@ export class LocalizationAllForm {
 	@Input({ type: "hidden" })
 	language: string;
 
-	@Input({ label: "Inputs", type: "nested", nestedFields: getInputFields(SimpleLocalizationForm) })
+	@Input({
+		label: "Inputs",
+		includeInJSON: true,
+		includeInCSV: true,
+		type: "nested",
+		nestedFields: getInputFields(SimpleLocalizationForm),
+	})
 	keys: SimpleLocalizationForm[];
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({

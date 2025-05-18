@@ -1,11 +1,11 @@
 import { StylesConfig } from 'react-select';
 
-interface OptionType {
+interface OptionType<TValue> {
   label: string;
-  value: string;
+  value: TValue;
 }
 
-export const darkSelectStyles: StylesConfig<OptionType, false> = {
+export const darkSelectStyles = <TValue>(): StylesConfig<OptionType<TValue>, false> => ({
   control: (baseStyles, state) => ({
     ...baseStyles,
     backgroundColor: '#1f2937',
@@ -70,4 +70,4 @@ export const darkSelectStyles: StylesConfig<OptionType, false> = {
       color: '#6366f1',
     },
   }),
-};
+});

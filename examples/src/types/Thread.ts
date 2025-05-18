@@ -1,4 +1,4 @@
-import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
+import { IsString, MinLength, IsBoolean } from "class-validator";
 import { Cell, List, Input, Form, Details, DetailsItem } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 
@@ -53,6 +53,11 @@ class ThreadForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({
@@ -62,7 +67,7 @@ export class CreateThreadForm extends ThreadForm {}
 
 @Form({
 	onSubmit: dataFetchers.threads.update,
-	getDetailsData: dataFetchers.threads.details,
+	getDetailsData: dataFetchers.threads.updateDetails,
 })
 export class EditThreadForm extends ThreadForm {}
 

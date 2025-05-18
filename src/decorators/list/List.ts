@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AnyClass } from '../../types/AnyClass';
+import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
 
 const LIST_METADATA_KEY = 'ListMetaData';
 
@@ -47,7 +47,9 @@ export function List<T>(options?: ListOptions<T> | ((item: T) => ListOptions<T>)
   };
 }
 
-export function getListConfiguration<T extends AnyClass>(entityClass: T): ListConfiguration<T> {
+export function getListConfiguration<T extends AnyClass>(
+  entityClass: AnyClassConstructor<T>
+): ListConfiguration<T> {
   const listConfiguration = Reflect.getMetadata(LIST_METADATA_KEY, entityClass);
   if (!listConfiguration) {
     throw new Error('List decerator should be used on class');

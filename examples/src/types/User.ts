@@ -72,6 +72,11 @@ class UserForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({
@@ -81,7 +86,7 @@ export class CreateUserForm extends UserForm {}
 
 @Form({
 	onSubmit: dataFetchers.users.update,
-	getDetailsData: dataFetchers.users.details,
+	getDetailsData: dataFetchers.users.updateDetails,
 })
 export class EditUserForm extends UserForm {}
 

@@ -8,15 +8,13 @@ export type OnSubmitFN<T> = (data: T | FormData) => Promise<T>;
 interface FormOptions<T extends AnyClass> {
   onSubmit: OnSubmitFN<T>;
   getDetailsData?: GetDetailsDataFN<T>;
-  /** @deprecated */
-  redirectBackOnSuccess?: boolean;
   type?: 'json' | 'formData';
   redirectSuccessUrl?: string;
 }
 
-export interface FormConfiguration<T extends AnyClass> extends FormOptions<T> {
-  /** @deprecated */
-  redirectBackOnSuccess: boolean;
+export interface FormConfiguration<T extends AnyClass> {
+  onSubmit: OnSubmitFN<T>;
+  getDetailsData?: GetDetailsDataFN<T>;
   type: 'json' | 'formData';
   redirectSuccessUrl?: string;
 }
@@ -39,9 +37,11 @@ export function getFormConfiguration<T extends AnyClass, K extends AnyClassConst
   if (!formOptions) {
     throw new Error('Form decerator should be used on class');
   }
-  return {
-    ...formOptions,
+  const formConfiguration: FormConfiguration<T> = {
+    onSubmit: formOptions.onSubmit,
+    getDetailsData: formOptions.getDetailsData,
     type: formOptions.type ?? 'json',
-    redirectBackOnSuccess: formOptions.redirectBackOnSuccess ?? true,
+    redirectSuccessUrl: formOptions.redirectSuccessUrl,
   };
+  return formConfiguration;
 }

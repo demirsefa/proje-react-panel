@@ -33,6 +33,7 @@ export const dataFetchers = Object.freeze({
 		details: getOne<DetailsThreadForm>("threads"),
 		create: create<CreateThreadForm>("threads"),
 		update: update<EditThreadForm>("threads"),
+		updateDetails: getOne<EditThreadForm>("threads"),
 		remove: remove("threads", "id"),
 	},
 	messages: {
@@ -40,6 +41,7 @@ export const dataFetchers = Object.freeze({
 		details: getOne<DetailsMessageForm>("messages"),
 		create: create<CreateMessageForm>("messages"),
 		update: update<EditMessageForm>("messages"),
+		updateDetails: getOne<EditMessageForm>("messages"),
 		remove: remove("messages", "id"),
 	},
 	users: {
@@ -47,6 +49,7 @@ export const dataFetchers = Object.freeze({
 		details: getOne<DetailsUserForm>("users"),
 		create: create<CreateUserForm>("users"),
 		update: update<EditUserForm>("users"),
+		updateDetails: getOne<EditUserForm>("users"),
 		remove: remove("users", "id"),
 	},
 	localization: {

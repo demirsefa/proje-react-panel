@@ -11,21 +11,29 @@ export type InputTypes = 'input' | 'textarea' | 'file-upload' | 'checkbox' | 'hi
 export type ExtendedInputTypes = InputTypes | 'select';
 
 export interface InputOptions {
+  name?: string;
   type?: InputTypes;
   inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
-  name?: string;
   label?: string;
   placeholder?: string;
   nestedFields?: InputConfiguration[];
+  includeInCSV?: boolean;
+  includeInJSON?: boolean;
 }
 
 export interface ExtendedInputOptions extends Omit<InputOptions, 'type'> {
   type: ExtendedInputTypes;
 }
 
-export interface InputConfiguration extends Omit<InputOptions, 'type'> {
+export interface InputConfiguration {
   name: string;
   type: ExtendedInputTypes;
+  inputType: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
+  label?: string;
+  placeholder?: string;
+  nestedFields?: InputConfiguration[];
+  includeInCSV: boolean;
+  includeInJSON: boolean;
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {
@@ -55,23 +63,22 @@ export function ExtendedInput(options?: ExtendedInputOptions): PropertyDecorator
 export function getInputFields<T extends AnyClass>(
   entityClass: AnyClassConstructor<T>
 ): InputConfiguration[] {
-  //TODO: any is not a good solution, we need to find a better way to do this
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const prototype = (entityClass as any).prototype;
+  const prototype = entityClass.prototype;
   const inputFields: string[] = Reflect.getMetadata(INPUT_KEY, prototype) || [];
   return inputFields.map(field => {
-    const fields = Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};
+    const fields: InputOptions =
+      Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};
     const inputType = fields?.inputType ?? (isFieldSensitive(field) ? 'password' : 'text');
-    return {
-      ...fields,
-      editable: fields.editable ?? true,
-      sensitive: fields.sensitive,
+    const inputConfiguration: InputConfiguration = {
       name: fields?.name ?? field,
       label: fields?.label ?? field,
       placeholder: fields?.placeholder ?? field,
       inputType: inputType,
+      nestedFields: fields?.nestedFields ?? [],
       type: fields?.type ?? 'input',
-      selectOptions: fields?.selectOptions ?? [],
+      includeInCSV: fields?.includeInCSV ?? false,
+      includeInJSON: fields?.includeInJSON ?? false,
     };
+    return inputConfiguration;
   });
 }

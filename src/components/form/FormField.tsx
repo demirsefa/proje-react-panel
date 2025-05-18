@@ -5,7 +5,6 @@ import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
 import { Label } from './Label';
 import { Select } from './Select';
-import { AnyClass } from '../../types/AnyClass';
 
 interface FormFieldProps {
   input: InputConfiguration;
@@ -27,6 +26,7 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
   const form = useFormContext();
   //TODO: inputOptions İnputResult seperate
   const data = form.getValues(input.name!);
+  console.log('--_>', data, input, input.nestedFields);
   return (
     <div>
       {/* TODO: any is not a good solution, we need to find a better way to do this */}
@@ -52,12 +52,7 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
   );
 }
 
-export function FormField<T extends AnyClass>({
-  input,
-  register,
-  error,
-  baseName,
-}: FormFieldProps<T>) {
+export function FormField({ input, register, error, baseName }: FormFieldProps) {
   const fieldName: string = (baseName ? baseName.toString() + '.' : '') + input.name || '';
   const renderField = () => {
     switch (input.type) {

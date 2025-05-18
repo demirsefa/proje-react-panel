@@ -58,7 +58,6 @@ export function Datagrid<T extends AnyClass>({
                       <CellField
                         key={configuration.name}
                         configuration={configuration}
-                        item={item}
                         value={value}
                       />
                     );

@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsString, MinLength, IsBoolean, ValidateIf } from "class-validator";
+import { IsEmail, IsEnum, IsString, MinLength, ValidateIf } from "class-validator";
 import { Cell, List, Input, DetailsItem, Details, Form, SelectInput } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 @List({
@@ -76,6 +76,11 @@ class AdminForm {
 		},
 	})
 	assetId: number;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({

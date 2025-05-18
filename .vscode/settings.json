@@ -4,5 +4,10 @@
   "chat.editor.fontSize": 15,
   "debug.console.fontSize": 15,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "folder-customization.folders": [
+    {
+      "path": "test-aletleri/src/client/"
+    }
+  ]
 }

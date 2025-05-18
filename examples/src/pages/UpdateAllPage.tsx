@@ -113,6 +113,30 @@ export function UpdateAllPage() {
 				/>
 			</div>
 			<FormPage
+				header={(utils) => (
+					<>
+						<button
+							className="export-button"
+							onClick={() => {
+								const json = utils.toJSON(utils.getValues());
+								utils.export(json, "json");
+							}}>
+							Export JSON
+						</button>
+
+						<button
+							className="import-button"
+							onClick={() => {
+								utils.import().then((json) => {
+									const values = utils.fromJSON(json);
+									console.log("values", values);
+									utils.setValues(values);
+								});
+							}}>
+							Import JSON
+						</button>
+					</>
+				)}
 				model={LocalizationAllForm}
 			/>
 		</div>

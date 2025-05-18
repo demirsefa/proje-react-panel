@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { InputConfiguration } from '../../decorators/form/Input';
 import { useFormContext, Controller } from 'react-hook-form';
 import { SelectInputConfiguration } from '../../decorators/form/inputs/SelectInput';
@@ -10,16 +10,18 @@ interface SelectProps {
   fieldName: string;
 }
 
-interface OptionType {
+interface OptionType<TValue> {
   label: string;
-  value: string;
+  value: TValue;
 }
 
-export function Select({ input, fieldName }: SelectProps) {
-  const inputSelect = input as SelectInputConfiguration;
+export function Select<TValue>({ input, fieldName }: SelectProps) {
+  const inputSelect = input as SelectInputConfiguration<TValue>;
   const { control } = useFormContext();
-  const [options, setOptions] = useState<OptionType[]>(inputSelect.defaultOptions || []);
+  const [options, setOptions] = useState<OptionType<TValue>[]>(inputSelect.defaultOptions || []);
   const [key, setKey] = useState(0);
+  //NOTE: is added to component to fix type error. Need to find a better solution.
+  const styles = useMemo(() => darkSelectStyles<TValue>(), []);
   useEffect(() => {
     if (inputSelect.onSelectPreloader) {
       inputSelect.onSelectPreloader().then(option => {
@@ -38,10 +40,10 @@ export function Select({ input, fieldName }: SelectProps) {
           <ReactSelect
             key={key}
             options={options}
-            styles={darkSelectStyles}
+            styles={styles}
             value={options.find(option => option.value === field.value) || null}
-            onChange={(selectedOption: OptionType | null) => {
-              field.onChange(selectedOption?.value);
+            onChange={(selectedOption: OptionType<TValue> | null) => {
+              field.onChange(selectedOption?.value as TValue);
             }}
           />
         );

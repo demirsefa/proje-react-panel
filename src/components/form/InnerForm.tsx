@@ -45,9 +45,6 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
               form.reset(resut);
               setErrorMessage(null);
               toast.success('Form submitted successfully');
-              if (formClass.redirectBackOnSuccess) {
-                navigate(-1);
-              }
               if (formClass.redirectSuccessUrl) {
                 navigate(formClass.redirectSuccessUrl);
               }

@@ -25,41 +25,60 @@ export function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<AuthLayout />}>
-						<Route path={"/"} index element={<Dashboard />} />
+						<Route path={"/"} index element={<Dashboard key="dashboard" />} />
 						<Route path={"admins"}>
-							<Route path={""} element={<ListPage model={AdminList} />} />
-							<Route path={"create"} element={<FormPage model={CreateAdminForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditAdminForm} />} />
-							<Route path={":id"} element={<DetailsPage model={AdminDetails} />} />
+							<Route path={""} element={<ListPage key="admin-list" model={AdminList} />} />
+							<Route path={"create"} element={<FormPage key="admin-create" model={CreateAdminForm} />} />
+							<Route path={"edit/:id"} element={<FormPage key="admin-edit" model={EditAdminForm} />} />
+							<Route path={":id"} element={<DetailsPage key="admin-details" model={AdminDetails} />} />
 						</Route>
 						<Route path={"assets"}>
-							<Route path={""} element={<ListPage model={AssetList} />} />
-							<Route path={"create"} element={<FormPage model={CreateAssetForm} />} />
-							<Route path={":id"} element={<DetailsPage model={DetailsAssetForm} />} />
+							<Route path={""} element={<ListPage key="asset-list" model={AssetList} />} />
+							<Route path={"create"} element={<FormPage key="asset-create" model={CreateAssetForm} />} />
+							<Route
+								path={":id"}
+								element={<DetailsPage key="asset-details" model={DetailsAssetForm} />}
+							/>
 						</Route>
 						<Route path={"messages"}>
-							<Route path={""} element={<ListPage model={MessageList} />} />
-							<Route path={"create"} element={<FormPage model={CreateMessageForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditMessageForm} />} />
-							<Route path={":id"} element={<DetailsPage model={DetailsMessageForm} />} />
+							<Route path={""} element={<ListPage key="message-list" model={MessageList} />} />
+							<Route
+								path={"create"}
+								element={<FormPage key="message-create" model={CreateMessageForm} />}
+							/>
+							<Route
+								path={"edit/:id"}
+								element={<FormPage key="message-edit" model={EditMessageForm} />}
+							/>
+							<Route
+								path={":id"}
+								element={<DetailsPage key="message-details" model={DetailsMessageForm} />}
+							/>
 						</Route>
 						<Route path={"threads"}>
-							<Route path={""} element={<ListPage model={ThreadList} />} />
-							<Route path={"create"} element={<FormPage model={CreateThreadForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditThreadForm} />} />
-							<Route path={":id"} element={<DetailsPage model={DetailsThreadForm} />} />
+							<Route path={""} element={<ListPage key="thread-list" model={ThreadList} />} />
+							<Route
+								path={"create"}
+								element={<FormPage key="thread-create" model={CreateThreadForm} />}
+							/>
+							<Route path={"edit/:id"} element={<FormPage key="thread-edit" model={EditThreadForm} />} />
+							<Route
+								path={":id"}
+								element={<DetailsPage key="thread-details" model={DetailsThreadForm} />}
+							/>
 						</Route>
 						<Route path={"users"}>
-							<Route path={""} element={<ListPage model={UserList} />} />
-							<Route path={"create"} element={<FormPage model={CreateUserForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditUserForm} />} />
-							<Route path={":id"} element={<DetailsPage model={DetailsUserForm} />} />
+							<Route path={""} element={<ListPage key="user-list" model={UserList} />} />
+							<Route path={"create"} element={<FormPage key="user-create" model={CreateUserForm} />} />
+							<Route path={"edit/:id"} element={<FormPage key="user-edit" model={EditUserForm} />} />
+							<Route path={":id"} element={<DetailsPage key="user-details" model={DetailsUserForm} />} />
 						</Route>
 						<Route path={"localization"}>
 							<Route
 								path={""}
 								element={
 									<ListPage
+										key="localization-list"
 										model={LocalizationList}
 										customHeader={
 											<>
@@ -69,19 +88,37 @@ export function App() {
 									/>
 								}
 							/>
-							<Route path={"create"} element={<FormPage model={CreateLocalizationForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditLocalizationForm} />} />
-							<Route path={"update-all/:language"} element={<UpdateAllPage />} />
+							<Route
+								path={"create"}
+								element={<FormPage key="localization-create" model={CreateLocalizationForm} />}
+							/>
+							<Route
+								path={"edit/:id"}
+								element={<FormPage key="localization-edit" model={EditLocalizationForm} />}
+							/>
+							<Route
+								path={"update-all/:language"}
+								element={<UpdateAllPage key="localization-update-all" />}
+							/>
 						</Route>
 						<Route path={"languages"}>
-							<Route path={""} element={<ListPage model={LanguageList} />} />
-							<Route path={"create"} element={<FormPage model={CreateLanguageForm} />} />
-							<Route path={"edit/:id"} element={<FormPage model={EditLanguageForm} />} />
-							<Route path={":id"} element={<DetailsPage model={DetailsLanguageForm} />} />
+							<Route path={""} element={<ListPage key="language-list" model={LanguageList} />} />
+							<Route
+								path={"create"}
+								element={<FormPage key="language-create" model={CreateLanguageForm} />}
+							/>
+							<Route
+								path={"edit/:id"}
+								element={<FormPage key="language-edit" model={EditLanguageForm} />}
+							/>
+							<Route
+								path={":id"}
+								element={<DetailsPage key="language-details" model={DetailsLanguageForm} />}
+							/>
 						</Route>
 					</Route>
 
-					<Route path="/login" element={<Login onLogin={dataFetchers.auth.login} />} />
+					<Route path="/login" element={<Login key="login" onLogin={dataFetchers.auth.login} />} />
 				</Routes>
 			</Router>
 		</Panel>

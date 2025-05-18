@@ -54,6 +54,9 @@ export function Login({ onLogin }: LoginProps) {
               label: 'Username',
               placeholder: 'Enter your username',
               type: 'input',
+              inputType: 'text',
+              includeInCSV: true,
+              includeInJSON: true,
             }}
             register={register}
             error={errors.username}
@@ -65,6 +68,8 @@ export function Login({ onLogin }: LoginProps) {
               inputType: 'password',
               placeholder: 'Enter your password',
               type: 'input',
+              includeInCSV: true,
+              includeInJSON: true,
             }}
             register={register}
             error={errors.password}

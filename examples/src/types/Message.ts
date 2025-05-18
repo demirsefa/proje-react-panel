@@ -33,6 +33,11 @@ class MessageForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
+
+	@Input({
+		type: "hidden",
+	})
+	clientVersion: number;
 }
 
 @Form({
@@ -42,7 +47,7 @@ export class CreateMessageForm extends MessageForm {}
 
 @Form({
 	onSubmit: dataFetchers.messages.update,
-	getDetailsData: dataFetchers.messages.details,
+	getDetailsData: dataFetchers.messages.updateDetails,
 })
 export class EditMessageForm extends MessageForm {}
 

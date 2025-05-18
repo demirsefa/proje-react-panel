@@ -1,23 +1,18 @@
 import { ExtendedInput, ExtendedInputOptions, InputConfiguration, InputOptions } from '../Input';
 
-export interface SelectInputOptions extends InputOptions {
-  //TODO: any is not a good solution, we need to find a better way to do this
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSelectPreloader?: () => Promise<{ label: string; value: any }[]>;
-  //TODO: fix this
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  defaultOptions?: { value: any; label: string }[];
+export interface SelectInputOptions<T> extends InputOptions {
+  onSelectPreloader?: () => Promise<{ label: string; value: T }[]>;
+  defaultOptions?: { value: T; label: string }[];
+  csvExport?: never;
 }
 
-export interface SelectInputConfiguration extends InputConfiguration {
+export interface SelectInputConfiguration<T> extends InputConfiguration {
   type: 'select';
-  onSelectPreloader?: () => Promise<{ label: string; value: string }[]>;
-  //TODO: fix this
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  defaultOptions?: { value: any; label: string }[];
+  onSelectPreloader?: () => Promise<{ label: string; value: T }[]>;
+  defaultOptions?: { value: T; label: string }[];
 }
 
-export function SelectInput(options?: SelectInputOptions): PropertyDecorator {
+export function SelectInput<K>(options?: SelectInputOptions<K>): PropertyDecorator {
   return ExtendedInput({
     ...options,
     type: 'select',
