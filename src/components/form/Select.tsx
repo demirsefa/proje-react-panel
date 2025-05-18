@@ -19,17 +19,15 @@ export function Select<TValue>({ input, fieldName }: SelectProps) {
   const inputSelect = input as SelectInputConfiguration<TValue>;
   const { control } = useFormContext();
   const [options, setOptions] = useState<OptionType<TValue>[]>(inputSelect.defaultOptions || []);
-  const [key, setKey] = useState(0);
   //NOTE: is added to component to fix type error. Need to find a better solution.
   const styles = useMemo(() => darkSelectStyles<TValue>(), []);
   useEffect(() => {
     if (inputSelect.onSelectPreloader) {
       inputSelect.onSelectPreloader().then(option => {
         setOptions(option);
-        setKey(key + 1);
       });
     }
-  }, [inputSelect, inputSelect.onSelectPreloader, key]);
+  }, [inputSelect, inputSelect.onSelectPreloader]);
 
   return (
     <Controller
@@ -38,7 +36,6 @@ export function Select<TValue>({ input, fieldName }: SelectProps) {
       render={({ field }) => {
         return (
           <ReactSelect
-            key={key}
             options={options}
             styles={styles}
             value={options.find(option => option.value === field.value) || null}

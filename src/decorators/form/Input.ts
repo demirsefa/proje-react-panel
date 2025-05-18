@@ -52,9 +52,8 @@ export function ExtendedInput(options?: ExtendedInputOptions): PropertyDecorator
   return (target, propertyKey) => {
     const existingInputs: string[] = Reflect.getMetadata(INPUT_KEY, target) || [];
     Reflect.defineMetadata(INPUT_KEY, [...existingInputs, propertyKey.toString()], target);
-
     if (options) {
-      const keyString = `${INPUT_KEY.toString()}:${propertyKey.toString()}:options`;
+        const keyString = `${INPUT_KEY.toString()}:${propertyKey.toString()}:options`;
       Reflect.defineMetadata(keyString, options, target);
     }
   };
@@ -70,6 +69,7 @@ export function getInputFields<T extends AnyClass>(
       Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};
     const inputType = fields?.inputType ?? (isFieldSensitive(field) ? 'password' : 'text');
     const inputConfiguration: InputConfiguration = {
+      ...fields,
       name: fields?.name ?? field,
       label: fields?.label ?? field,
       placeholder: fields?.placeholder ?? field,

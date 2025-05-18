@@ -64,7 +64,7 @@ class AdminForm {
 	@SelectInput({
 		label: "Asset",
 		defaultOptions: [],
-		onSelectPreloader: () => {
+		onSelectPreloader: async () => {
 			return dataFetchers.assets.getAll({}).then((res) => {
 				return res.data.map((asset) => {
 					return {
