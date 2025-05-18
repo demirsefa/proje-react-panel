@@ -17,6 +17,7 @@ export interface InputOptions {
   label?: string;
   placeholder?: string;
   nestedFields?: InputConfiguration[];
+  defaultValue?: string;
   includeInCSV?: boolean;
   includeInJSON?: boolean;
 }
@@ -32,6 +33,7 @@ export interface InputConfiguration {
   label?: string;
   placeholder?: string;
   nestedFields?: InputConfiguration[];
+  defaultValue?: string;
   includeInCSV: boolean;
   includeInJSON: boolean;
 }

@@ -54,15 +54,31 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
 
 export function FormField({ input, register, error, baseName }: FormFieldProps) {
   const fieldName: string = (baseName ? baseName.toString() + '.' : '') + input.name || '';
+  //TODO: support rest default values
   const renderField = () => {
     switch (input.type) {
       case 'textarea':
-        return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
+        return (
+          <textarea
+            defaultValue={input.defaultValue}
+            {...register(fieldName, {
+              value: input.defaultValue,
+            })}
+            placeholder={input.placeholder}
+          />
+        );
       case 'select':
         return <Select input={input} fieldName={fieldName} />;
       case 'input': {
         return (
-          <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
+          <input
+            type={input.inputType}
+            defaultValue={input.defaultValue}
+            {...register(fieldName, {
+              value: input.defaultValue,
+            })}
+            placeholder={input.placeholder}
+          />
         );
       }
       case 'file-upload':

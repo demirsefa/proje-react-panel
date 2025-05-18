@@ -45,6 +45,7 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
               form.reset(resut);
               setErrorMessage(null);
               toast.success('Form submitted successfully');
+              //TODO: https path or relative path
               if (formClass.redirectSuccessUrl) {
                 navigate(formClass.redirectSuccessUrl);
               }
