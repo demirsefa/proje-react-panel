@@ -1,5 +1,5 @@
 import { IsString, MinLength } from "class-validator";
-import { Cell, List, Input, getInputFields, Form, Details } from "proje-react-panel";
+import { Cell, List, Input, getInputFields, Form } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 @List({
 	headers: {

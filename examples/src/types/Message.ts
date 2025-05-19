@@ -1,4 +1,4 @@
-import { IsString, MinLength, IsBoolean, ValidateNested } from "class-validator";
+import { IsString, MinLength, IsBoolean } from "class-validator";
 import { Cell, List, Input, Form, Details, DetailsItem } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 

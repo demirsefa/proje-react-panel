@@ -1,6 +1,15 @@
 import { IsEmail, IsEnum, IsString, MinLength, ValidateIf } from "class-validator";
 import { Cell, List, Input, DetailsItem, Details, Form, SelectInput } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
+
+
+function getAssetOptions() {
+	return dataFetchers.assets.getAll({}).then((res) => {
+		return res.data.map((asset) => {
+			return { value: asset.id, label: asset.filename };
+		});
+	});
+}
 @List({
 	headers: {
 		create: { path: "create", label: "Create" },
@@ -64,16 +73,7 @@ class AdminForm {
 	@SelectInput({
 		label: "Asset",
 		defaultOptions: [],
-		onSelectPreloader: async () => {
-			return dataFetchers.assets.getAll({}).then((res) => {
-				return res.data.map((asset) => {
-					return {
-						value: asset.id,
-						label: asset.filename,
-					};
-				});
-			});
-		},
+		onSelectPreloader: getAssetOptions,
 	})
 	assetId: number;
 
