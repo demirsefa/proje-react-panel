@@ -23,6 +23,7 @@ export function Select<TValue>({ input, fieldName }: SelectProps) {
   const styles = useMemo(() => darkSelectStyles<TValue>(), []);
   useEffect(() => {
     if (inputSelect.onSelectPreloader) {
+      const
       inputSelect.onSelectPreloader().then(option => {
         setOptions(option);
       });
