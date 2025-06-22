@@ -5,22 +5,23 @@ import { Label } from './Label';
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   input: InputConfiguration;
+  fieldName: string;
 }
 
 //TODO2:
-export function Checkbox({ input, ...props }: CheckboxProps) {
-  const { label, name } = input;
+export function Checkbox({ input, fieldName, ...props }: CheckboxProps) {
+  const { label } = input;
   const form = useFormContext();
   const { register } = form;
 
   return (
-    <Label className="checkbox-label" htmlFor={name} label={label} fieldName={name}>
+    <Label className="checkbox-label" htmlFor={fieldName} label={label} fieldName={fieldName}>
       <input
         type="checkbox"
-        id={name}
+        id={fieldName}
         className="apple-switch"
         {...props}
-        {...register(name, {
+        {...register(fieldName, {
           setValueAs: (value: string) => value === 'on',
         })}
       />

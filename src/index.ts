@@ -34,5 +34,5 @@ export { Layout } from './components/layout';
 
 //AUTH
 export { Login } from './components/Login';
-
-//UTILS
+export { login } from './utils/login';
+export { logout } from './utils/logout';

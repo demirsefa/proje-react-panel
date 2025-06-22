@@ -71,6 +71,6 @@ export const dataFetchers = Object.freeze({
 		remove: remove("languages", "code"),
 	},
 	auth: {
-		login: login(),
+		login: login,
 	},
 });

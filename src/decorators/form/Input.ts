@@ -11,7 +11,6 @@ export type InputTypes = 'input' | 'textarea' | 'file-upload' | 'checkbox' | 'hi
 export type ExtendedInputTypes = InputTypes | 'select';
 
 export interface InputOptions {
-  name?: string;
   type?: InputTypes;
   inputType?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
   label?: string;
@@ -28,6 +27,7 @@ export interface ExtendedInputOptions extends Omit<InputOptions, 'type'> {
 
 export interface InputConfiguration {
   name: string;
+  isNested: boolean;
   type: ExtendedInputTypes;
   inputType: 'text' | 'email' | 'tel' | 'password' | 'number' | 'date';
   label?: string;
@@ -55,7 +55,7 @@ export function ExtendedInput(options?: ExtendedInputOptions): PropertyDecorator
     const existingInputs: string[] = Reflect.getMetadata(INPUT_KEY, target) || [];
     Reflect.defineMetadata(INPUT_KEY, [...existingInputs, propertyKey.toString()], target);
     if (options) {
-        const keyString = `${INPUT_KEY.toString()}:${propertyKey.toString()}:options`;
+      const keyString = `${INPUT_KEY.toString()}:${propertyKey.toString()}:options`;
       Reflect.defineMetadata(keyString, options, target);
     }
   };
@@ -70,9 +70,13 @@ export function getInputFields<T extends AnyClass>(
     const fields: InputOptions =
       Reflect.getMetadata(`${INPUT_KEY.toString()}:${field}:options`, prototype) || {};
     const inputType = fields?.inputType ?? (isFieldSensitive(field) ? 'password' : 'text');
+
+    // Check if field is in format translations[0].x
+    const isNested: boolean = field.match(/^[a-zA-Z]+\[\d+\]\.[a-zA-Z]+$/) !== null;
     const inputConfiguration: InputConfiguration = {
       ...fields,
-      name: fields?.name ?? field,
+      name: field,
+      isNested,
       label: fields?.label ?? field,
       placeholder: fields?.placeholder ?? field,
       inputType: inputType,

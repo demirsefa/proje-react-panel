@@ -1,14 +1,12 @@
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { createWithEqualityFn } from 'zustand/traditional';
 import { shallow } from 'zustand/vanilla/shallow';
-
-interface User {
-  username: string;
-}
+import { User } from '../types/User';
 
 interface AppState {
   user: User | null;
   login: (user: User) => void;
+  logout: () => void;
 }
 
 export const useAppStore = createWithEqualityFn<AppState>()(
@@ -16,6 +14,7 @@ export const useAppStore = createWithEqualityFn<AppState>()(
     set => ({
       user: null,
       login: (user: User) => set({ user }),
+      logout: () => set({ user: null }),
     }),
     {
       name: 'app-store-1',

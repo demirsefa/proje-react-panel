@@ -5,17 +5,18 @@ import { InputConfiguration } from '../../decorators/form/Input';
 interface UploaderProps {
   input: InputConfiguration;
   maxLength?: number;
+  fieldName: string;
 }
 
-export function Uploader({ input, maxLength = 1 }: UploaderProps) {
+export function Uploader({ input, maxLength = 1, fieldName }: UploaderProps) {
   const form = useFormContext();
   const [files, setFiles] = useState<File[]>([]);
-  const id = input.name!;
+  const id = fieldName;
 
   useEffect(() => {
     // Update form value whenever files change
-    form.setValue(input.name + '_files', files.length > 0);
-  }, [files, form, input.name]);
+    form.setValue(fieldName + '_files', files.length > 0);
+  }, [files, form, fieldName]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (maxLength > 1) {

@@ -21,7 +21,7 @@ export function getAll<T>(endpoint: string): GetDataForList<T> {
 	};
 }
 
-export function getOne<T>(endpoint: string, key: string = "id"): GetDetailsDataFN<T> {
+export function getOne<T>(endpoint: string, key = "id"): GetDetailsDataFN<T> {
 	return async (params: Record<string, string>): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const response = await axiosInstance.get<T>(`/${endpoint}/${params[key]}`);
@@ -30,36 +30,37 @@ export function getOne<T>(endpoint: string, key: string = "id"): GetDetailsDataF
 }
 
 export function create<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T | FormData): Promise<T | FormData> => {
+	return async (data: T | FormData): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
-		await axiosInstance.post<T>(`/${endpoint}`, data);
-		return data;
+		const response = await axiosInstance.post<T>(`/${endpoint}`, data);
+		return response.data;
 	};
 }
 
 export function createFormData<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T | FormData): Promise<T | FormData> => {
+	return async (data: T | FormData): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
-		await axiosInstance.post<T>(`/${endpoint}`, data, {
+		const response = await axiosInstance.post<T>(`/${endpoint}`, data, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
 		});
-		return data;
+		return response.data;
 	};
 }
 
-export function update<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
-	return async (data: T | FormData): Promise<T | FormData> => {
+export function update<T>(endpoint: string, key = "id"): OnSubmitFN<T> {
+	return async (data: T | FormData): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data);
 		return response.data;
 	};
 }
 
-export function updateFormData<T>(endpoint: string, key: string = "id"): OnSubmitFN<T> {
-	return async (data: T | FormData): Promise<T | FormData> => {
+export function updateFormData<T>(endpoint: string, key = "id"): OnSubmitFN<T> {
+	return async (data: T | FormData): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const id = (data as any)[key];
 		const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data, {
@@ -72,29 +73,27 @@ export function updateFormData<T>(endpoint: string, key: string = "id"): OnSubmi
 }
 
 export function updateSimple<T>(endpoint: string): OnSubmitFN<T> {
-	return async (data: T | FormData): Promise<T | FormData> => {
+	return async (data: T | FormData): Promise<T> => {
 		const axiosInstance = getAxiosInstance();
 		const response = await axiosInstance.put<T>(`/${endpoint}`, data);
 		return response.data;
 	};
 }
 
-export function remove<T>(
-	endpoint: string,
-	key: string = 'id',
-  ): (data: T) => Promise<void> {
+export function remove<T>(endpoint: string, key = "id"): (data: T) => Promise<void> {
 	return async (data: T): Promise<void> => {
-	  const axiosInstance = getAxiosInstance();
-	  const id = (data as any)[key];
-	  await axiosInstance
-		.delete<T>(`/${endpoint}/${id}`)
-		.then((res) => res.data)
-		.catch((err: AxiosError) => {
-		  const messageError = err.response?.data as { message: string };
-		  if (messageError?.message) {
-			throw new Error(messageError.message);
-		  }
-		  throw err;
-		});
+		const axiosInstance = getAxiosInstance();
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const id = (data as any)[key];
+		await axiosInstance
+			.delete<T>(`/${endpoint}/${id}`)
+			.then((res) => res.data)
+			.catch((err: AxiosError) => {
+				const messageError = err.response?.data as { message: string };
+				if (messageError?.message) {
+					throw new Error(messageError.message);
+				}
+				throw err;
+			});
 	};
 }

@@ -4,6 +4,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { SelectInputConfiguration } from '../../decorators/form/inputs/SelectInput';
 import ReactSelect from 'react-select';
 import { darkSelectStyles } from './SelectStyles';
+import { preloadCacheHelper } from '../../utils/PreloadCacheHelper';
 
 interface SelectProps {
   input: InputConfiguration;
@@ -23,9 +24,9 @@ export function Select<TValue>({ input, fieldName }: SelectProps) {
   const styles = useMemo(() => darkSelectStyles<TValue>(), []);
   useEffect(() => {
     if (inputSelect.onSelectPreloader) {
-      const
-      inputSelect.onSelectPreloader().then(option => {
-        setOptions(option);
+      const onSelectPreloader = inputSelect.onSelectPreloader;
+      preloadCacheHelper.setOrGetCache(onSelectPreloader, (options: OptionType<TValue>[]) => {
+        setOptions(options);
       });
     }
   }, [inputSelect, inputSelect.onSelectPreloader]);

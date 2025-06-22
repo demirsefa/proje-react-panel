@@ -1,7 +1,6 @@
 import { Outlet } from "react-router";
 import React from "react";
-import type { ScreenCreatorData } from "proje-react-panel";
-import { Layout } from "proje-react-panel";
+import { Layout, logout } from "proje-react-panel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faDashboard,
@@ -37,7 +36,7 @@ function getIcons(iconType: IconType) {
 	}
 }
 
-function getMenu(screens: Record<string, ScreenCreatorData>): {
+function getMenu(): {
 	name: string;
 	path: string;
 	iconType: IconType;
@@ -59,6 +58,9 @@ export function AuthLayout() {
 		<Layout
 			logout={() => {
 				setAuthLogout();
+				logout(() => {
+					window.location.href = "/login";
+				});
 			}}
 			getIcons={getIcons}
 			menu={getMenu}>

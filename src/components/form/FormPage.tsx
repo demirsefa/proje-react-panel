@@ -2,7 +2,15 @@ import React, { useEffect, useMemo } from 'react';
 import { InnerForm } from './InnerForm';
 import { AnyClass, AnyClassConstructor } from '../../types/AnyClass';
 import { useParams } from 'react-router';
-import { FormProvider, Resolver, useForm, UseFormReturn, Path, PathValue } from 'react-hook-form';
+import {
+  FormProvider,
+  Resolver,
+  useForm,
+  UseFormReturn,
+  Path,
+  PathValue,
+  DefaultValues,
+} from 'react-hook-form';
 import { getFormPageMeta } from '../../decorators/form/getFormPageMeta';
 import { FormHeader } from './FormHeader';
 import { InputConfiguration } from '../../decorators/form/Input';
@@ -21,6 +29,7 @@ export interface FormPageProps<T extends AnyClass> {
   title?: string;
   documentTitle?: string;
   header?: (utils: FormUtils<T>) => React.ReactNode;
+  className?: string;
 }
 
 function useCreateFormUtils<T extends AnyClass>(
@@ -142,11 +151,19 @@ export function FormPage<T extends AnyClass>({
   title,
   documentTitle,
   header,
+  className,
 }: FormPageProps<T>) {
   const { class: formClass, inputs, resolver } = useMemo(() => getFormPageMeta(model), [model]);
   const params = useParams();
   const form = useForm<T>({
     resolver: resolver as Resolver<T>,
+    defaultValues: inputs.reduce(
+      (acc, input) => {
+        acc[input.name] = input.defaultValue;
+        return acc;
+      },
+      {} as Record<string, unknown>
+    ) as DefaultValues<T>,
   });
   const utils = useCreateFormUtils(inputs, form);
 
@@ -165,9 +182,11 @@ export function FormPage<T extends AnyClass>({
   }, [params, form.reset, formClass.getDetailsData, formClass, form]);
 
   return (
-    <FormProvider {...form}>
-      <FormHeader title={title} utils={utils} header={header} />
-      <InnerForm inputs={inputs} formClass={formClass} />
-    </FormProvider>
+    <div className={`form-wrapper ${className ?? ''}`}>
+      <FormProvider {...form}>
+        <FormHeader title={title} utils={utils} header={header} />
+        <InnerForm inputs={inputs} formClass={formClass} />
+      </FormProvider>
+    </div>
   );
 }

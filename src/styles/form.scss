@@ -17,9 +17,19 @@
     input[type='email'],
     input[type='tel'],
     input[type='number'],
+    input[type='date'] {
+      height: 40px;
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='number'],
     input[type='date'],
     textarea,
     select {
+      box-sizing: border-box;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #444;
@@ -71,6 +81,7 @@
     color: white;
     border: none;
     border-radius: 5px;
+    height: 40px;
     cursor: pointer;
     transition: background-color 0.2s;
 
@@ -78,11 +89,11 @@
       background-color: #0056b3;
     }
   }
-}
 
-.label {
-  font-weight: bold;
-  margin-bottom: 6px;
-  display: block;
-  color: #f2f2f2;
+  .label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: block;
+    color: #f2f2f2;
+  }
 }

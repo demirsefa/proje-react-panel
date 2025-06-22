@@ -21,81 +21,82 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
   const loadingRef = useRef(false);
 
   return (
-    <div className="form-wrapper">
-      <form
-        ref={formRef}
-        onSubmit={form.handleSubmit(
-          async (dataForm: T) => {
-            if (loadingRef.current) return;
-            loadingRef.current = true;
-            try {
-              const data =
-                formClass.type === 'json'
-                  ? dataForm
-                  : (() => {
-                      const formData = new FormData(formRef.current!);
-                      for (const key in dataForm) {
-                        if (!formData.get(key)) {
-                          formData.append(key, dataForm[key]);
-                        }
+    <form
+      ref={formRef}
+      onSubmit={form.handleSubmit(
+        async (dataForm: T) => {
+          if (loadingRef.current) return;
+          loadingRef.current = true;
+          try {
+            const data =
+              formClass.type === 'json'
+                ? dataForm
+                : (() => {
+                    const formData = new FormData(formRef.current!);
+                    for (const key in dataForm) {
+                      if (!formData.get(key)) {
+                        formData.append(key, dataForm[key]);
                       }
-                      return formData;
-                    })();
-              const resut = await formClass.onSubmit(data);
-              form.reset(resut);
-              setErrorMessage(null);
-              toast.success('Form submitted successfully');
-              //TODO: https path or relative path
-              if (formClass.redirectSuccessUrl) {
-                navigate(formClass.redirectSuccessUrl);
-              }
-            } catch (error: unknown) {
-              const errorResponse = error as { response?: { data?: { message?: string } } };
-              const message =
-                errorResponse?.response?.data?.message ||
-                (error instanceof Error ? error.message : 'An error occurred');
-              toast.error('Something went wrong');
-              setErrorMessage(message);
-              console.error(error);
-            } finally {
-              loadingRef.current = false;
-            }
-          },
-          (errors, event) => {
-            //TOOD: put error if useer choose global error
-            console.log('error creating creation', errors, event);
-          }
-        )}
-      >
-        <div>
-          {errorMessage && (
-            <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
-              {errorMessage}
-            </div>
-          )}
-          {inputs?.map((input: InputConfiguration) => (
-            <FormField
-              key={input.name || ''}
-              input={input}
-              register={form.register}
-              error={
-                input.name
-                  ? {
-                      message: (
-                        form.formState.errors[input.name as keyof T] as {
-                          message: string;
-                        }
-                      )?.message,
                     }
-                  : undefined
-              }
-            />
-          ))}
-          <button type="submit" className="submit-button">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+                    return formData;
+                  })();
+            const resut = await formClass.onSubmit(data);
+            form.reset(resut);
+            setErrorMessage(null);
+            toast.success('Form submitted successfully');
+            //TODO: https path or relative path
+            if (formClass.redirectSuccessUrl) {
+              navigate(formClass.redirectSuccessUrl);
+            }
+            if (formClass.onSubmitSuccess) {
+              formClass.onSubmitSuccess(resut);
+            }
+          } catch (error: unknown) {
+            const errorResponse = error as { response?: { data?: { message?: string } } };
+            const message =
+              errorResponse?.response?.data?.message ||
+              (error instanceof Error ? error.message : 'An error occurred');
+            toast.error('Something went wrong');
+            setErrorMessage(message);
+            console.error(error);
+          } finally {
+            loadingRef.current = false;
+          }
+        },
+        (errors, event) => {
+          //TOOD: put error if useer choose global error
+          console.error('error creating creation', errors, event);
+        }
+      )}
+    >
+      <div>
+        {errorMessage && (
+          <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>
+            {errorMessage}
+          </div>
+        )}
+        {inputs?.map((input: InputConfiguration) => (
+          <FormField
+            key={input.name || ''}
+            input={input}
+            register={form.register}
+            error={
+              input.name
+                ? {
+                    message: (
+                      form.formState.errors[input.name as keyof T] as {
+                        message: string;
+                      }
+                    )?.message,
+                  }
+                : undefined
+            }
+          />
+        ))}
+        <button type="submit" className="submit-button">
+          Submit
+        </button>
+      </div>
+    </form>
   );
 }

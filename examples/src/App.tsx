@@ -8,11 +8,11 @@ import { AssetList, CreateAssetForm, DetailsAssetForm } from "./types/Asset";
 import { ThreadList, CreateThreadForm, EditThreadForm, DetailsThreadForm } from "./types/Thread";
 import { MessageList, CreateMessageForm, EditMessageForm, DetailsMessageForm } from "./types/Message";
 import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "./types/User";
-import { dataFetchers } from "./api/dataFetchers";
-import { initApi, initAuthToken } from "./api/apiConfig";
+import { initApi, initAuthToken, setAuthToken } from "./api/apiConfig";
 import { CreateLocalizationForm, EditLocalizationForm, LocalizationList } from "./types/Localization";
 import { UpdateAllPage } from "./pages/UpdateAllPage";
 import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "./types/Language";
+import { LoginForm } from "./types/Login";
 
 initApi({
 	baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
@@ -21,7 +21,11 @@ initAuthToken();
 
 export function App() {
 	return (
-		<Panel>
+		<Panel onInit={appData => {
+			if (appData.token) {
+				setAuthToken(appData.token);
+			}
+		}}>
 			<Router>
 				<Routes>
 					<Route path="/" element={<AuthLayout />}>
@@ -118,7 +122,7 @@ export function App() {
 						</Route>
 					</Route>
 
-					<Route path="/login" element={<Login key="login" onLogin={dataFetchers.auth.login} />} />
+					<Route path="/login" element={<Login key="login" model={LoginForm} />} />
 				</Routes>
 			</Router>
 		</Panel>

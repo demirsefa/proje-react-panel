@@ -52,6 +52,15 @@ class LocalizationForm {
 	@Input({ label: "Explanation", type: "textarea" })
 	explanation: string;
 
+	//@IsString()
+	//@MinLength(2) //we do not support nested fields yet TODO: warning
+	@Input({ defaultValue: "", label: "Turkish Text", placeholder: "Enter Turkish Text" })
+	"translations[0].text": string;
+
+	//@IsString() //we do not support nested fields yet TODO: warning
+	@Input({ defaultValue: "tr", type: "hidden" })
+	"translations[0].language": string;
+
 	@Input({
 		type: "hidden",
 	})

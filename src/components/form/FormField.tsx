@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { InputConfiguration } from '../../decorators/form/Input';
 import { useFormContext, UseFormRegister } from 'react-hook-form';
 import { Uploader } from './Uploader';
@@ -20,13 +20,13 @@ interface NestedFormFieldsProps {
   //TODO: any is not a good solution, we need to find a better way to do this
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
+  fieldName: string;
 }
 
-function NestedFormFields({ input, register }: NestedFormFieldsProps) {
+function NestedFormFields({ input, register, fieldName }: NestedFormFieldsProps) {
   const form = useFormContext();
   //TODO: inputOptions İnputResult seperate
-  const data = form.getValues(input.name!);
-  console.log('--_>', data, input, input.nestedFields);
+  const data = form.getValues(fieldName);
   return (
     <div>
       {/* TODO: any is not a good solution, we need to find a better way to do this */}
@@ -36,12 +36,12 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
           {input.nestedFields?.map((nestedInput: InputConfiguration) => (
             <FormField
               key={nestedInput.name?.toString() ?? ''}
-              baseName={input.name + '[' + index + ']'}
+              baseName={fieldName + '[' + index + ']'}
               input={nestedInput}
               register={register}
               error={
                 input.name
-                  ? { message: (form.formState.errors[input.name] as { message: string })?.message }
+                  ? { message: (form.formState.errors[fieldName] as { message: string })?.message }
                   : undefined
               }
             />
@@ -54,53 +54,37 @@ function NestedFormFields({ input, register }: NestedFormFieldsProps) {
 
 export function FormField({ input, register, error, baseName }: FormFieldProps) {
   const fieldName: string = (baseName ? baseName.toString() + '.' : '') + input.name || '';
-  //TODO: support rest default values
-  const renderField = () => {
+  const renderedField = useMemo(() => {
     switch (input.type) {
       case 'textarea':
-        return (
-          <textarea
-            defaultValue={input.defaultValue}
-            {...register(fieldName, {
-              value: input.defaultValue,
-            })}
-            placeholder={input.placeholder}
-          />
-        );
+        return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
       case 'select':
         return <Select input={input} fieldName={fieldName} />;
       case 'input': {
         return (
-          <input
-            type={input.inputType}
-            defaultValue={input.defaultValue}
-            {...register(fieldName, {
-              value: input.defaultValue,
-            })}
-            placeholder={input.placeholder}
-          />
+          <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
         );
       }
       case 'file-upload':
-        return <Uploader input={input} />;
+        return <Uploader fieldName={fieldName} input={input} />;
       case 'checkbox':
-        return <Checkbox input={input} />;
+        return <Checkbox fieldName={fieldName} input={input} />;
       case 'hidden':
         return <input type="hidden" {...register(fieldName)} />;
       case 'nested':
-        return <NestedFormFields input={input} register={register} />;
+        return <NestedFormFields fieldName={fieldName} input={input} register={register} />;
       default:
         return null;
     }
-  };
+  }, [input, register, fieldName]);
 
   return (
     <div className="form-field">
-      {input.type !== 'checkbox' && (
+      {input.type !== 'hidden' && input.type !== 'checkbox' && (
         <Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
       )}
-      {renderField()}
-      {error && <span className="error-message">{error.message}</span>}
+      {renderedField}
+      {error && input.type !== 'hidden' && <span className="error-message">{error.message}</span>}
     </div>
   );
 }

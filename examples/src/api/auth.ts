@@ -1,34 +1,8 @@
-import axios from "axios";
-import { OnLogin } from "proje-react-panel";
-import { getAxiosInstance, setAuthToken } from "./apiConfig";
+import { LoginForm, LoginResponse } from "../types/Login";
+import { getAxiosInstance } from "./apiConfig";
 
-
-// Define the API response data type
-interface LoginResponseData {
-	access_token: string;
-	admin: {
-		email: string;
-		id: string;
-	};
+export async function login(data: LoginForm | FormData): Promise<LoginResponse> {
+	const axiosInstance = getAxiosInstance();
+	const response = await axiosInstance.post<LoginResponse>("/auth/login", data);
+	return response.data;
 }
-
-export function login(): OnLogin {
-	return {
-		login: async (username: string, password: string) => {
-			try {
-				const response = await getAxiosInstance().post<LoginResponseData>("/auth/login", { username, password });
-				console.log(response);
-				const { access_token, admin } = response.data;
-				setAuthToken(access_token);
-				// map response to LoginResponse
-				return {
-					user: admin,
-					token: access_token
-				};
-			} catch (error) {
-				throw error;
-			}
-		},
-	};
-}
-

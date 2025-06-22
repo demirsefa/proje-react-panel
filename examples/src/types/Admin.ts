@@ -2,7 +2,6 @@ import { IsEmail, IsEnum, IsString, MinLength, ValidateIf } from "class-validato
 import { Cell, List, Input, DetailsItem, Details, Form, SelectInput } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 
-
 function getAssetOptions() {
 	return dataFetchers.assets.getAll({}).then((res) => {
 		return res.data.map((asset) => {
@@ -70,6 +69,7 @@ class AdminForm {
 		],
 	})
 	role: string;
+
 	@SelectInput({
 		label: "Asset",
 		defaultOptions: [],
