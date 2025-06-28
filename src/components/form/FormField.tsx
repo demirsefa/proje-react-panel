@@ -30,24 +30,46 @@ function NestedFormFields({ input, register, fieldName }: NestedFormFieldsProps)
   return (
     <div>
       {/* TODO: any is not a good solution, we need to find a better way to do this */}
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-      {data?.map((value: any, index: number) => (
-        <div key={index}>
+      {Array.isArray(data) ? (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data?.map((value: any, index: number) => (
+          <div key={index}>
+            {input.nestedFields?.map((nestedInput: InputConfiguration) => (
+              <FormField
+                key={nestedInput.name?.toString() ?? ''}
+                baseName={fieldName + '[' + index + ']'}
+                input={nestedInput}
+                register={register}
+                error={
+                  input.name
+                    ? {
+                        message: (form.formState.errors[fieldName] as { message: string })?.message,
+                      }
+                    : undefined
+                }
+              />
+            ))}
+          </div>
+        ))
+      ) : (
+        <div>
           {input.nestedFields?.map((nestedInput: InputConfiguration) => (
             <FormField
               key={nestedInput.name?.toString() ?? ''}
-              baseName={fieldName + '[' + index + ']'}
+              baseName={fieldName}
               input={nestedInput}
               register={register}
               error={
                 input.name
-                  ? { message: (form.formState.errors[fieldName] as { message: string })?.message }
+                  ? {
+                      message: (form.formState.errors[fieldName] as { message: string })?.message,
+                    }
                   : undefined
               }
             />
           ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }

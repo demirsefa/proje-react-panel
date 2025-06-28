@@ -1,5 +1,7 @@
 import { Cell, List, Input, ImageCell, Form, Details, DetailsItem, DownloadCell } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
+import { getInputFields } from "proje-react-panel";
+import { SimpleLocalizationForm } from "./Localization";
 
 @List({
 	headers: {
@@ -7,7 +9,6 @@ import { dataFetchers } from "../api/dataFetchers";
 	},
 	cells: (item: AssetList) => ({
 		details: { path: "" + item.id, label: "Details" },
-		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.assets.remove },
 	}),
 	getData: dataFetchers.assets.getAll,
@@ -17,6 +18,11 @@ export class AssetList {
 		title: "ID",
 	})
 	id: number;
+
+	@Cell({
+		title: "Title",
+	})
+	title: string;
 
 	@Cell({
 		title: "File",
@@ -39,6 +45,13 @@ export class AssetList {
 }
 
 class AssetForm {
+	@Input({
+		label: "Title",
+		type: "nested",
+		nestedFields: getInputFields(SimpleLocalizationForm),
+	})
+	title: SimpleLocalizationForm;
+
 	@Input({
 		label: "File",
 		type: "file-upload",
