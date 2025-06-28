@@ -47,8 +47,6 @@ class LocalizationForm {
 	@Input({ label: "Key", type: "input" })
 	id: string;
 
-	@IsString()
-	@MinLength(1)
 	@Input({ label: "Explanation", type: "textarea" })
 	explanation: string;
 

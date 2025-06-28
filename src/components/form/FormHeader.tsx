@@ -9,10 +9,12 @@ interface FormHeaderProps<T extends AnyClass> {
 }
 
 export function FormHeader<T extends AnyClass>({ utils, header, title }: FormHeaderProps<T>) {
+  if (!header) return null;
+
   return (
     <div className="form-header">
       {title && <h2 className="form-title">{title}</h2>}
-      <div className="form-actions">{header ? header(utils) : null}</div>
+      {<div className="form-header-inner">{header(utils)}</div>}
     </div>
   );
 }
