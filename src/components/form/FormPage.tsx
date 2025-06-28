@@ -159,7 +159,14 @@ export function FormPage<T extends AnyClass>({
     resolver: resolver as Resolver<T>,
     defaultValues: inputs.reduce(
       (acc, input) => {
-        acc[input.name] = input.defaultValue;
+        if (input.type === 'nested') {
+          acc[input.name] = input.nestedFields?.reduce((acc, nestedInput) => {
+            acc[nestedInput.name] = nestedInput.defaultValue;
+            return acc;
+          }, {} as Record<string, unknown>);
+        } else {
+          acc[input.name] = input.defaultValue;
+        }
         return acc;
       },
       {} as Record<string, unknown>

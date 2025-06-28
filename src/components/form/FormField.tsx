@@ -28,7 +28,7 @@ function NestedFormFields({ input, register, fieldName }: NestedFormFieldsProps)
   //TODO: inputOptions İnputResult seperate
   const data = form.getValues(fieldName);
   return (
-    <div>
+    <div className="nested-form-field-inner">
       {/* TODO: any is not a good solution, we need to find a better way to do this */}
       {Array.isArray(data) ? (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,7 +101,7 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
   }, [input, register, fieldName]);
 
   return (
-    <div className="form-field">
+    <div className={`form-field ${input.type === 'nested' ? 'nested-form-field' : ''}`}>
       {input.type !== 'hidden' && input.type !== 'checkbox' && (
         <Label htmlFor={fieldName} label={input.label} fieldName={fieldName} />
       )}
