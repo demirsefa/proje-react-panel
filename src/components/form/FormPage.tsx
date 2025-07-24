@@ -160,10 +160,13 @@ export function FormPage<T extends AnyClass>({
     defaultValues: inputs.reduce(
       (acc, input) => {
         if (input.type === 'nested') {
-          acc[input.name] = input.nestedFields?.reduce((acc, nestedInput) => {
-            acc[nestedInput.name] = nestedInput.defaultValue;
-            return acc;
-          }, {} as Record<string, unknown>);
+          acc[input.name] = input.nestedFields?.reduce(
+            (acc, nestedInput) => {
+              acc[nestedInput.name] = nestedInput.defaultValue;
+              return acc;
+            },
+            {} as Record<string, unknown>
+          );
         } else {
           acc[input.name] = input.defaultValue;
         }
@@ -183,10 +186,17 @@ export function FormPage<T extends AnyClass>({
   useEffect(() => {
     if (formClass.getDetailsData) {
       formClass.getDetailsData(params as Record<string, string>).then(data => {
-        form.reset(data as T);
+        inputs.forEach(input => {
+          if (input.type === 'nested') {
+            //TODO: examine this
+            form.setValue(input.name as Path<T>, data[input.name]);
+          } else {
+            form.setValue(input.name as Path<T>, data[input.name]);
+          }
+        });
       });
     }
-  }, [params, form.reset, formClass.getDetailsData, formClass, form]);
+  }, [form, formClass, inputs, params]);
 
   return (
     <div className={`form-wrapper ${className ?? ''}`}>

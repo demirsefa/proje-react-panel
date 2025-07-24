@@ -33,11 +33,6 @@ class MessageForm {
 	@IsBoolean()
 	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({

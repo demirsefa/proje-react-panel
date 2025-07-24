@@ -76,11 +76,6 @@ class AdminForm {
 		onSelectPreloader: getAssetOptions,
 	})
 	assetId: number;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({

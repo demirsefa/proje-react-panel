@@ -33,11 +33,6 @@ class LanguageForm {
 	@IsBoolean()
 	@Input({ label: "Default Language", type: "checkbox" })
 	isDefault: boolean;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({

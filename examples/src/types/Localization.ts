@@ -58,11 +58,6 @@ class LocalizationForm {
 	//@IsString() //we do not support nested fields yet TODO: warning
 	@Input({ defaultValue: "tr", type: "hidden" })
 	"translations[0].language": string;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 export class SimpleLocalizationForm {
@@ -85,11 +80,6 @@ export class SimpleLocalizationForm {
 		includeInCSV: true,
 	})
 	language: string;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({
@@ -109,11 +99,6 @@ export class LocalizationAllForm {
 		nestedFields: getInputFields(SimpleLocalizationForm),
 	})
 	keys: SimpleLocalizationForm[];
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({

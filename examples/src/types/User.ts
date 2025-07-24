@@ -65,13 +65,8 @@ class UserForm {
 	lastName: string;
 
 	@IsBoolean()
-	@Input({ label: "Is Active", type: "checkbox" })
+	@Input({ label: "Is Active", type: "checkbox" })	
 	isActive: boolean;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({

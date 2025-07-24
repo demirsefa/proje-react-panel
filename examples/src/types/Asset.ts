@@ -57,11 +57,6 @@ class AssetForm {
 		type: "file-upload",
 	})
 	file: unknown;
-
-	@Input({
-		type: "hidden",
-	})
-	clientVersion: number;
 }
 
 @Form({
