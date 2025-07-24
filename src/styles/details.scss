@@ -12,6 +12,10 @@
   max-width: 1200px;
   margin: 0 auto;
 
+  .details-header {
+    margin-bottom: 2rem;
+  }
+
   .details-item {
     background: var(--background-color);
     border-radius: 8px;

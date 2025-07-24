@@ -6,9 +6,13 @@ export type GetDetailsDataFN<T> = (param: Record<string, string>) => Promise<T>;
 
 interface DetailsOptions<T extends AnyClass> {
   getDetailsData: GetDetailsDataFN<T>;
+  key?: string;
+  primaryId: keyof T;
 }
 
-export type DetailsConfiguration<T extends AnyClass> = DetailsOptions<T>;
+export type DetailsConfiguration<T extends AnyClass> = DetailsOptions<T> & {
+  key: string;
+};
 
 export function Details<T extends AnyClass>(options?: DetailsOptions<T>): ClassDecorator {
   return (target: object) => {
@@ -27,5 +31,6 @@ export function getDetailsConfiguration<T extends AnyClass>(
   }
   return {
     ...detailsConfiguration,
+    key: detailsConfiguration.key || entityClass.name,
   };
 }

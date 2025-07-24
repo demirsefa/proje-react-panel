@@ -65,7 +65,7 @@ class UserForm {
 	lastName: string;
 
 	@IsBoolean()
-	@Input({ label: "Is Active", type: "checkbox" })	
+	@Input({ label: "Is Active", type: "checkbox" })
 	isActive: boolean;
 }
 
@@ -90,6 +90,7 @@ export class EditUserForm extends UserForm {
 
 @Details({
 	getDetailsData: dataFetchers.users.details,
+	primaryId: "id",
 })
 export class DetailsUserForm {
 	@DetailsItem()

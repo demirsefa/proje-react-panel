@@ -4,18 +4,21 @@ import { ErrorComponent } from './ErrorComponent';
 import { AnyClass, AnyClassConstructor } from '../types/AnyClass';
 import { getDetailsPageMeta } from '../decorators/details/getDetailsPageMeta';
 import { LoadingScreen } from './LoadingScreen';
+import { useAppStore } from '../store/store';
 
 interface DetailsPageProps<T extends AnyClass> {
   model: AnyClassConstructor<T>;
+  CustomHeader?: ({ data }: { data: T | null }) => React.ReactNode;
 }
 
-export function DetailsPage<T extends AnyClass>({ model }: DetailsPageProps<T>) {
+export function DetailsPage<T extends AnyClass>({ model, CustomHeader }: DetailsPageProps<T>) {
   const id = useId();
   const { class: detailsClass, items } = useMemo(() => getDetailsPageMeta(model), [model]);
   const params = useParams();
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const allDetailsData = useAppStore(state => state.detailsData);
 
   useEffect(() => {
     detailsClass
@@ -28,6 +31,19 @@ export function DetailsPage<T extends AnyClass>({ model }: DetailsPageProps<T>) 
       .catch(setError)
       .finally(() => setLoading(false));
   }, [params, detailsClass.getDetailsData, detailsClass]);
+
+  useEffect(() => {
+    setData(data => {
+      if (data) {
+        const detailsData =
+          allDetailsData?.[detailsClass.key]?.[data[detailsClass.primaryId] as string] ??
+          ({} as Partial<T>);
+
+        return { ...data, ...detailsData };
+      }
+      return null;
+    });
+  }, [detailsClass.key, detailsClass.primaryId, allDetailsData]);
 
   if (error) {
     return (
@@ -47,6 +63,11 @@ export function DetailsPage<T extends AnyClass>({ model }: DetailsPageProps<T>) 
 
   return (
     <div className="details-page">
+      {CustomHeader && (
+        <div className="details-header">
+          <CustomHeader data={data} />
+        </div>
+      )}
       {items.map(item => (
         <div key={item.name} className="details-item">
           <div className="item-label">{item.name}</div>

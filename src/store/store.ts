@@ -4,6 +4,8 @@ import { shallow } from 'zustand/vanilla/shallow';
 import { User } from '../types/User';
 
 interface AppState {
+  detailsData: Record<string, Record<string, unknown>>;
+  updateDetailsData: (key: string, id: string, data: unknown) => void;
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
@@ -11,16 +13,25 @@ interface AppState {
 
 export const useAppStore = createWithEqualityFn<AppState>()(
   persist(
-    set => ({
+    (set, get) => ({
       user: null,
       login: (user: User) => set({ user }),
       logout: () => set({ user: null }),
+      detailsData: {},
+      updateDetailsData: (key: string, id: string, data: unknown) =>
+        set({
+          detailsData: {
+            ...get().detailsData,
+            [key]: { ...get().detailsData[key], [id]: data },
+          },
+        }),
     }),
     {
       name: 'app-store-1',
       storage: createJSONStorage(() => localStorage),
       partialize: state => ({
         user: state.user,
+        detailsData: {},
       }),
     }
   ),

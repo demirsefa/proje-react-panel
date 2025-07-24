@@ -1,4 +1,4 @@
-import { IsEmail, MinLength } from "class-validator";
+import { MinLength } from "class-validator";
 import { Form, Input, login } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 import { AdminDetails } from "./Admin";

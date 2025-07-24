@@ -13,6 +13,7 @@ import { CreateLocalizationForm, EditLocalizationForm, LocalizationList } from "
 import { UpdateAllPage } from "./pages/UpdateAllPage";
 import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "./types/Language";
 import { LoginForm } from "./types/Login";
+import { AdminDetailsHeader } from "./components/AdminDetailsHeader";
 
 initApi({
 	baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
@@ -21,11 +22,12 @@ initAuthToken();
 
 export function App() {
 	return (
-		<Panel onInit={appData => {
-			if (appData.token) {
-				setAuthToken(appData.token);
-			}
-		}}>
+		<Panel
+			onInit={(appData) => {
+				if (appData.token) {
+					setAuthToken(appData.token);
+				}
+			}}>
 			<Router>
 				<Routes>
 					<Route path="/" element={<AuthLayout />}>
@@ -34,7 +36,16 @@ export function App() {
 							<Route path={""} element={<ListPage key="admin-list" model={AdminList} />} />
 							<Route path={"create"} element={<FormPage key="admin-create" model={CreateAdminForm} />} />
 							<Route path={"edit/:id"} element={<FormPage key="admin-edit" model={EditAdminForm} />} />
-							<Route path={":id"} element={<DetailsPage key="admin-details" model={AdminDetails} />} />
+							<Route
+								path={":id"}
+								element={
+									<DetailsPage
+										CustomHeader={AdminDetailsHeader}
+										key="admin-details"
+										model={AdminDetails}
+									/>
+								}
+							/>
 						</Route>
 						<Route path={"assets"}>
 							<Route path={""} element={<ListPage key="asset-list" model={AssetList} />} />

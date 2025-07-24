@@ -94,6 +94,7 @@ export class EditAdminForm extends AdminForm {}
 
 @Details({
 	getDetailsData: dataFetchers.admins.details,
+	primaryId: "username",
 })
 export class AdminDetails {
 	@DetailsItem()
@@ -107,4 +108,10 @@ export class AdminDetails {
 
 	@DetailsItem()
 	role: string;
+
+	@DetailsItem()
+	createdAt: string;
+
+	@DetailsItem()
+	updatedAt: string;
 }

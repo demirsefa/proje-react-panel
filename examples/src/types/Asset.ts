@@ -68,6 +68,7 @@ export class CreateAssetForm extends AssetForm {}
 
 @Details({
 	getDetailsData: dataFetchers.assets.details,
+	primaryId: "url",
 })
 export class DetailsAssetForm {
 	@DetailsItem()

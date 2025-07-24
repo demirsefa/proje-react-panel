@@ -70,6 +70,7 @@ export class EditThreadForm extends ThreadForm {}
 
 @Details({
 	getDetailsData: dataFetchers.threads.details,
+	primaryId: "id",
 })
 export class DetailsThreadForm {
 	@DetailsItem()

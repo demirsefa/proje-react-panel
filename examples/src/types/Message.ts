@@ -50,6 +50,7 @@ export class EditMessageForm extends MessageForm {}
 
 @Details({
 	getDetailsData: dataFetchers.messages.details,
+	primaryId: "id",
 })
 export class DetailsMessageForm {
 	@DetailsItem()

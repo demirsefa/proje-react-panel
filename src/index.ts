@@ -36,3 +36,6 @@ export { Layout } from './components/layout';
 export { Login } from './components/Login';
 export { login } from './utils/login';
 export { logout } from './utils/logout';
+
+//SERVICES
+export { updateDetailsData } from './services/DataService';

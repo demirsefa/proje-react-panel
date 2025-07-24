@@ -50,5 +50,6 @@ export class EditLanguageForm extends LanguageForm {}
 
 @Details({
 	getDetailsData: dataFetchers.languages.details,
+	primaryId: "code",
 })
 export class DetailsLanguageForm extends LanguageForm {}
