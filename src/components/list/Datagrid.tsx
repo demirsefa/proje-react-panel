@@ -52,9 +52,11 @@ export function Datagrid<T extends AnyClass>({
                   ? listPageMeta.class.cells?.(item)
                   : listPageMeta.class.cells
                 : null;
-              const listDataItem = listData?.[item[listPageMeta.class.primaryId]] as
-                | Record<string, unknown>
-                | undefined;
+              const listDataItem = listPageMeta.class.primaryId
+                ? (listData?.[item[listPageMeta.class.primaryId!] as string] as
+                    | Record<string, unknown>
+                    | undefined)
+                : null;
               return (
                 <tr key={index}>
                   {cells.map((configuration: CellConfiguration) => {

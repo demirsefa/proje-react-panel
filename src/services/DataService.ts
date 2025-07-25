@@ -9,13 +9,15 @@ export function updateDetailsData<T extends AnyClass>(
 ) {
   const { class: detailsClass } = getDetailsPageMeta(model);
   const key = detailsClass.key;
-  const id = detailsClass.primaryId;
-  console.log('updateDetailsData', model, data, detailsClass);
-  if (!data[id]) {
-    throw new Error(`Id ${id} not found in data`);
+  if (!detailsClass.primaryId) {
+    throw new Error('Primary id is required to use this utility function');
   }
 
-  useAppStore.getState().updateDetailsData(key, data[id]?.toString(), data);
+  if (!data[detailsClass.primaryId]) {
+    throw new Error(`Id ${detailsClass.primaryId} not found in data`);
+  }
+
+  useAppStore.getState().updateDetailsData(key, data[detailsClass.primaryId]?.toString(), data);
 }
 
 export function updateListData<T extends AnyClass>(
@@ -24,11 +26,13 @@ export function updateListData<T extends AnyClass>(
 ) {
   const { class: listClass } = getListPageMeta(model);
   const key = listClass.key;
-  const id = listClass.primaryId;
-  console.log('updateListData', model, data, listClass);
-  if (!data[id]) {
-    throw new Error(`Id ${id} not found in data`);
+  if (!listClass.primaryId) {
+    throw new Error('Primary id is required to use this utility function');
   }
 
-  useAppStore.getState().updateListData(key, data[id]?.toString(), data);
+  if (!data[listClass.primaryId]) {
+    throw new Error(`Id ${listClass.primaryId} not found in data`);
+  }
+
+  useAppStore.getState().updateListData(key, data[listClass.primaryId]?.toString(), data);
 }

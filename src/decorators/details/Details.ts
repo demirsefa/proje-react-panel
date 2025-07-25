@@ -7,7 +7,7 @@ export type GetDetailsDataFN<T> = (param: Record<string, string>) => Promise<T>;
 interface DetailsOptions<T extends AnyClass> {
   getDetailsData: GetDetailsDataFN<T>;
   key?: string;
-  primaryId: keyof T;
+  primaryId?: keyof T;
 }
 
 export type DetailsConfiguration<T extends AnyClass> = DetailsOptions<T> & {

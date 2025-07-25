@@ -33,10 +33,14 @@ export function DetailsPage<T extends AnyClass>({ model, CustomHeader }: Details
   }, [params, detailsClass.getDetailsData, detailsClass]);
 
   useEffect(() => {
+    if (!detailsClass.primaryId) {
+      return;
+    }
+
     setData(data => {
       if (data) {
         const detailsData =
-          allDetailsData?.[detailsClass.key]?.[data[detailsClass.primaryId] as string] ??
+          allDetailsData?.[detailsClass.key]?.[data[detailsClass.primaryId!] as string] ??
           ({} as Partial<T>);
 
         return { ...data, ...detailsData };

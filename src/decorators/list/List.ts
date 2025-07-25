@@ -35,12 +35,11 @@ export interface ListOptions<T> {
   getData: GetDataForList<T>;
   headers?: ListHeaderOptions;
   cells?: ((item: T) => ListCellOptions<T>) | ListCellOptions<T>;
-  primaryId: string;
+  primaryId?: string;
   key?: string;
 }
 
 export type ListConfiguration<T> = ListOptions<T> & {
-  primaryId: string;
   key: string;
 };
 
