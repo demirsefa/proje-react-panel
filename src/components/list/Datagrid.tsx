@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { EmptyList } from './EmptyList';
 import SearchIcon from '../../assets/icons/svg/search.svg';
 import PencilIcon from '../../assets/icons/svg/pencil.svg';
+import DownArrowIcon from '../../assets/icons/svg/down-arrow-backup-2.svg';
 import TrashIcon from '../../assets/icons/svg/trash.svg';
 import { ListPageMeta } from '../../decorators/list/getListPageMeta';
 import { AnyClass } from '../../types/AnyClass';
@@ -40,9 +41,9 @@ export function Datagrid<T extends AnyClass>({
               {cells.map(cellOptions => (
                 <th key={cellOptions.name}>{cellOptions.title ?? cellOptions.name}</th>
               ))}
-              {listGeneralCells?.details && <th>Details</th>}
-              {listGeneralCells?.edit && <th>Edit</th>}
-              {listGeneralCells?.delete && <th>Delete</th>}
+              {(listGeneralCells?.details ||
+                listGeneralCells?.edit ||
+                listGeneralCells?.delete) && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -69,43 +70,54 @@ export function Datagrid<T extends AnyClass>({
                       />
                     );
                   })}
-                  {listCells?.details && (
+                  {(listCells?.details || listCells?.edit || listCells?.delete) && (
                     <td>
-                      <Link to={listCells.details.path} className="util-cell-link">
-                        <SearchIcon className="icon icon-search" />
-                        <span className="util-cell-label">{listCells.details.label}</span>
-                      </Link>
-                    </td>
-                  )}
-                  {listCells?.edit && (
-                    <td>
-                      <Link to={listCells.edit.path} className="util-cell-link">
-                        <PencilIcon className="icon icon-pencil" />
-                        <span className="util-cell-label">{listCells.edit.label}</span>
-                      </Link>
-                    </td>
-                  )}
-                  {listCells?.delete && (
-                    <td>
-                      <a
-                        onClick={() => {
-                          listCells.delete
-                            ?.onRemoveItem?.(item)
-                            .then(() => {
-                              onRemoveItem?.(item);
-                            })
-                            .catch((e: unknown) => {
-                              console.error(e);
-                              const message =
-                                e instanceof Error ? e.message : 'Error deleting item';
-                              alert(message);
-                            });
-                        }}
-                        className="util-cell-link util-cell-link-remove"
-                      >
-                        <TrashIcon className="icon icon-trash" />
-                        <span className="util-cell-label">{listCells.delete.label}</span>
-                      </a>
+                      <div className="util-cell-actions">
+                        <p className="util-cell-actions-label">
+                          Actions <DownArrowIcon className="icon icon-down" />
+                        </p>
+                        <ul className="util-cell-actions-list">
+                          {listCells?.details && (
+                            <li>
+                              <Link to={listCells.details.path} className="util-cell-link">
+                                <SearchIcon className="icon icon-search" />
+                                <span className="util-cell-label">{listCells.details.label}</span>
+                              </Link>
+                            </li>
+                          )}
+                          {listCells?.edit && (
+                            <li>
+                              <Link to={listCells.edit.path} className="util-cell-link">
+                                <PencilIcon className="icon icon-pencil" />
+                                <span className="util-cell-label">{listCells.edit.label}</span>
+                              </Link>
+                            </li>
+                          )}
+                          {listCells?.delete && (
+                            <li>
+                              <a
+                                onClick={() => {
+                                  listCells.delete
+                                    ?.onRemoveItem?.(item)
+                                    .then(() => {
+                                      onRemoveItem?.(item);
+                                    })
+                                    .catch((e: unknown) => {
+                                      console.error(e);
+                                      const message =
+                                        e instanceof Error ? e.message : 'Error deleting item';
+                                      alert(message);
+                                    });
+                                }}
+                                className="util-cell-link util-cell-link-remove"
+                              >
+                                <TrashIcon className="icon icon-trash" />
+                                <span className="util-cell-label">{listCells.delete.label}</span>
+                              </a>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
                     </td>
                   )}
                 </tr>

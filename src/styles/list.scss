@@ -164,6 +164,11 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
       fill: #ff0000;
       stroke: none;
     }
+    &.icon-down {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
   }
 
   .util-cell-label {
@@ -213,5 +218,50 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     font-size: 14px;
     font-weight: 500;
     transition: background-color 0.2s ease;
+  }
+}
+.util-cell-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  &:hover {
+    .util-cell-actions-list {
+      display: flex;
+    }
+  }
+}
+.util-cell-actions-label {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: underline;
+}
+.util-cell-actions-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #2b2b2b;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  z-index: 1000;
+  > li {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #444444;
+    cursor: pointer;
+    &:hover {
+      background-color: #444444;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
