@@ -12,6 +12,7 @@ import { SimpleLocalizationForm } from "./Localization";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.assets.remove },
 	}),
 	getData: dataFetchers.assets.getAll,
+	primaryId: "id",
 })
 export class AssetList {
 	@Cell({

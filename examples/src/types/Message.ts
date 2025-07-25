@@ -12,6 +12,7 @@ import { dataFetchers } from "../api/dataFetchers";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.messages.remove },
 	}),
 	getData: dataFetchers.messages.getAll,
+	primaryId: "id",
 })
 export class MessageList {
 	@Cell({ name: "id", title: "id" })

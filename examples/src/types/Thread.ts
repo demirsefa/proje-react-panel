@@ -12,6 +12,7 @@ import { dataFetchers } from "../api/dataFetchers";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.threads.remove },
 	}),
 	getData: dataFetchers.threads.getAll,
+	primaryId: "id",
 })
 export class ThreadList {
 	id: string;

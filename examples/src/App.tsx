@@ -14,6 +14,7 @@ import { UpdateAllPage } from "./pages/UpdateAllPage";
 import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "./types/Language";
 import { LoginForm } from "./types/Login";
 import { AdminDetailsHeader } from "./components/AdminDetailsHeader";
+import { AdminListHeader } from "./components/AdminListHeader";
 
 initApi({
 	baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
@@ -33,7 +34,12 @@ export function App() {
 					<Route path="/" element={<AuthLayout />}>
 						<Route path={"/"} index element={<Dashboard key="dashboard" />} />
 						<Route path={"admins"}>
-							<Route path={""} element={<ListPage key="admin-list" model={AdminList} />} />
+							<Route
+								path={""}
+								element={
+									<ListPage key="admin-list" customHeader={<AdminListHeader />} model={AdminList} />
+								}
+							/>
 							<Route path={"create"} element={<FormPage key="admin-create" model={CreateAdminForm} />} />
 							<Route path={"edit/:id"} element={<FormPage key="admin-edit" model={EditAdminForm} />} />
 							<Route

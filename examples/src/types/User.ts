@@ -12,6 +12,7 @@ import { dataFetchers } from "../api/dataFetchers";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.users.remove },
 	}),
 	getData: dataFetchers.users.getAll,
+	primaryId: "id",
 })
 export class UserList {
 	@Cell({ name: "id", title: "id", type: "uuid" })

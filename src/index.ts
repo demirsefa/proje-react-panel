@@ -39,3 +39,4 @@ export { logout } from './utils/logout';
 
 //SERVICES
 export { updateDetailsData } from './services/DataService';
+export { updateListData } from './services/DataService';

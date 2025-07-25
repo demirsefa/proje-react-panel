@@ -19,6 +19,7 @@ function getAssetOptions() {
 		delete: { label: "Delete", onRemoveItem: dataFetchers.admins.remove },
 	}),
 	getData: dataFetchers.admins.getAll,
+	primaryId: "id",
 })
 export class AdminList {
 	@Cell({
@@ -35,6 +36,18 @@ export class AdminList {
 		title: "email",
 	})
 	email: string;
+
+	@Cell({
+		title: "Created At",
+		type: "date",
+	})
+	createdAt: string;
+
+	@Cell({
+		title: "Updated At",
+		type: "date",
+	})
+	updatedAt: string;
 }
 
 class AdminForm {
@@ -97,6 +110,9 @@ export class EditAdminForm extends AdminForm {}
 	primaryId: "username",
 })
 export class AdminDetails {
+	@DetailsItem()
+	id: string;
+
 	@DetailsItem()
 	username: string;
 

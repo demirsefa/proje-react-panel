@@ -13,6 +13,7 @@ import { dataFetchers } from "../api/dataFetchers";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.languages.remove },
 	}),
 	getData: dataFetchers.languages.getAll,
+	primaryId: "code",
 })
 export class LanguageList {
 	@Cell({ name: "code", title: "Code" })

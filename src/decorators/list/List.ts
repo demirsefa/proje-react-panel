@@ -35,9 +35,14 @@ export interface ListOptions<T> {
   getData: GetDataForList<T>;
   headers?: ListHeaderOptions;
   cells?: ((item: T) => ListCellOptions<T>) | ListCellOptions<T>;
+  primaryId: string;
+  key?: string;
 }
 
-export type ListConfiguration<T> = ListOptions<T>;
+export type ListConfiguration<T> = ListOptions<T> & {
+  primaryId: string;
+  key: string;
+};
 
 export function List<T>(options?: ListOptions<T> | ((item: T) => ListOptions<T>)): ClassDecorator {
   return (target: object) => {
@@ -50,11 +55,13 @@ export function List<T>(options?: ListOptions<T> | ((item: T) => ListOptions<T>)
 export function getListConfiguration<T extends AnyClass>(
   entityClass: AnyClassConstructor<T>
 ): ListConfiguration<T> {
-  const listConfiguration = Reflect.getMetadata(LIST_METADATA_KEY, entityClass);
+  const listConfiguration: ListOptions<T> = Reflect.getMetadata(LIST_METADATA_KEY, entityClass);
   if (!listConfiguration) {
     throw new Error('List decerator should be used on class');
   }
   return {
     ...listConfiguration,
+    primaryId: listConfiguration.primaryId,
+    key: listConfiguration.key || entityClass.name,
   };
 }

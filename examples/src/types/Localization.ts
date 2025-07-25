@@ -10,6 +10,7 @@ import { dataFetchers } from "../api/dataFetchers";
 		delete: { label: "Delete", onRemoveItem: dataFetchers.localization.remove },
 	}),
 	getData: dataFetchers.localization.getAll,
+	primaryId: "id",
 })
 export class LocalizationList {
 	@Cell({ name: "id", title: "Key" })

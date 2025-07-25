@@ -8,6 +8,7 @@ import { ListPageMeta } from '../../decorators/list/getListPageMeta';
 import { AnyClass } from '../../types/AnyClass';
 import { CellField } from './CellField';
 import { CellConfiguration } from '../../decorators/list/Cell';
+import { useAppStore } from '../../store/store';
 
 interface DatagridProps<T extends AnyClass> {
   data: T[];
@@ -21,6 +22,7 @@ export function Datagrid<T extends AnyClass>({
   onRemoveItem,
 }: DatagridProps<T>) {
   const cells = listPageMeta.cells;
+  const listData = useAppStore(state => state.listData[listPageMeta.class.key]);
   const listGeneralCells = data?.[0]
     ? typeof listPageMeta.class.cells === 'function'
       ? listPageMeta.class.cells?.(data[0])
@@ -50,10 +52,13 @@ export function Datagrid<T extends AnyClass>({
                   ? listPageMeta.class.cells?.(item)
                   : listPageMeta.class.cells
                 : null;
+              const listDataItem = listData?.[item[listPageMeta.class.primaryId]] as
+                | Record<string, unknown>
+                | undefined;
               return (
                 <tr key={index}>
                   {cells.map((configuration: CellConfiguration) => {
-                    const value = item[configuration.name];
+                    const value = listDataItem?.[configuration.name] ?? item[configuration.name];
                     return (
                       <CellField
                         key={configuration.name}

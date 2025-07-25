@@ -6,6 +6,8 @@ import { User } from '../types/User';
 interface AppState {
   detailsData: Record<string, Record<string, unknown>>;
   updateDetailsData: (key: string, id: string, data: unknown) => void;
+  listData: Record<string, Record<string, unknown>>;
+  updateListData: (key: string, id: string, data: unknown) => void;
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
@@ -24,6 +26,11 @@ export const useAppStore = createWithEqualityFn<AppState>()(
             ...get().detailsData,
             [key]: { ...get().detailsData[key], [id]: data },
           },
+        }),
+      listData: {},
+      updateListData: (key: string, id: string, data: unknown) =>
+        set({
+          listData: { ...get().listData, [key]: { ...get().listData[key], [id]: data } },
         }),
     }),
     {
