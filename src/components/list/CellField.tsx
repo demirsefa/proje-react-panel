@@ -7,17 +7,20 @@ import { ImageCell } from './cells/ImageCell';
 import { UUIDCell } from './cells/UUIDCell';
 import { DefaultCell } from './cells/DefaultCell';
 import { DownloadCell } from './cells/DownloadCell';
+import { LinkCell } from './cells/LinkCell';
 
 interface CellFieldProps<T extends AnyClass> {
   configuration: CellConfiguration;
-  value: T[keyof T];
+  item: T;
 }
 
 export function CellField<T extends AnyClass>({
   configuration,
-  value,
+  item,
 }: CellFieldProps<T>): React.ReactElement {
   let render;
+
+  const value = item[configuration.name];
 
   switch (configuration.type) {
     case 'boolean':
@@ -34,6 +37,9 @@ export function CellField<T extends AnyClass>({
       break;
     case 'download':
       render = <DownloadCell value={value} configuration={configuration} />;
+      break;
+    case 'link':
+      render = <LinkCell item={item} configuration={configuration} />;
       break;
     default:
       render = <DefaultCell value={value} configuration={configuration} />;

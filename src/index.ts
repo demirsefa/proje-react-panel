@@ -13,13 +13,14 @@ export {
 } from './decorators/list/List';
 export { ImageCell } from './decorators/list/cells/ImageCell';
 export { Cell } from './decorators/list/Cell';
+export { DownloadCell } from './decorators/list/cells/DownloadCell';
+export { LinkCell } from './decorators/list/cells/LinkCell';
 
 //FORM
 export { FormPage } from './components/form/FormPage';
 export { Form, type OnSubmitFN } from './decorators/form/Form';
 export { Input } from './decorators/form/Input';
 export { SelectInput } from './decorators/form/inputs/SelectInput';
-export { DownloadCell } from './decorators/list/cells/DownloadCell';
 //for nested form fields
 export { getInputFields } from './decorators/form/Input';
 

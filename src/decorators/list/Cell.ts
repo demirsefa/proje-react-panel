@@ -14,7 +14,7 @@ export interface StaticSelectFilter extends Filter {
 }
 
 export type CellTypes = 'string' | 'date' | 'number' | 'boolean' | 'uuid';
-export type ExtendedCellTypes = CellTypes | 'image' | 'download';
+export type ExtendedCellTypes = CellTypes | 'image' | 'download' | 'link';
 
 export interface CellOptions {
   name?: string;

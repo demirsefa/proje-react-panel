@@ -61,12 +61,14 @@ export function Datagrid<T extends AnyClass>({
               return (
                 <tr key={index}>
                   {cells.map((configuration: CellConfiguration) => {
-                    const value = listDataItem?.[configuration.name] ?? item[configuration.name];
                     return (
                       <CellField
                         key={configuration.name}
+                        item={{
+                          ...(listDataItem ?? {}),
+                          ...item,
+                        }}
                         configuration={configuration}
-                        value={value}
                       />
                     );
                   })}

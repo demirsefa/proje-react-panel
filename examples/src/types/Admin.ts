@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsString, MinLength, ValidateIf } from "class-validator";
-import { Cell, List, Input, DetailsItem, Details, Form, SelectInput } from "proje-react-panel";
+import { Cell, List, Input, DetailsItem, Details, Form, SelectInput, LinkCell } from "proje-react-panel";
 import { dataFetchers } from "../api/dataFetchers";
 
 function getAssetOptions() {
@@ -42,6 +42,21 @@ export class AdminList {
 		type: "date",
 	})
 	createdAt: string;
+
+	@LinkCell({
+		path: "/",
+		placeHolder: "Custom Link",
+	})
+	details: string;
+
+	@LinkCell({
+		path: "/",
+		placeHolder: "Click Me",
+		onClick: (data: AdminList) => {
+			alert(data.username);
+		},
+	})
+	detailsOnClick: string;
 
 	@Cell({
 		title: "Updated At",

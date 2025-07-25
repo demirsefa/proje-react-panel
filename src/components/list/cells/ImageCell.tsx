@@ -1,6 +1,7 @@
 import React from 'react';
 import { CellConfiguration } from '../../../decorators/list/Cell';
 import { ImageCellConfiguration } from '../../../decorators/list/cells/ImageCell';
+
 interface ImageCellProps {
   value: string;
   configuration: CellConfiguration;
