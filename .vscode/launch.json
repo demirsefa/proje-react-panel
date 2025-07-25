@@ -22,6 +22,15 @@
       "cwd": "${workspaceFolder}/examples",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Start Server",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start"],
+      "cwd": "/Users/hasbisefademir/WebstormProjects/proje/nestjs-react-panel-server",
+      "console": "integratedTerminal"
     }
   ]
 }

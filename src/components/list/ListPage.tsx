@@ -106,6 +106,9 @@ export function ListPage<T extends AnyClass>({
       />
       <div className="list-footer">
         <Pagination pagination={pagination} onPageChange={fetchData} />
+        <p className="list-footer-total">
+          TOTAL: {pagination.total} / SHOWING: {pagination.limit}
+        </p>
       </div>
       <FilterPopup
         isOpen={isFilterOpen}
