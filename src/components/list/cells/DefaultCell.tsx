@@ -1,13 +1,13 @@
 import React from 'react';
 import { CellConfiguration } from '../../../decorators/list/Cell';
+import { AnyClass } from '../../../types/AnyClass';
 
 interface DefaultCellProps {
-  //TODO: any is not a good solution, we need to find a better way to do this
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+  item: AnyClass;
   configuration: CellConfiguration;
 }
 
-export function DefaultCell({ value, configuration }: DefaultCellProps): React.ReactElement {
+export function DefaultCell({ item, configuration }: DefaultCellProps): React.ReactElement {
+  const value = item[configuration.name];
   return <>{value ? value.toString() : configuration.placeHolder}</>;
 }

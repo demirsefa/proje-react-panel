@@ -34,7 +34,7 @@ export const useAppStore = createWithEqualityFn<AppState>()(
         }),
     }),
     {
-      name: 'app-store-1',
+      name: 'proje-panel-store',
       storage: createJSONStorage(() => localStorage),
       partialize: state => ({
         user: state.user,

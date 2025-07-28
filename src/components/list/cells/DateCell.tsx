@@ -1,10 +1,14 @@
 import React from 'react';
+import { AnyClass } from '../../../types/AnyClass';
+import { CellConfiguration } from '../../../decorators/list/Cell';
 
 interface DateCellProps {
-  value: string | number | Date;
+  item: AnyClass;
+  configuration: CellConfiguration;
 }
 
-export function DateCell({ value }: DateCellProps) {
+export function DateCell({ item, configuration }: DateCellProps) {
+  const value = item[configuration.name];
   if (!value) return <>-</>;
 
   const date = new Date(value);

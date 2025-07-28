@@ -1,13 +1,15 @@
 import React from 'react';
 import { CellConfiguration } from '../../../decorators/list/Cell';
 import { DownloadCellConfiguration } from '../../../decorators/list/cells/DownloadCell';
+import { AnyClass } from '../../../types/AnyClass';
 
 interface DownloadCellProps {
-  value: string;
+  item: AnyClass;
   configuration: CellConfiguration;
 }
 
-export function DownloadCell({ value, configuration }: DownloadCellProps): React.ReactElement {
+export function DownloadCell({ item, configuration }: DownloadCellProps): React.ReactElement {
+  const value = item[configuration.name];
   if (!value) return <>-</>;
 
   const downloadConfiguration = configuration as DownloadCellConfiguration;

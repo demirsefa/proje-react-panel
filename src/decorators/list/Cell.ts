@@ -22,6 +22,10 @@ export interface CellOptions {
   type?: CellTypes;
   placeHolder?: string;
   filter?: Filter | StaticSelectFilter;
+  style?: {
+    minWidth?: string;
+    width?: string;
+  };
 }
 
 export interface CellConfiguration extends Omit<CellOptions, 'type'> {

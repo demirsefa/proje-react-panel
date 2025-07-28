@@ -20,31 +20,40 @@ export function CellField<T extends AnyClass>({
 }: CellFieldProps<T>): React.ReactElement {
   let render;
 
-  const value = item[configuration.name];
-
   switch (configuration.type) {
     case 'boolean':
-      render = <BooleanCell value={value} />;
+      render = <BooleanCell item={item} configuration={configuration} />;
       break;
     case 'date':
-      render = <DateCell value={value} />;
+      render = <DateCell item={item} configuration={configuration} />;
       break;
     case 'image':
-      render = <ImageCell value={value} configuration={configuration} />;
+      render = <ImageCell item={item} configuration={configuration} />;
       break;
     case 'uuid':
-      render = <UUIDCell value={value} />;
+      render = <UUIDCell item={item} configuration={configuration} />;
       break;
     case 'download':
-      render = <DownloadCell value={value} configuration={configuration} />;
+      render = <DownloadCell item={item} configuration={configuration} />;
       break;
     case 'link':
       render = <LinkCell item={item} configuration={configuration} />;
       break;
     default:
-      render = <DefaultCell value={value} configuration={configuration} />;
+      render = <DefaultCell item={item} configuration={configuration} />;
       break;
   }
-
-  return <td key={configuration.name}>{render}</td>;
+  const width = configuration.style?.width;
+  const minWidth = configuration.style?.minWidth;
+  return (
+    <td
+      key={configuration.name}
+      style={{
+        minWidth,
+        width,
+      }}
+    >
+      {render}
+    </td>
+  );
 }

@@ -73,7 +73,7 @@ export function Datagrid<T extends AnyClass>({
                     );
                   })}
                   {(listCells?.details || listCells?.edit || listCells?.delete) && (
-                    <td>
+                    <td width="0">
                       <div className="util-cell-actions">
                         <p className="util-cell-actions-label">
                           Actions <DownArrowIcon className="icon icon-down" />
