@@ -15,13 +15,14 @@ export function LinkCell<T>({ item, configuration }: LinkCellProps<T>) {
   return (
     <Link to={linkConfiguration.path ?? linkConfiguration.url ?? ''}>
       {linkConfiguration.onClick ? (
-        <button
+        <a
+          className="util-cell-link"
           onClick={() => {
             linkConfiguration.onClick?.(item as T);
           }}
         >
           {value?.toString()}
-        </button>
+        </a>
       ) : (
         value?.toString() || linkConfiguration.placeHolder
       )}

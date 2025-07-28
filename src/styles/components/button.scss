@@ -1,0 +1,14 @@
+.panel-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  background-color: cornflowerblue;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    transform: scale(1.01);
+  }
+}

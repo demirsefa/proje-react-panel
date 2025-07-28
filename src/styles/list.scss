@@ -269,3 +269,6 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     }
   }
 }
+.util-cell-link {
+  cursor: pointer;
+}
