@@ -7,7 +7,7 @@ import { dataFetchers } from "../api/dataFetchers";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: LanguageList) => ({
+	actions: (item: LanguageList) => ({
 		details: { path: `${item.code}`, label: "Details" },
 		edit: { path: "edit/" + item.code, label: "Edit" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.languages.remove },

@@ -5,7 +5,7 @@ import { dataFetchers } from "../api/dataFetchers";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: LocalizationList) => ({
+	actions: (item: LocalizationList) => ({
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.localization.remove },
 	}),

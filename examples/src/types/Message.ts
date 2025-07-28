@@ -6,7 +6,7 @@ import { dataFetchers } from "../api/dataFetchers";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: MessageList) => ({
+	actions: (item: MessageList) => ({
 		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.messages.remove },

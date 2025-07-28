@@ -24,10 +24,10 @@ export function Datagrid<T extends AnyClass>({
 }: DatagridProps<T>) {
   const cells = listPageMeta.cells;
   const listData = useAppStore(state => state.listData[listPageMeta.class.key]);
-  const listGeneralCells = data?.[0]
-    ? typeof listPageMeta.class.cells === 'function'
-      ? listPageMeta.class.cells?.(data[0])
-      : listPageMeta.class.cells
+  const listActions = data?.[0]
+    ? typeof listPageMeta.class.actions === 'function'
+      ? listPageMeta.class.actions?.(data[0])
+      : listPageMeta.class.actions
     : null;
 
   return (
@@ -46,18 +46,20 @@ export function Datagrid<T extends AnyClass>({
                   {cellOptions.title ?? cellOptions.name}
                 </th>
               ))}
-              {(listGeneralCells?.details ||
-                listGeneralCells?.edit ||
-                listGeneralCells?.delete) && <th style={{ width: '30px' }}>Actions</th>}
+              {(listActions?.details ||
+                listActions?.edit ||
+                listActions?.delete ||
+                listActions?.customActions?.length) && <th style={{ width: '30px' }}>Actions</th>}
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => {
               const listCells = item
-                ? typeof listPageMeta.class.cells === 'function'
-                  ? listPageMeta.class.cells?.(item)
-                  : listPageMeta.class.cells
+                ? typeof listPageMeta.class.actions === 'function'
+                  ? listPageMeta.class.actions?.(item)
+                  : listPageMeta.class.actions
                 : null;
+              //TODO: memoize this
               const listDataItem = listPageMeta.class.primaryId
                 ? (listData?.[item[listPageMeta.class.primaryId!] as string] as
                     | Record<string, unknown>
@@ -123,6 +125,13 @@ export function Datagrid<T extends AnyClass>({
                               </a>
                             </li>
                           )}
+                          {listCells?.customActions?.map(action => (
+                            <li key={action.label}>
+                              <a onClick={() => action.onClick(item)} className="util-cell-link">
+                                <span className="util-cell-label">{action.label}</span>
+                              </a>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </td>

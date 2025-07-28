@@ -7,7 +7,7 @@ import { SimpleLocalizationForm } from "./Localization";
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: AssetList) => ({
+	actions: (item: AssetList) => ({
 		details: { path: "" + item.id, label: "Details" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.assets.remove },
 	}),

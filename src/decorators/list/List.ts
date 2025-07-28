@@ -25,7 +25,8 @@ export interface ListHeaderOptions {
   create?: { path: string; label: string };
 }
 
-export interface ListCellOptions<T> {
+export interface ListActionOptions<T> {
+  customActions?: { label: string; onClick: (item: T) => void; icon?: string }[];
   details?: { path: string; label: string };
   edit?: { path: string; label: string };
   delete?: { label: string; onRemoveItem?: (item: T) => Promise<void> };
@@ -34,7 +35,7 @@ export interface ListCellOptions<T> {
 export interface ListOptions<T> {
   getData: GetDataForList<T>;
   headers?: ListHeaderOptions;
-  cells?: ((item: T) => ListCellOptions<T>) | ListCellOptions<T>;
+  actions?: ((item: T) => ListActionOptions<T>) | ListActionOptions<T>;
   primaryId?: string;
   key?: string;
 }

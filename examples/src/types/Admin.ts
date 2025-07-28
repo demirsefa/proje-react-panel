@@ -13,7 +13,15 @@ function getAssetOptions() {
 	headers: {
 		create: { path: "create", label: "Create" },
 	},
-	cells: (item: AdminList) => ({
+	actions: (item: AdminList) => ({
+		customActions: [
+			{
+				label: "Custom",
+				onClick: () => {
+					alert("Custom");
+				},
+			},
+		],
 		details: { path: "" + item.id, label: "Details" },
 		edit: { path: "edit/" + item.id, label: "Edit" },
 		delete: { label: "Delete", onRemoveItem: dataFetchers.admins.remove },
