@@ -39,11 +39,16 @@ export function Datagrid<T extends AnyClass>({
           <thead>
             <tr>
               {cells.map(cellOptions => (
-                <th key={cellOptions.name}>{cellOptions.title ?? cellOptions.name}</th>
+                <th
+                  key={cellOptions.name}
+                  style={{ width: cellOptions.style?.width, minWidth: cellOptions.style?.minWidth }}
+                >
+                  {cellOptions.title ?? cellOptions.name}
+                </th>
               ))}
               {(listGeneralCells?.details ||
                 listGeneralCells?.edit ||
-                listGeneralCells?.delete) && <th>Actions</th>}
+                listGeneralCells?.delete) && <th style={{ width: '30px' }}>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -73,7 +78,7 @@ export function Datagrid<T extends AnyClass>({
                     );
                   })}
                   {(listCells?.details || listCells?.edit || listCells?.delete) && (
-                    <td width="0">
+                    <td style={{ width: '30px' }}>
                       <div className="util-cell-actions">
                         <p className="util-cell-actions-label">
                           Actions <DownArrowIcon className="icon icon-down" />

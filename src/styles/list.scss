@@ -89,13 +89,13 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     min-width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
+    position: relative;
 
     th,
     td {
       padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid #444444;
-      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
