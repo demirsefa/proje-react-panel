@@ -1,17 +1,17 @@
-import { create, getAll, getOne, update, updateSimple, remove, createFormData } from "./crud";
-import { AssetList, CreateAssetForm, DetailsAssetForm } from "../types/Asset";
-import { EditThreadForm, CreateThreadForm, DetailsThreadForm, ThreadList } from "../types/Thread";
-import { CreateMessageForm, DetailsMessageForm, EditMessageForm, MessageList } from "../types/Message";
-import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "../types/User";
+import { getAll, getOne, create, createFormData, update, updateSimple, remove } from "proje-react-panel";
+import { AssetList, CreateAssetForm, DetailsAssetForm } from "../models/Asset";
+import { EditThreadForm, CreateThreadForm, DetailsThreadForm, ThreadList } from "../models/Thread";
+import { CreateMessageForm, DetailsMessageForm, EditMessageForm, MessageList } from "../models/Message";
+import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "../models/User";
 import {
 	CreateLocalizationForm,
 	EditLocalizationForm,
 	LocalizationAllForm,
 	LocalizationList,
-} from "../types/Localization";
-import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "../types/Language";
-import { login } from "./auth";
-import { AdminDetails, AdminList, CreateAdminForm, EditAdminForm } from "../types/Admin";
+} from "../models/Localization";
+import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "../models/Language";
+import { authLogin } from "proje-react-panel";
+import { AdminDetails, AdminList, CreateAdminForm, EditAdminForm } from "../models/Admin";
 
 export const dataFetchers = Object.freeze({
 	admins: {
@@ -71,6 +71,6 @@ export const dataFetchers = Object.freeze({
 		remove: remove("languages", "code"),
 	},
 	auth: {
-		login: login,
+		login: authLogin,
 	},
 });

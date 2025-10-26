@@ -3,16 +3,16 @@ import { Login, Panel, ListPage, FormPage, DetailsPage } from "proje-react-panel
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
 import { AuthLayout } from "./AuthLayout";
-import { AdminDetails, AdminList, CreateAdminForm, EditAdminForm } from "./types/Admin";
-import { AssetList, CreateAssetForm, DetailsAssetForm } from "./types/Asset";
-import { ThreadList, CreateThreadForm, EditThreadForm, DetailsThreadForm } from "./types/Thread";
-import { MessageList, CreateMessageForm, EditMessageForm, DetailsMessageForm } from "./types/Message";
-import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "./types/User";
-import { initApi, initAuthToken, setAuthToken } from "./api/apiConfig";
-import { CreateLocalizationForm, EditLocalizationForm, LocalizationList } from "./types/Localization";
+import { AdminDetails, AdminList, CreateAdminForm, EditAdminForm } from "./models/Admin";
+import { AssetList, CreateAssetForm, DetailsAssetForm } from "./models/Asset";
+import { ThreadList, CreateThreadForm, EditThreadForm, DetailsThreadForm } from "./models/Thread";
+import { MessageList, CreateMessageForm, EditMessageForm, DetailsMessageForm } from "./models/Message";
+import { UserList, CreateUserForm, EditUserForm, DetailsUserForm } from "./models/User";
+import { initApi, initAuthToken, setAuthToken } from "proje-react-panel";
+import { CreateLocalizationForm, EditLocalizationForm, LocalizationList } from "./models/Localization";
 import { UpdateAllPage } from "./pages/UpdateAllPage";
-import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "./types/Language";
-import { LoginForm } from "./types/Login";
+import { LanguageList, CreateLanguageForm, EditLanguageForm, DetailsLanguageForm } from "./models/Language";
+import { DefaultLoginForm } from "proje-react-panel";
 import { AdminDetailsHeader } from "./components/AdminDetailsHeader";
 import { AdminListHeader } from "./components/AdminListHeader";
 
@@ -139,7 +139,7 @@ export function App() {
 						</Route>
 					</Route>
 
-					<Route path="/login" element={<Login key="login" model={LoginForm} />} />
+					<Route path="/login" element={<Login key="login" model={DefaultLoginForm} />} />
 				</Routes>
 			</Router>
 		</Panel>

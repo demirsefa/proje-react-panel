@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminList } from "../types/Admin";
+import { AdminList } from "../models/Admin";
 import { updateListData } from "proje-react-panel";
 
 export function AdminListHeader() {

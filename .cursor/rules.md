@@ -40,7 +40,17 @@ export function Button({ label, onClick }: ButtonProps) {
 
 Use SCSS exclusively for styling.
 
-## 5. General Rules
+## 5. Package Management
+
+**ALWAYS use yarn, NEVER use npm.**
+
+- Use `yarn add` instead of `npm install`
+- Use `yarn remove` instead of `npm uninstall`
+- Use `yarn` instead of `npm install` for installing dependencies
+- Use `yarn build` instead of `npm run build`
+- Use `yarn test` instead of `npm test`
+
+## 6. General Rules
 
 - Keep components focused and single-responsibility
 - Use meaningful names

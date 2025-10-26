@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { LocalizationAllForm } from "../types/Localization";
+import { LocalizationAllForm } from "../models/Localization";
 import { dataFetchers } from "../api/dataFetchers";
 import { FormPage } from "proje-react-panel";
 import Select from "react-select";
 import { useNavigate, useParams } from "react-router";
-import { LanguageList } from "../types/Language";
+import { LanguageList } from "../models/Language";
 import { HardCodedLanguageOptions } from "../constants/HardCodedLanguageOptions";
 
 export function UpdateAllPage() {

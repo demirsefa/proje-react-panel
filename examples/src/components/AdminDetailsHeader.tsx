@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminDetails } from "../types/Admin";
+import { AdminDetails } from "../models/Admin";
 import { updateDetailsData } from "proje-react-panel";
 
 export function AdminDetailsHeader({ data }: { data: AdminDetails | null }) {

@@ -37,6 +37,31 @@ export { Layout } from './components/layout';
 export { Login } from './components/Login';
 export { login } from './utils/login';
 export { logout } from './utils/logout';
+export { DefaultLoginForm } from './decorators/auth/DefaultLoginForm';
+
+//API
+export {
+  initApi,
+  initAuthToken,
+  setAuthToken,
+  setAuthLogout,
+  getAxiosInstance,
+  axiosInstance,
+} from './api/ApiConfig';
+export {
+  getAll,
+  getOne,
+  create,
+  createFormData,
+  update,
+  updateFormData,
+  updateSimple,
+  remove,
+} from './api/CrudApi';
+export { login as authLogin } from './api/AuthApi';
+
+//TYPES
+export type { LoginForm, LoginResponse } from './types/Login';
 
 //SERVICES
 export { updateDetailsData } from './services/DataService';

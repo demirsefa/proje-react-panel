@@ -12,7 +12,6 @@ import {
 	faUserAlt,
 	faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { setAuthLogout } from "./api/apiConfig";
 
 export type IconType = "dashboard" | "admin" | "user" | "message" | "thread" | "assets" | "localization" | "language";
 function getIcons(iconType: IconType) {
@@ -57,7 +56,6 @@ export function AuthLayout() {
 	return (
 		<Layout
 			logout={() => {
-				setAuthLogout();
 				logout(() => {
 					window.location.href = "/login";
 				});
