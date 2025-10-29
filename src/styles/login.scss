@@ -5,11 +5,11 @@
   min-height: 100vh;
   max-width: 100vw;
   max-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+  background: linear-gradient(135deg, var(--prp-bg-primary) 0%, var(--prp-bg-secondary) 100%);
   padding: 0;
-   form {
+  form {
     width: 400px;
-    background: #1a1a1a;
+    background: var(--prp-bg-primary);
     border-radius: 8px;
     padding: 40px;
   }

@@ -5,15 +5,16 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #2b2b2b;
+    background: var(--prp-bg-secondary);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #666666;
+    background: var(--prp-bg-tertiary);
     border-radius: 4px;
 
     &:hover {
-      background: #777777;
+      background: var(--prp-bg-tertiary);
+      opacity: 0.9;
     }
   }
 }

@@ -1,7 +1,7 @@
 .form-wrapper {
   padding: 20px;
-  background-color: #1a1a1a;
-  color: #f2f2f2;
+  background-color: var(--prp-bg-primary);
+  color: var(--prp-text-secondary);
   width: 100%;
 
   form {
@@ -22,7 +22,7 @@
         top: 25px;
         bottom: 4px;
         width: 1px;
-        border-left: 1px dashed #444;
+        border-left: 1px dashed var(--prp-border-primary);
       }
     }
     .nested-form-field-inner {
@@ -48,24 +48,24 @@
       box-sizing: border-box;
       padding: 10px;
       font-size: 16px;
-      border: 1px solid #444;
+      border: 1px solid var(--prp-border-primary);
       border-radius: 5px;
       width: 100%;
-      background-color: #333;
-      color: #f2f2f2;
+      background-color: var(--prp-bg-tertiary);
+      color: var(--prp-text-secondary);
       transition: border-color 0.2s;
 
       &:focus {
-        border-color: #66b2ff;
+        border-color: var(--prp-color-focus);
         outline: none;
       }
 
       &:disabled {
-        background-color: #252525;
+        background-color: var(--prp-bg-primary);
         cursor: not-allowed;
         opacity: 0.8;
-        border-color: #444;
-        color: #999;
+        border-color: var(--prp-border-primary);
+        color: var(--prp-text-muted);
       }
     }
 
@@ -86,15 +86,15 @@
     .error-message {
       margin-top: 4px;
       font-size: 14px;
-      color: #ff4d4f;
+      color: var(--prp-color-error);
     }
   }
 
   .submit-button {
     padding: 12px;
     font-size: 18px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--prp-bg-button-primary);
+    color: var(--prp-text-primary);
     border: none;
     border-radius: 5px;
     height: 40px;
@@ -102,7 +102,8 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: var(--prp-bg-button-primary);
+      opacity: 0.9;
     }
   }
 
@@ -110,6 +111,6 @@
     font-weight: bold;
     margin-bottom: 6px;
     display: block;
-    color: #f2f2f2;
+    color: var(--prp-text-secondary);
   }
 }

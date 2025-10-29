@@ -4,14 +4,14 @@
   align-items: center;
   padding: 1rem;
   margin-bottom: 1.5rem;
-  background-color: #333333;
+  background-color: var(--prp-bg-tertiary);
   border-radius: 8px 0 0 8px;
 
   .form-title {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #cccccc;
+    color: var(--prp-text-secondary);
   }
 
   .form-header-inner {
@@ -23,50 +23,52 @@
     .export-button,
     .import-button {
       padding: 0.5rem 1rem;
-      border: 1px solid #444444;
+      border: 1px solid var(--prp-border-primary);
       border-radius: 4px;
-      background-color: #222222;
-      color: #cccccc;
+      background-color: var(--prp-bg-secondary);
+      color: var(--prp-text-secondary);
       font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s ease;
 
       &:hover {
-        background-color: #444444;
-        border-color: #555555;
+        background-color: var(--prp-bg-tertiary);
+        border-color: var(--prp-border-primary);
       }
     }
   }
 
   &.dark-theme {
-    background-color: black;
+    background-color: var(--prp-bg-primary);
     box-shadow: none;
 
     .form-title {
-      color: white;
+      color: var(--prp-text-primary);
     }
 
     .form-actions {
       .export-button {
-        background-color: black;
-        border-color: black;
-        color: white;
+        background-color: var(--prp-bg-primary);
+        border-color: var(--prp-bg-primary);
+        color: var(--prp-text-primary);
 
         &:hover {
-          background-color: black;
-          border-color: black;
+          background-color: var(--prp-bg-primary);
+          border-color: var(--prp-bg-primary);
+          opacity: 0.9;
         }
       }
 
       .import-button {
         .import-label {
-          background-color: black;
-          border-color: black;
-          color: white;
+          background-color: var(--prp-bg-primary);
+          border-color: var(--prp-bg-primary);
+          color: var(--prp-text-primary);
 
           &:hover {
-            background-color: black;
-            border-color: black;
+            background-color: var(--prp-bg-primary);
+            border-color: var(--prp-bg-primary);
+            opacity: 0.9;
           }
         }
       }

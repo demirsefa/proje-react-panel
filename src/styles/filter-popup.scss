@@ -4,11 +4,11 @@
   //TODO: make this variable
   left: 260px;
   right: 10px;
-  background: #1e1e1e;
+  background: var(--prp-bg-secondary);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid #333;
+  box-shadow: 0 4px 20px var(--prp-shadow-dark);
+  border: 1px solid var(--prp-border-primary);
   z-index: 10;
   &-header {
     display: flex;
@@ -19,7 +19,7 @@
     h3 {
       margin: 0;
       font-size: 1.2rem;
-      color: #ffffff;
+      color: var(--prp-text-primary);
     }
   }
 
@@ -32,16 +32,17 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: #2d2d2d;
+      background: var(--prp-bg-secondary);
       border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #444;
+      background: var(--prp-bg-tertiary);
       border-radius: 4px;
 
       &:hover {
-        background: #555;
+        background: var(--prp-bg-tertiary);
+        opacity: 0.9;
       }
     }
   }
@@ -60,11 +61,11 @@
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  color: #999;
+  color: var(--prp-text-muted);
   transition: color 0.2s ease;
 
   &:hover {
-    color: #ffffff;
+    color: var(--text-primary);
   }
 }
 
@@ -75,27 +76,27 @@
     display: block;
     margin-bottom: 5px;
     font-size: 0.9rem;
-    color: #bbb;
+    color: var(--prp-text-secondary);
   }
 
   input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #444;
+    border: 1px solid var(--prp-border-primary);
     border-radius: 6px;
     font-size: 0.9rem;
-    background: #2d2d2d;
-    color: #ffffff;
+    background: var(--prp-bg-secondary);
+    color: var(--prp-text-primary);
     transition: all 0.2s ease;
 
     &:focus {
-      border-color: #0066cc;
+      border-color: var(--prp-bg-button-primary);
       outline: none;
-      box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+      box-shadow: 0 0 0 2px var(--prp-shadow-focus);
     }
 
     &::placeholder {
-      color: #666;
+      color: var(--prp-text-muted);
     }
   }
 }
@@ -110,25 +111,26 @@
 }
 
 .cancel-button {
-  background: #2d2d2d;
-  border: 1px solid #444;
-  color: #bbb;
+  background: var(--prp-bg-secondary);
+  border: 1px solid var(--prp-border-primary);
+  color: var(--prp-text-secondary);
 
   &:hover {
-    background: #333;
-    border-color: #555;
-    color: #fff;
+    background: var(--prp-bg-tertiary);
+    border-color: var(--prp-border-primary);
+    color: var(--prp-text-primary);
   }
 }
 
 .apply-button {
-  background: #0066cc;
-  border: 1px solid #0056b3;
-  color: white;
+  background: var(--prp-bg-button-primary);
+  border: 1px solid var(--prp-bg-button-primary);
+  color: var(--prp-text-primary);
 
   &:hover {
-    background: #0056b3;
+    background: var(--prp-bg-button-primary);
+    opacity: 0.9;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 2px 8px var(--prp-shadow-focus);
   }
 }

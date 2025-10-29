@@ -14,19 +14,8 @@ body {
 		"Droid Sans", "Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #282727;
-	color: white;
 
 	> * {
 		box-sizing: border-box;
-	}
-}
-
-.dashboard {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	justify-content: space-between;
-	.counter-container {
-		width: 100%;
 	}
 }

@@ -11,14 +11,15 @@
     padding: 16px;
     margin: 20px 0;
     border-radius: 8px;
-    background-color: rgba(255, 77, 79, 0.1);
-    border-left: 4px solid #ff4d4f;
-    color: #f2f2f2;
+    background-color: var(--prp-bg-tertiary);
+    opacity: 0.3;
+    border-left: 4px solid var(--prp-color-error);
+    color: var(--prp-text-secondary);
     align-items: flex-start;
 
     .error-icon {
       margin-right: 16px;
-      color: #ff4d4f;
+      color: var(--prp-color-error);
       font-size: 24px;
       display: flex;
       align-items: center;
@@ -30,7 +31,7 @@
       h3 {
         margin: 0 0 8px;
         font-size: 18px;
-        color: #ff4d4f;
+        color: var(--prp-color-error);
       }
 
       p {
@@ -42,16 +43,16 @@
 
   // Additional error feedback styles
   .field-error {
-    border-color: #ff4d4f !important;
+    border-color: var(--prp-color-error) !important;
 
     &:focus {
-      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+      box-shadow: 0 0 0 2px var(--prp-shadow-dark);
     }
   }
 
   .error-message {
     margin-top: 4px;
     font-size: 14px;
-    color: #ff4d4f;
+    color: var(--prp-color-error);
   }
 }

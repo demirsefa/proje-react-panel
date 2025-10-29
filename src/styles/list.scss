@@ -4,8 +4,8 @@ $footer-height: 60px;
 $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
 .list {
   width: 100%;
-  background-color: #2b2b2b;
-  color: #e0e0e0;
+  background-color: var(--prp-bg-secondary);
+  color: var(--prp-text-muted);
   max-height: 100vh;
   height: 100vh;
   min-height: 100vh;
@@ -17,14 +17,14 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
-    background: linear-gradient(90deg, #2b2b2b 0%, #3c3c3c 100%);
+    background: linear-gradient(90deg, var(--prp-bg-secondary) 0%, var(--prp-bg-tertiary) 100%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px var(--prp-shadow-medium);
 
     .header-title {
       font-size: 20px;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--prp-text-primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -36,8 +36,8 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
 
       .create-button {
         padding: 8px 16px;
-        background-color: #4caf50;
-        color: white;
+        background-color: var(--prp-bg-button-success);
+        color: var(--prp-text-primary);
         border-radius: 4px;
         text-decoration: none;
         font-size: 14px;
@@ -45,7 +45,8 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
         transition: background-color 0.2s ease;
 
         &:hover {
-          background-color: #45a049;
+          background-color: var(--prp-bg-button-success);
+          opacity: 0.9;
         }
         .icon-create {
           fill: currentColor;
@@ -95,22 +96,22 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     td {
       padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid #444444;
+      border-bottom: 1px solid var(--prp-border-primary);
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
     th {
-      color: #ffffff;
-      background-color: #3c3c3c;
+      color: var(--prp-text-primary);
+      background-color: var(--prp-bg-tertiary);
     }
 
     tr:nth-child(even) {
-      background-color: #353535;
+      background-color: var(--prp-bg-secondary);
     }
 
     tr:hover {
-      background-color: #444444;
+      background-color: var(--prp-bg-tertiary);
     }
   }
 
@@ -124,23 +125,23 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
 
     .empty-list-content {
       text-align: center;
-      color: #888;
+      color: var(--prp-text-muted);
 
       svg {
         margin-bottom: 1rem;
-        color: #666;
+        color: var(--prp-text-muted);
       }
 
       h3 {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
         font-weight: 500;
-        color: #fff;
+        color: var(--prp-text-primary);
       }
 
       p {
         font-size: 1rem;
-        color: #888;
+        color: var(--prp-text-muted);
       }
     }
   }
@@ -150,14 +151,14 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
+  color: var(--prp-text-muted);
   text-decoration: none;
   transition: color 0.2s ease;
   &.util-cell-link-remove {
     cursor: pointer;
   }
   &:hover {
-    color: #333;
+    color: var(--prp-text-muted);
   }
 
   .icon {
@@ -165,7 +166,7 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     height: 16px;
     stroke: none;
     &.icon-trash {
-      fill: #ff0000;
+      fill: var(--prp-color-error);
       stroke: none;
     }
     &.icon-down {
@@ -181,8 +182,8 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
 }
 
 .filter-button {
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--prp-bg-button-success);
+  color: var(--text-primary);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -190,7 +191,8 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #45a049;
+    background-color: var(--prp-bg-button-success);
+    opacity: 0.9;
   }
   .icon-filter {
     position: relative;
@@ -215,7 +217,7 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
   gap: 16px;
   a {
     padding: 8px 16px;
-    background-color: #4caf50;
+    background-color: var(--prp-bg-button-success);
     color: white;
     border-radius: 4px;
     text-decoration: none;
@@ -251,8 +253,8 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
   list-style: none;
   margin: 0;
   padding: 0;
-  background-color: #2b2b2b;
-  border: 1px solid #444444;
+  background-color: var(--prp-bg-secondary);
+  border: 1px solid var(--prp-border-primary);
   border-radius: 4px;
   z-index: 1000;
   > li {
@@ -262,7 +264,7 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     border-bottom: 1px solid #444444;
     cursor: pointer;
     &:hover {
-      background-color: #444444;
+      background-color: var(--prp-bg-tertiary);
     }
     &:last-child {
       border-bottom: none;

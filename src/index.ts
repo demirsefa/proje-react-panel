@@ -29,6 +29,7 @@ export { Panel } from './components/Panel';
 
 //DASHBOARD
 export { Counter } from './components/Counter';
+export { Dashboard, DashboardGrid, DashboardItem } from './components/dashboard';
 
 //LAYOUT
 export { Layout } from './components/layout';

@@ -13,10 +13,10 @@ input.apple-switch {
   outline: none;
   width: 50px;
   height: 30px;
-  background-color: #fff;
+  background-color: var(--prp-bg-white);
   border: 1px solid #d9dadc;
   border-radius: 50px;
-  box-shadow: inset -20px 0 0 0 #fff;
+  box-shadow: inset -20px 0 0 0 var(--prp-bg-white);
 }
 
 input.apple-switch:after {
@@ -28,15 +28,15 @@ input.apple-switch:after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 4px 6px var(--prp-shadow-medium);
 }
 
 input.apple-switch:checked {
-  box-shadow: inset 20px 0 0 0 #4ed164;
-  border-color: #4ed164;
+  box-shadow: inset 20px 0 0 0 var(--prp-color-success);
+  border-color: var(--prp-color-success);
 }
 
 input.apple-switch:checked:after {
   left: 20px;
-  box-shadow: -2px 4px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: -2px 4px 3px var(--prp-shadow-light);
 }

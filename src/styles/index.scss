@@ -1,3 +1,4 @@
+@import './base/variables';
 @import './layout';
 @import './sidebar';
 @import './form';
@@ -13,6 +14,7 @@
 @import './components/form-header';
 @import './components/button';
 @import './details';
+@import './dashboard';
 //TODO: import deprecated
 .layout {
   display: flex;
@@ -22,12 +24,14 @@
   width: 100%;
   padding: 0;
   overflow: hidden !important;
+  background-color: var(--prp-bg-primary);
+  color: var(--prp-text-primary);
   a {
-    color: white;
+    color: var(--prp-text-primary);
 
     &:hover,
     &:active {
-      color: white;
+      color: var(--prp-text-primary);
     }
   }
 
@@ -45,13 +49,13 @@
   &.icon-true {
     width: 20px;
     height: 20px;
-    stroke: #4caf50;
+    stroke: var(--prp-bg-button-success);
     fill: none;
   }
   &.icon-false {
     width: 20px;
     height: 20px;
-    stroke: #ff0000;
+    stroke: var(--prp-color-error);
     fill: none;
   }
 }

@@ -10,17 +10,21 @@ A powerful and flexible React-based panel library for building administrative in
 - **Layout System**: Consistent layout management
 - **Panel Component**: Core panel functionality
 - **Counter Component**: Utility component for counting operations
+- **Dashboard Components**: Flexible grid-based dashboard layout system
+- **Color System**: Centralized color system with SCSS variables and CSS custom properties
 
 ## Decorators
 
 The library provides several decorators for enhanced functionality:
 
 ### List Decorators
+
 - `@List`: Main list decorator for creating list views
 - `@ImageCell`: Specialized cell for handling images in lists
 - `@Cell`: Base cell decorator for list items
 
 ### Form Decorators
+
 - `@Input`: Form input decorator
 - `@Crud`: CRUD operations decorator
 
@@ -35,7 +39,7 @@ yarn add proje-react-panel
 ## Usage
 
 ```typescript
-import { Panel, ListPage, FormPage, Login, Layout } from 'proje-react-panel';
+import { Panel, ListPage, FormPage, Login, Layout, DashboardGrid, DashboardItem } from 'proje-react-panel';
 
 // Initialize the panel
 const panel = new Panel({
@@ -48,7 +52,20 @@ const panel = new Panel({
   <FormPage />
   <Login />
 </Layout>
+
+// Dashboard example
+<DashboardGrid columns={3}>
+  <DashboardItem>Content 1</DashboardItem>
+  <DashboardItem>Content 2</DashboardItem>
+  <DashboardItem>Content 3</DashboardItem>
+</DashboardGrid>
 ```
+
+## Guides
+
+- **[Dashboard Guide](./DASHBOARD_GUIDE.md)** - Complete guide for using Dashboard components
+- **[Auth Layout Guide](./AUTH_LAYOUT_GUIDE.md)** - Guide for implementing authentication layouts with sidebar
+- **[Color System Guide](./COLOR_SYSTEM_GUIDE.md)** - Complete documentation of the color system, SCSS variables, and CSS custom properties
 
 ## Type Definitions
 

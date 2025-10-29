@@ -1,0 +1,45 @@
+// SCSS Color Variables - Dark Theme
+// ⚠️ IMPORTANT: If you change any variables here, you MUST update COLOR_SYSTEM_GUIDE.md
+$dark-void: #1a1a1a; // Darkest background
+$dark-slate: #2b2b2b; // Dark background
+$dark-mist: #333333; // Medium dark background
+$dark-silver: #444444; // Lighter dark background
+
+$dark-pearl: #ffffff; // White
+$dark-ash: #e0e0e0; // Light gray
+$dark-dust: #999999; // Medium gray
+
+$dark-ocean: #007bff; // Primary blue
+$dark-sky: #66b2ff; // Light blue (focus)
+$dark-emerald: #4caf50; // Success green
+$dark-ruby: #ff4d4f; // Error red
+
+.layout {
+  // Backgrounds
+  --prp-bg-primary: #{$dark-void};
+  --prp-bg-secondary: #{$dark-slate};
+  --prp-bg-tertiary: #{$dark-mist};
+  --prp-bg-white: #{$dark-pearl};
+  --prp-bg-button-primary: #{$dark-ocean};
+  --prp-bg-button-success: #{$dark-emerald};
+
+  // Text
+  --prp-text-primary: #{$dark-pearl};
+  --prp-text-secondary: #{$dark-ash};
+  --prp-text-muted: #{$dark-dust};
+
+  // Borders
+  --prp-border-primary: #{$dark-silver};
+  --prp-border-light: #{$dark-ash};
+
+  // Colors
+  --prp-color-focus: #{$dark-sky};
+  --prp-color-success: #{$dark-emerald};
+  --prp-color-error: #{$dark-ruby};
+
+  // Shadows
+  --prp-shadow-light: rgba(0, 0, 0, 0.05);
+  --prp-shadow-medium: rgba(0, 0, 0, 0.2);
+  --prp-shadow-dark: rgba(0, 0, 0, 0.3);
+  --prp-shadow-focus: rgba(102, 178, 255, 0.2);
+}

@@ -1,13 +1,21 @@
 import React from "react";
-import { Counter } from "proje-react-panel";
+import { Counter, DashboardGrid, DashboardItem } from "proje-react-panel";
 
 export function Dashboard() {
 	return (
-		<div className="dashboard">
-			<Counter targetNumber={100} duration={2000} image={""} text={"Products"} />
-			<Counter targetNumber={100} duration={2000} image={""} text={"Downloads"} />
-			<Counter targetNumber={100} duration={2000} image={""} text={"Services"} />
-			<Counter targetNumber={100} duration={2000} image={""} text={"Admins"} />
-		</div>
+		<DashboardGrid columns={3}>
+			<DashboardItem>
+				<Counter targetNumber={100} duration={2000} image={""} text={"Products"} />
+			</DashboardItem>
+			<DashboardItem>
+				<Counter targetNumber={100} duration={2000} image={""} text={"Downloads"} />
+			</DashboardItem>
+			<DashboardItem>
+				<Counter targetNumber={100} duration={2000} image={""} text={"Services"} />
+			</DashboardItem>
+			<DashboardItem>
+				<Counter targetNumber={100} duration={2000} image={""} text={"Admins"} />
+			</DashboardItem>
+		</DashboardGrid>
 	);
 }

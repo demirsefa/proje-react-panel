@@ -1,9 +1,9 @@
 .panel-button {
   padding: 0.5rem 1rem;
-  border: 1px solid #444444;
+  border: 1px solid var(--prp-border-primary);
   border-radius: 4px;
-  background-color: cornflowerblue;
-  color: #ffffff;
+  background-color: var(--prp-bg-button-primary);
+  color: var(--prp-text-primary);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
