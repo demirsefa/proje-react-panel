@@ -6,6 +6,9 @@
     // The richtext field reaches its optional @tiptap peers through import(), which needs a
     // module kind that supports dynamic import; rollup wants ESM out of tsc anyway.
     "module": "esnext",
+    // Sabit tutuluyor: aksi hâlde ortak kök repo köküne kayıp .d.ts'ler dist/src/ altına
+    // düşüyor ve package.json'daki "types": "dist/index.d.ts" boşa çıkıyor.
+    "rootDir": "src",
     "moduleResolution": "node",
     "jsx": "react",
     "allowJs": true,
