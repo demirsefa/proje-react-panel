@@ -527,5 +527,5 @@ The Dashboard components are part of the `proje-react-panel` library and require
 
 ## Related Components
 
-- [Counter Component](./README.md#counter-component) - For displaying animated counters
+- [Counter Component](../README.md#counter-component) - For displaying animated counters
 - [Layout Component](./AUTH_LAYOUT_GUIDE.md) - For page layouts with sidebar
