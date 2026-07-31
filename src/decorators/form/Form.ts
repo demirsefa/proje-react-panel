@@ -5,12 +5,21 @@ import { GetDetailsDataFN } from '../details/Details';
 const DETAILS_METADATA_KEY = 'DetailsMetaData';
 export type OnSubmitFN<T, L = T> = (data: T | FormData) => Promise<L>;
 
+export interface FormGroup {
+  key: string;
+  label: string;
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
+}
+
 interface FormOptions<T extends AnyClass, L = T> {
   onSubmit: OnSubmitFN<T, L>;
   onSubmitSuccess?: (data: L) => void;
   getDetailsData?: GetDetailsDataFN<T>;
   type?: 'json' | 'formData';
   redirectSuccessUrl?: string;
+  //NOTE: declares the section headings and their order; fields opt in with @Input({ group }).
+  groups?: FormGroup[];
 }
 
 export interface FormConfiguration<T extends AnyClass, L = T> {
@@ -19,6 +28,7 @@ export interface FormConfiguration<T extends AnyClass, L = T> {
   getDetailsData?: GetDetailsDataFN<T>;
   type: 'json' | 'formData';
   redirectSuccessUrl?: string;
+  groups?: FormGroup[];
 }
 
 export function Form<T extends AnyClass, L = T>(options?: FormOptions<T, L>): ClassDecorator {
@@ -45,6 +55,7 @@ export function getFormConfiguration<T extends AnyClass, K extends AnyClassConst
     getDetailsData: formOptions.getDetailsData,
     type: formOptions.type ?? 'json',
     redirectSuccessUrl: formOptions.redirectSuccessUrl,
+    groups: formOptions.groups,
   };
   return formConfiguration;
 }

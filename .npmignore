@@ -108,3 +108,4 @@ package-lock.json
 rollup.config.mjs
 tsconfig.json
 examples
+jest

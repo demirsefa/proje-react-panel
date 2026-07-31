@@ -10,6 +10,7 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.svg$': '<rootDir>/jest/svgStub.js',
   },
   collectCoverage: true,
   coverageDirectory: 'coverage',

@@ -18,9 +18,16 @@ export { LinkCell } from './decorators/list/cells/LinkCell';
 
 //FORM
 export { FormPage } from './components/form/FormPage';
-export { Form, type OnSubmitFN } from './decorators/form/Form';
+export { Form, type OnSubmitFN, type FormGroup } from './decorators/form/Form';
 export { Input } from './decorators/form/Input';
 export { SelectInput } from './decorators/form/inputs/SelectInput';
+export {
+  RichTextInput,
+  DEFAULT_RICH_TEXT_TOOLBAR,
+  type RichTextInputOptions,
+  type RichTextInputConfiguration,
+  type RichTextToolbarItem,
+} from './decorators/form/inputs/RichTextInput';
 export {
   CustomInput,
   type CustomInputOptions,

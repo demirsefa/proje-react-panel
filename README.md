@@ -27,6 +27,7 @@ The library provides several decorators for enhanced functionality:
 
 - `@Input`: Form input decorator
 - `@SelectInput`: Select input decorator
+- `@RichTextInput`: Rich text (TipTap) input decorator — needs the optional `@tiptap/react` + `@tiptap/starter-kit` peers
 - `@CustomInput`: Render your own component in place of a field
 - `@Crud`: CRUD operations decorator
 

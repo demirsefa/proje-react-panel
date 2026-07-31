@@ -90,6 +90,54 @@
     }
   }
 
+  .form-group-section {
+    border: 1px solid var(--prp-border-primary);
+    border-radius: 6px;
+    background-color: var(--prp-bg-secondary);
+    padding: 16px;
+    margin: 0 0 20px 0;
+    min-width: 0;
+
+    .form-group-legend,
+    .form-group-summary {
+      font-weight: bold;
+      font-size: 15px;
+      color: var(--prp-text-primary);
+      padding: 0 6px;
+    }
+
+    .form-group-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &:before {
+        content: '▾';
+        color: var(--prp-text-muted);
+        transition: transform 0.2s;
+      }
+    }
+
+    details:not([open]) > .form-group-summary:before {
+      transform: rotate(-90deg);
+    }
+
+    .form-group-fields {
+      margin-top: 12px;
+    }
+
+    .form-field:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   .submit-button {
     padding: 12px;
     font-size: 18px;

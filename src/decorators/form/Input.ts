@@ -8,7 +8,7 @@ const isFieldSensitive = (fieldName: string): boolean => {
 };
 
 export type InputTypes = 'input' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden' | 'nested';
-export type ExtendedInputTypes = InputTypes | 'select' | 'custom';
+export type ExtendedInputTypes = InputTypes | 'select' | 'custom' | 'richtext';
 
 export interface InputOptions {
   type?: InputTypes;
@@ -19,6 +19,9 @@ export interface InputOptions {
   defaultValue?: string;
   includeInCSV?: boolean;
   includeInJSON?: boolean;
+  //NOTE: the visual section this field belongs to, matched against @Form({ groups }) by key.
+  group?: string;
+  rows?: number;
 }
 
 export interface ExtendedInputOptions extends Omit<InputOptions, 'type'> {
@@ -36,6 +39,8 @@ export interface InputConfiguration {
   defaultValue?: string;
   includeInCSV: boolean;
   includeInJSON: boolean;
+  group?: string;
+  rows?: number;
 }
 
 export function Input(options?: InputOptions): PropertyDecorator {

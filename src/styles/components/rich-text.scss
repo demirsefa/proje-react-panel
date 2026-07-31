@@ -1,0 +1,115 @@
+// Colors mirror the react-select control (see SelectStyles.ts) so a richtext field and a
+// select field sitting next to each other in the same form read as the same widget family.
+$rich-text-surface: #1f2937;
+$rich-text-border: #374151;
+$rich-text-accent: #6366f1;
+$rich-text-muted: #9ca3af;
+
+.rich-text-field {
+  border: 1px solid $rich-text-border;
+  border-radius: 6px;
+  background-color: $rich-text-surface;
+  color: #ffffff;
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: $rich-text-accent;
+    box-shadow: 0 0 0 1px $rich-text-accent;
+  }
+
+  .rich-text-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px;
+    border-bottom: 1px solid $rich-text-border;
+    background-color: $rich-text-surface;
+  }
+
+  .rich-text-toolbar-button {
+    min-width: 32px;
+    height: 28px;
+    padding: 0 8px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: $rich-text-border;
+    }
+
+    &.is-active {
+      background-color: $rich-text-accent;
+      border-color: $rich-text-accent;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .rich-text-content {
+    position: relative;
+    padding: 10px;
+    font-size: 16px;
+
+    // The placeholder is CSS-only on purpose: @tiptap/extension-placeholder would be a third
+    // package for consumers to install, for one line of grey text.
+    &.is-empty::before {
+      content: attr(data-placeholder);
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: $rich-text-muted;
+      pointer-events: none;
+    }
+
+    .ProseMirror {
+      outline: none;
+      min-height: inherit;
+
+      > * + * {
+        margin-top: 0.6em;
+      }
+
+      p,
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.4em;
+        margin: 0;
+      }
+
+      a {
+        color: $rich-text-accent;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.rich-text-loading,
+.rich-text-missing {
+  padding: 10px;
+  border: 1px dashed $rich-text-border;
+  border-radius: 6px;
+  color: $rich-text-muted;
+}
+
+.rich-text-missing {
+  color: var(--prp-color-error);
+  border-color: var(--prp-color-error);
+}

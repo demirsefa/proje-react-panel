@@ -1,15 +1,72 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { InputConfiguration } from '../../decorators/form/Input';
 import { FormField } from './FormField';
 import { useNavigate } from 'react-router';
-import { FormConfiguration } from '../../decorators/form/Form';
+import { FormConfiguration, FormGroup } from '../../decorators/form/Form';
 import { AnyClass } from '../../types/AnyClass';
 import { toast } from 'react-toastify';
 
 interface InnerFormProps<T extends AnyClass> {
   inputs: InputConfiguration[];
   formClass: FormConfiguration<T>;
+}
+
+interface GroupSection {
+  key: string;
+  label: string;
+  collapsible: boolean;
+  defaultCollapsed: boolean;
+  inputs: InputConfiguration[];
+}
+
+/**
+ * Splits the inputs into the fields rendered straight into the form and the grouped sections.
+ * With no `group` on any field every input stays ungrouped, so the markup is byte-for-byte what
+ * it was before groups existed — no stray fieldset around existing panels' CSS.
+ */
+function splitIntoGroups(
+  inputs: InputConfiguration[],
+  groups?: FormGroup[]
+): { ungrouped: InputConfiguration[]; sections: GroupSection[] } {
+  const ungrouped: InputConfiguration[] = [];
+  const inputsByGroup = new Map<string, InputConfiguration[]>();
+  const appearanceOrder: string[] = [];
+
+  inputs?.forEach(input => {
+    // Hidden fields carry no label and no layout; a fieldset around them would only add noise.
+    if (!input.group || input.type === 'hidden') {
+      ungrouped.push(input);
+      return;
+    }
+    if (!inputsByGroup.has(input.group)) {
+      inputsByGroup.set(input.group, []);
+      appearanceOrder.push(input.group);
+    }
+    inputsByGroup.get(input.group)!.push(input);
+  });
+
+  const declared = groups ?? [];
+  const declaredKeys = declared.map(group => group.key);
+  const orderedKeys = [
+    ...declaredKeys.filter(key => inputsByGroup.has(key)),
+    // A group nobody declared in @Form({ groups }) still renders — labelled with its own key,
+    // appended after the declared ones, in the order the fields introduced it.
+    ...appearanceOrder.filter(key => !declaredKeys.includes(key)),
+  ];
+
+  const sections = orderedKeys.map(key => {
+    const declaration = declared.find(group => group.key === key);
+    return {
+      key,
+      label: declaration?.label ?? key,
+      collapsible: declaration?.collapsible ?? false,
+      defaultCollapsed: declaration?.defaultCollapsed ?? false,
+      inputs: inputsByGroup.get(key)!,
+    };
+  });
+
+  return { ungrouped, sections };
 }
 
 export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormProps<T>) {
@@ -19,6 +76,29 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
   const navigate = useNavigate();
   const form = useFormContext<T>();
   const loadingRef = useRef(false);
+  const { ungrouped, sections } = useMemo(
+    () => splitIntoGroups(inputs, formClass.groups),
+    [inputs, formClass.groups]
+  );
+
+  const renderField = (input: InputConfiguration) => (
+    <FormField
+      key={input.name || ''}
+      input={input}
+      register={form.register}
+      error={
+        input.name
+          ? {
+              message: (
+                form.formState.errors[input.name as keyof T] as {
+                  message: string;
+                }
+              )?.message,
+            }
+          : undefined
+      }
+    />
+  );
 
   return (
     <form
@@ -75,23 +155,25 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
             {errorMessage}
           </div>
         )}
-        {inputs?.map((input: InputConfiguration) => (
-          <FormField
-            key={input.name || ''}
-            input={input}
-            register={form.register}
-            error={
-              input.name
-                ? {
-                    message: (
-                      form.formState.errors[input.name as keyof T] as {
-                        message: string;
-                      }
-                    )?.message,
-                  }
-                : undefined
-            }
-          />
+        {ungrouped.map(renderField)}
+        {sections.map(section => (
+          <fieldset
+            key={section.key}
+            data-group={section.key}
+            className={`form-group-section${section.collapsible ? ' form-group-section-collapsible' : ''}`}
+          >
+            {section.collapsible ? (
+              <details open={!section.defaultCollapsed}>
+                <summary className="form-group-summary">{section.label}</summary>
+                <div className="form-group-fields">{section.inputs.map(renderField)}</div>
+              </details>
+            ) : (
+              <>
+                <legend className="form-group-legend">{section.label}</legend>
+                <div className="form-group-fields">{section.inputs.map(renderField)}</div>
+              </>
+            )}
+          </fieldset>
         ))}
         <button type="submit" className="submit-button">
           Submit

@@ -6,6 +6,9 @@ import { Checkbox } from './Checkbox';
 import { Label } from './Label';
 import { Select } from './Select';
 import { CustomField } from './CustomField';
+//NOTE: safe to import statically — RichTextField pulls the optional @tiptap/* peers in itself,
+// through a dynamic import, only once a richtext field is actually rendered.
+import { RichTextField } from './RichTextField';
 
 interface FormFieldProps {
   input: InputConfiguration;
@@ -80,9 +83,13 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
   const renderedField = useMemo(() => {
     switch (input.type) {
       case 'textarea':
-        return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
+        return (
+          <textarea {...register(fieldName)} placeholder={input.placeholder} rows={input.rows} />
+        );
       case 'select':
         return <Select input={input} fieldName={fieldName} />;
+      case 'richtext':
+        return <RichTextField input={input} fieldName={fieldName} />;
       case 'custom':
         return <CustomField input={input} fieldName={fieldName} error={error?.message} />;
       case 'input': {

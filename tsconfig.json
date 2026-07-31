@@ -3,6 +3,9 @@
     "declaration": true,
     "target": "esnext",
     "sourceMap": true,
+    // The richtext field reaches its optional @tiptap peers through import(), which needs a
+    // module kind that supports dynamic import; rollup wants ESM out of tsc anyway.
+    "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
     "allowJs": true,
@@ -18,14 +21,6 @@
     "strictPropertyInitialization": false,
     "experimentalDecorators": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "example",
-    "rollup.config.js"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
 }
