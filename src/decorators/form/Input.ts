@@ -8,7 +8,7 @@ const isFieldSensitive = (fieldName: string): boolean => {
 };
 
 export type InputTypes = 'input' | 'textarea' | 'file-upload' | 'checkbox' | 'hidden' | 'nested';
-export type ExtendedInputTypes = InputTypes | 'select';
+export type ExtendedInputTypes = InputTypes | 'select' | 'custom';
 
 export interface InputOptions {
   type?: InputTypes;

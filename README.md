@@ -26,6 +26,8 @@ The library provides several decorators for enhanced functionality:
 ### Form Decorators
 
 - `@Input`: Form input decorator
+- `@SelectInput`: Select input decorator
+- `@CustomInput`: Render your own component in place of a field
 - `@Crud`: CRUD operations decorator
 
 ## Installation
@@ -60,6 +62,41 @@ const panel = new Panel({
   <DashboardItem>Content 3</DashboardItem>
 </DashboardGrid>
 ```
+
+## Custom Form Fields
+
+When a field needs a control the library does not ship, `@CustomInput` lets your app render
+it. The library only wires the field into `react-hook-form` and renders the label and the
+error message like any other field — everything inside is yours.
+
+```tsx
+import { CustomInput, type CustomRenderProps } from 'proje-react-panel';
+
+class Product {
+  @Input({ label: 'Name' })
+  name: string;
+
+  @CustomInput({
+    label: 'Cover image',
+    render: ({ value, onChange, error }: CustomRenderProps) => (
+      <MyImagePicker value={value as string} onSelect={onChange} invalid={!!error} />
+    ),
+  })
+  coverImage: string;
+}
+```
+
+The render function receives:
+
+| Prop        | Type                       | Description                                         |
+| ----------- | -------------------------- | --------------------------------------------------- |
+| `fieldName` | `string`                   | Full form path of the field (nested paths included) |
+| `value`     | `unknown`                  | Current form value                                  |
+| `onChange`  | `(value: unknown) => void` | Writes a new value into the form                    |
+| `error`     | `string \| undefined`      | Validation message for this field, if any           |
+
+Because the value is whatever you pass to `onChange`, a custom field can hold an id, an
+object or a file reference — validation and submit treat it like any other form value.
 
 ## Guides
 

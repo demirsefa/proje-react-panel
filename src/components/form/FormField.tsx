@@ -5,6 +5,7 @@ import { Uploader } from './Uploader';
 import { Checkbox } from './Checkbox';
 import { Label } from './Label';
 import { Select } from './Select';
+import { CustomField } from './CustomField';
 
 interface FormFieldProps {
   input: InputConfiguration;
@@ -82,6 +83,8 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
         return <textarea {...register(fieldName)} placeholder={input.placeholder} />;
       case 'select':
         return <Select input={input} fieldName={fieldName} />;
+      case 'custom':
+        return <CustomField input={input} fieldName={fieldName} error={error?.message} />;
       case 'input': {
         return (
           <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
@@ -98,7 +101,8 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
       default:
         return null;
     }
-  }, [input, register, fieldName]);
+    // NOTE: error message is a dependency because 'custom' forwards it into the render prop.
+  }, [input, register, fieldName, error?.message]);
 
   return (
     <div className={`form-field ${input.type === 'nested' ? 'nested-form-field' : ''}`}>
