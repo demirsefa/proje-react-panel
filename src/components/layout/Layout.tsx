@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SideBar } from './SideBar';
+import { LoadingScreen } from '../LoadingScreen';
 import { useAppStore } from '../../store/store';
 
 export function Layout<IconType>({
@@ -16,8 +17,23 @@ export function Layout<IconType>({
   const { user } = useAppStore(s => ({
     user: s.user,
   }));
-  if (!user) {
+  const redirected = useRef(false);
+
+  // Yonlendirme render govdesinde degil effect'te yapiliyor: render sirasindaki
+  // yan etki React kuralini ihlal ediyor ve StrictMode'da iki kez tetikleniyordu.
+  useEffect(() => {
+    if (user || redirected.current) {
+      return;
+    }
+    redirected.current = true;
     logout?.('redirect');
+  }, [user, logout]);
+
+  // Oturum yokken children RENDER EDILMEZ. Eskiden `logout('redirect')` cagrilip
+  // yine de tum layout donuluyordu; tarayici korumali ekrani boyayip ancak
+  // ondan sonra login'e gidiyordu (panelin bir an gorunup kaybolmasi).
+  if (!user) {
+    return <LoadingScreen id="layout-auth-redirect" />;
   }
 
   return (
