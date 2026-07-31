@@ -60,7 +60,7 @@ export function ListPage<T extends AnyClass>({
     const filtersFromUrl: Record<string, string> = {};
     searchParams.forEach((value, key) => {
       filtersFromUrl[key] = value;
-    });
+    }); 
     setActiveFilters(filtersFromUrl);
   }, []);
 

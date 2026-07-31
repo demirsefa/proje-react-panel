@@ -5,7 +5,7 @@
   "debug.console.fontSize": 15,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "folder-customization.folders": [
+  "folder-customizaation.folders": [
     {
       "path": "test-aletleri/src/client/"
     }
