@@ -11,6 +11,13 @@ import { CellField } from './CellField';
 import { CellConfiguration } from '../../decorators/list/Cell';
 import { useAppStore } from '../../store/store';
 
+/**
+ * Otomatik duzende bu deger yalnizca bir ipucuydu; tarayici "Actions" etiketi
+ * sigsin diye kolonu kendisi buyutuyordu. `table-layout: fixed` ile genislik
+ * birebir uygulaniyor, dolayisiyla eski 30px etiketi kirpiyor.
+ */
+const ACTIONS_COLUMN_WIDTH = '120px';
+
 interface DatagridProps<T extends AnyClass> {
   data: T[];
   listPageMeta: ListPageMeta<T>;
@@ -49,7 +56,9 @@ export function Datagrid<T extends AnyClass>({
               {(listActions?.details ||
                 listActions?.edit ||
                 listActions?.delete ||
-                listActions?.customActions?.length) && <th style={{ width: '30px' }}>Actions</th>}
+                listActions?.customActions?.length) && (
+                <th style={{ width: ACTIONS_COLUMN_WIDTH }}>Actions</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -80,7 +89,7 @@ export function Datagrid<T extends AnyClass>({
                     );
                   })}
                   {(listCells?.details || listCells?.edit || listCells?.delete) && (
-                    <td style={{ width: '30px' }}>
+                    <td className="util-cell-actions-cell" style={{ width: ACTIONS_COLUMN_WIDTH }}>
                       <div className="util-cell-actions">
                         <p className="util-cell-actions-label">
                           Actions <DownArrowIcon className="icon icon-down" />

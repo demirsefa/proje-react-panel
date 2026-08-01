@@ -86,8 +86,17 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
     @include custom-scrollbar;
   }
 
+  // `width` sart: `table-layout: fixed`, genislik `auto` kaldigi surece devreye
+  // girmiyor (CSS 2.1 17.5.2.1) ve tarayici otomatik duzene doner. Burada eskiden
+  // sadece `min-width: 100%` vardi, yani sabit duzen hic calismiyordu: nowrap
+  // hucreler kolonu icerik kadar sisiriyor, tablo konteyneri asiyor ve uzun
+  // metin tasiyan her liste yatay scroll aciyordu.
+  //
+  // Kolonlarina px genislik veren tuketiciler genis tabloyu kaybetmiyor: sabit
+  // duzende kullanilan tablo genisligi, belirtilen kolon genisliklerinin toplami
+  // ile bu %100 degerinin buyugudur.
   .datagrid-table {
-    min-width: 100%;
+    width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
     position: relative;
@@ -97,8 +106,17 @@ $datagrid-height: calc(100vh - #{$header-height} - #{$footer-height});
       padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid var(--prp-border-primary);
+      // `text-overflow` yalnizca tasma kirpildiginda is goruyor; `overflow`
+      // olmadan ellipsis hicbir zaman cizilmiyordu.
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    // Actions hucresindeki acilir liste `position: absolute`; kirpilirsa menu
+    // gorunmez oluyor. Kirpma sadece metin kolonlari icin gerekli.
+    .util-cell-actions-cell {
+      overflow: visible;
     }
 
     th {

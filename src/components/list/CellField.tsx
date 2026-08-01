@@ -48,6 +48,7 @@ export function CellField<T extends AnyClass>({
   return (
     <td
       key={configuration.name}
+      title={cellTitle(configuration, item)}
       style={{
         minWidth,
         width,
@@ -56,4 +57,27 @@ export function CellField<T extends AnyClass>({
       {render}
     </td>
   );
+}
+
+/**
+ * Sabit kolon genisliginde uzun metin ellipsis'e dusuyor ve tam degeri okumanin
+ * tek yolu hover kaliyor. Gorsel/indirme/link hucrelerinde metin degil element
+ * basildigi icin ham degeri tooltip yapmak yalnizca gurultu olurdu.
+ */
+function cellTitle<T extends AnyClass>(
+  configuration: CellConfiguration,
+  item: T
+): string | undefined {
+  if (
+    configuration.type === 'image' ||
+    configuration.type === 'download' ||
+    configuration.type === 'link'
+  ) {
+    return undefined;
+  }
+  const value = item[configuration.name];
+  if (value === null || value === undefined || typeof value === 'object') {
+    return undefined;
+  }
+  return String(value);
 }

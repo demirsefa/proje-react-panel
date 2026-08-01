@@ -23,7 +23,16 @@ export interface CellOptions {
   placeHolder?: string;
   filter?: Filter | StaticSelectFilter;
   style?: {
+    /**
+     * @deprecated Tablo `table-layout: fixed` kullaniyor; sabit duzende hucre
+     * `min-width`'i kolon genisligini etkilemiyor (CSS 2.1 17.5.2.1). Bunun
+     * yerine `width` verin.
+     */
     minWidth?: string;
+    /**
+     * Kolon genisligi. Sabit duzende birebir uygulanir; yuzde vermek tabloyu
+     * konteynere sigdirir, px vermek toplam konteyneri asarsa yatay scroll acar.
+     */
     width?: string;
   };
 }

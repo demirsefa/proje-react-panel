@@ -14,11 +14,14 @@ export function ImageCell({ item, configuration }: ImageCellProps) {
   if (!value) return <>-</>;
 
   return (
+    // maxWidth sart: sabit tablo duzeninde kolon 100px'ten dar kalabiliyor ve
+    // hucre tasmayi kirptigi icin gorsel sessizce yarim gorunurdu. Kucultmek
+    // kirpmaktan iyi; objectFit: contain oranı koruyor.
     <img
       width={100}
       height={100}
       src={imageConfiguration.baseUrl + value}
-      style={{ objectFit: 'contain' }}
+      style={{ objectFit: 'contain', maxWidth: '100%' }}
       alt=""
     />
   );
