@@ -6,6 +6,7 @@ import { Checkbox } from './Checkbox';
 import { Label } from './Label';
 import { Select } from './Select';
 import { CustomField } from './CustomField';
+import { getFieldRegisterOptions } from './registerOptions';
 //NOTE: safe to import statically — RichTextField pulls the optional @tiptap/* peers in itself,
 // through a dynamic import, only once a richtext field is actually rendered.
 import { RichTextField } from './RichTextField';
@@ -94,7 +95,11 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
         return <CustomField input={input} fieldName={fieldName} error={error?.message} />;
       case 'input': {
         return (
-          <input type={input.inputType} {...register(fieldName)} placeholder={input.placeholder} />
+          <input
+            type={input.inputType}
+            {...register(fieldName, getFieldRegisterOptions(input.inputType))}
+            placeholder={input.placeholder}
+          />
         );
       }
       case 'file-upload':
@@ -102,7 +107,11 @@ export function FormField({ input, register, error, baseName }: FormFieldProps) 
       case 'checkbox':
         return <Checkbox fieldName={fieldName} input={input} />;
       case 'hidden':
-        return <input type="hidden" {...register(fieldName)} />;
+        //NOTE: hidden fields go through the same conversion — a hidden id declared with
+        // inputType 'number' must reach onSubmit as a number, or it ends up in the URL as a string.
+        return (
+          <input type="hidden" {...register(fieldName, getFieldRegisterOptions(input.inputType))} />
+        );
       case 'nested':
         return <NestedFormFields fieldName={fieldName} input={input} register={register} />;
       default:

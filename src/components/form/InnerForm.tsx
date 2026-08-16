@@ -114,6 +114,12 @@ export function InnerForm<T extends AnyClass>({ inputs, formClass }: InnerFormPr
                 : (() => {
                     const formData = new FormData(formRef.current!);
                     for (const key in dataForm) {
+                      //NOTE: an empty number field is `undefined` since register() converts it;
+                      // appending that would post the literal string 'undefined'. The DOM entry
+                      // for the field is already in formData, so skipping it loses nothing.
+                      if (dataForm[key] === undefined || dataForm[key] === null) {
+                        continue;
+                      }
                       if (!formData.get(key)) {
                         formData.append(key, dataForm[key]);
                       }

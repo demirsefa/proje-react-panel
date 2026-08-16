@@ -99,6 +99,29 @@ The render function receives:
 Because the value is whatever you pass to `onChange`, a custom field can hold an id, an
 object or a file reference — validation and submit treat it like any other form value.
 
+## What a field puts into the submitted body
+
+The DOM hands every input value over as a string. The library converts it before it reaches
+`onSubmit`, so a model does not need `@Type(() => Number)` to get a number:
+
+| Field                             | Value in the submitted body                                           |
+| --------------------------------- | --------------------------------------------------------------------- |
+| `@Input({ inputType: 'number' })` | `number` — and `undefined` when the field is empty                    |
+| `@Input({ inputType: 'date' })`   | `string` — the input's own `'YYYY-MM-DD'`, `''` when empty, no `Date` |
+| `@Input({ type: 'checkbox' })`    | `boolean`                                                             |
+| everything else                   | `string`                                                              |
+
+Notes:
+
+- **Empty number fields are `undefined`, not `0`.** `JSON.stringify` drops the key, so
+  `@IsOptional()` fields simply stay unset, and a required `@IsInt()` fails with the message
+  under the field instead of quietly posting `0`.
+- **Date fields stay strings.** They are meant to be validated with `@IsString()` /
+  `@IsISO8601()` and posted as-is; the library never turns them into `Date` objects.
+- **`type: 'hidden'` follows the same rules** — declare `inputType: 'number'` on a hidden id
+  and it reaches the body as a number rather than a string.
+- `@Type(() => Number)` on a model keeps working; it just is not needed anymore.
+
 ## Guides
 
 - **[Dashboard Guide](./guides/DASHBOARD_GUIDE.md)** - Complete guide for using Dashboard components
