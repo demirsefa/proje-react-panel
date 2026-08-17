@@ -2,6 +2,28 @@
 
 This file starts at 1.11.0; earlier releases are only in the git history.
 
+## 1.11.0
+
+### Fixed
+
+- **`@LinkCell({ path: '/users/:id' })` now fills its path parameters from the row.** The path was
+  handed to `<Link to>` verbatim, so every open/edit cell rendered the literal `/users/:id` and
+  404'd on click — a link that looks right until it is used. Every `:param` in `path` is now
+  replaced with the row's value of that name. A parameter the row has no value for is left in
+  place rather than dropped, so a missing field stays visible instead of quietly producing
+  `/users/undefined`. Consumers carrying a local patch for this can remove it.
+
+### Added
+
+- `src/__tests__/components/list/LinkCell.test.tsx` pins the substitution: one parameter, several
+  parameters, an unmatched parameter, and a path with none.
+
+### Changed
+
+- **The `react-router` peer range is now `^7.3.0`** instead of the exact `7.3.0` pin. Any 7.x from
+  7.3.0 up satisfies it, so a consumer upgrading the router for its own reasons (e.g. a security
+  advisory) no longer gets a permanent peer warning.
+
 ## 1.11.0-beta.0
 
 ### Changed — please read before upgrading
