@@ -64,7 +64,7 @@ export function update<T>(endpoint: string, key = 'id'): OnSubmitFN<T> {
 export function updateFormData<T>(endpoint: string, key = 'id'): OnSubmitFN<T> {
   return async (data: T | FormData): Promise<T> => {
     const axiosInstance = getAxiosInstance();
-    const id = (data as any)[key];
+    const id = (data as Record<string, unknown>)[key];
     const response = await axiosInstance.put<T>(`/${endpoint}/${id}`, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -89,7 +89,7 @@ export function remove<T>(endpoint: string, key = 'id'): (data: T) => Promise<vo
     const id = (data as any)[key];
     await axiosInstance
       .delete<T>(`/${endpoint}/${id}`)
-      .then((res: any) => res.data)
+      .then(res => res.data)
       .catch((err: AxiosError) => {
         const messageError = err.response?.data as { message: string };
         if (messageError?.message) {
