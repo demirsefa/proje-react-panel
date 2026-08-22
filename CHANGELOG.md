@@ -2,6 +2,22 @@
 
 This file starts at 1.11.0; earlier releases are only in the git history.
 
+## 1.11.1
+
+### Fixed
+
+- **Icons keep their `viewBox`, so consumer CSS can resize them.** SVGR was running SVGO with its
+  default configuration, whose `removeViewBox` plugin drops a `viewBox` that is redundant with
+  `width`/`height`. Only `check.svg` and `cross.svg` matched that condition (`0 0 24 24` with
+  `width=24`); every other icon carries `width=800` and was unaffected. Without a `viewBox` an SVG
+  cannot scale: a consumer sizing `.icon-true` to 16px got the top-left 16 units of a 24-unit
+  drawing — the tick in a boolean cell was cropped away rather than shrunk. `removeViewBox` is now
+  explicitly disabled in `rollup.config.mjs`. Consumers carrying a dist patch that injects the
+  attribute can remove it.
+- `prefixIds` is passed explicitly alongside it, because supplying `svgoConfig` replaces SVGR's
+  default plugin list wholesale — losing it would let ids and class names collide between icons
+  inlined into the same bundle.
+
 ## 1.11.0
 
 ### Fixed
