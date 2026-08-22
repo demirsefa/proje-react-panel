@@ -4,6 +4,7 @@ import { terser } from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import typescript from 'rollup-plugin-typescript2';
 import svgr from '@svgr/rollup';
+import { readFileSync } from 'node:fs';
 
 export default {
   input: 'src/index.ts',
@@ -24,22 +25,16 @@ export default {
     resolve(),
     commonjs(),
     /**
+     * Ikonlarin SVGO ayari `svgo.icons.json`'da, rollup'in icinde degil: ayni
+     * dosyayi `svgoViewBox.test.ts` de okuyup her ikonu gercekten donusturuyor,
+     * yani ayar bozulursa test kirmiziya doner. Ayarin kendisi neden var:
      * SVGO'nun `removeViewBox` plugin'i, viewBox width/height ile ayni oldugunda
      * (`0 0 24 24` + `width=24`) onu "gereksiz" sayip siliyor. viewBox'siz bir SVG
-     * olceklenemez: tuketici CSS'te 16px verdiginde ikon kucultulmez, KIRPILIR --
-     * check/cross ikonlari tam bu yuzden yarim gorunuyordu. Kapali kalmali.
+     * olceklenemez -- tuketici CSS'te 16px verdiginde ikon kucultulmez, KIRPILIR.
+     * `prefixIds` SVGR'in varsayilanindan elle tasindi: `svgoConfig` verildiginde
+     * varsayilan tamamen degisiyor ve id/class carpismalarini o onluyor.
      */
-    svgr({
-      svgoConfig: {
-        plugins: [
-          { name: 'preset-default', params: { overrides: { removeViewBox: false } } },
-          // SVGR'in kendi varsayilaninda var; `svgoConfig` verildiginde varsayilan
-          // TAMAMEN degistigi icin elle tasinmali. Ikonlar tek bundle'a gomuluyor,
-          // id/class'lar dosya adiyla onekleniyor ve boylece carpismiyorlar.
-          'prefixIds',
-        ],
-      },
-    }),
+    svgr({ svgoConfig: JSON.parse(readFileSync('./svgo.icons.json', 'utf8')) }),
     typescript({ tsconfig: './tsconfig.json', clean: true }),
     terser(),
   ],
