@@ -38,6 +38,21 @@ export interface ListOptions<T> {
   actions?: ((item: T) => ListActionOptions<T>) | ListActionOptions<T>;
   primaryId?: string;
   key?: string;
+  /**
+   * Sayfa boyutunu ekrana sigan satir sayisindan hesapla. Varsayilan acik:
+   * sabit bir sayfa boyutu (ornegin 10) buyuk ekranda tablonun altinda kocaman
+   * bir bosluk birakiyordu — datagrid yuksekligi viewport'a civili.
+   * Kapatirsan `getData` limit'i eskisi gibi kendi belirler.
+   */
+  autoCalculate?: boolean;
+  /**
+   * Satir yuksekligi (px). Sadece bir bilgi degil, tabloya UYGULANIR: satira
+   * bu yukseklik verilir ve hucre icerigi (ornegin gorsel) buna kirpilir.
+   * Boylece beyan ile gercek asla ayrisamaz. Yalnizca satirini kendi CSS'iyle
+   * degistiren ya da `image` gibi yuksek hucre tasiyan listelerde gerekir;
+   * verilmezse kutuphanenin kendi olcusu (`LIST_ROW_HEIGHT`) kullanilir.
+   */
+  rowHeight?: number;
 }
 
 export type ListConfiguration<T> = ListOptions<T> & {

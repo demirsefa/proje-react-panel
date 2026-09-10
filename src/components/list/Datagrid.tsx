@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { EmptyList } from './EmptyList';
+import { LoadingScreen } from '../LoadingScreen';
 import SearchIcon from '../../assets/icons/svg/search.svg';
 import PencilIcon from '../../assets/icons/svg/pencil.svg';
 import DownArrowIcon from '../../assets/icons/svg/down-arrow-backup-2.svg';
@@ -21,12 +22,24 @@ const ACTIONS_COLUMN_WIDTH = '120px';
 interface DatagridProps<T extends AnyClass> {
   data: T[];
   listPageMeta: ListPageMeta<T>;
+  loading?: boolean;
+  /**
+   * Satir yuksekligi satira UYGULANIR, sadece bildirilmez: otomatik sayfa
+   * boyutu bu sayiya gore hesaplandigi icin gercekle ayrismasina izin
+   * verilemez. Inline veriliyor ki tuketicinin kendi tablo CSS'i olsa da
+   * gecerli olsun.
+   */
+  rowHeight?: number;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
   onRemoveItem?: (item: T) => Promise<void>;
 }
 
 export function Datagrid<T extends AnyClass>({
   data,
   listPageMeta,
+  loading,
+  rowHeight,
+  containerRef,
   onRemoveItem,
 }: DatagridProps<T>) {
   const cells = listPageMeta.cells;
@@ -38,8 +51,10 @@ export function Datagrid<T extends AnyClass>({
     : null;
 
   return (
-    <div className="datagrid">
-      {!data || data.length === 0 ? (
+    <div className="datagrid" ref={containerRef}>
+      {loading ? (
+        <LoadingScreen id={listPageMeta.class.key} />
+      ) : !data || data.length === 0 ? (
         <EmptyList />
       ) : (
         <table className="datagrid-table">
@@ -75,7 +90,7 @@ export function Datagrid<T extends AnyClass>({
                     | undefined)
                 : null;
               return (
-                <tr key={index}>
+                <tr key={index} style={{ height: rowHeight }}>
                   {cells.map((configuration: CellConfiguration) => {
                     return (
                       <CellField

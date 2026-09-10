@@ -137,6 +137,29 @@ export class ProductDetails {
 }
 ```
 
+### 4.4.1 Page size
+
+`ListPage` asks for as many rows as fit the datagrid, instead of a fixed page size. It measures the
+grid element (so your own shell CSS is accounted for) and divides by the row height — which is
+declared, not measured, and then applied to the row, so the number cannot drift from what is on
+screen:
+
+```ts
+// Default: auto page size, library row height, nothing to declare.
+@List({ getData: dataFetchers.products.getAll, primaryId: 'id' })
+
+// A list with taller rows (an image cell, or your own row CSS) declares its height.
+@List({ getData: dataFetchers.products.getAll, primaryId: 'id', rowHeight: 124 })
+
+// Opt out: `getData` (or the server) decides the page size, as before.
+@List({ getData: dataFetchers.products.getAll, primaryId: 'id', autoCalculate: false })
+```
+
+The computed size is sent as `limit`, so the backend contract in §2 is unchanged. It is clamped to
+5–100 rows, and recomputed on window resize.
+
+---
+
 ### 4.5 Route the pages
 
 ```tsx

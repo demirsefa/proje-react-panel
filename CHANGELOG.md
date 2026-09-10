@@ -2,6 +2,36 @@
 
 This file starts at 1.11.0; earlier releases are only in the git history.
 
+## Unreleased
+
+### Added
+
+- **Lists size their own pages.** `ListPage` now asks for as many rows as the datagrid can show
+  instead of leaving the page size to the server, which on a tall screen meant ten rows and a large
+  empty area below them. The grid element is measured — not assumed — because a consumer styling its
+  own shell has no fixed `100vh - chrome` height, and any constant here would be silently wrong for
+  them. The row height is the other half of the sum and is *declared* rather than measured:
+  measuring a row would require rendering one first, so the correct page size would always cost a
+  second request. `@List({ rowHeight })` overrides it for taller rows, `@List({ autoCalculate: false })`
+  restores the previous behaviour, and the computed value travels as the existing `limit` query
+  parameter, so no backend change is needed.
+- The declared `rowHeight` is applied to the row inline, and image cells are capped to it. A
+  declaration the library does not enforce is a guess: an `image` cell alone used to make its row
+  roughly three times taller than the rest, which is exactly the case that would break the
+  calculation. A development-only warning names any list that carries an image cell without
+  declaring a row height.
+
+### Fixed
+
+- **The last page of a list is reachable again.** Page count used `Math.floor(total / limit)`, so a
+  final partial page was never drawn: 2151 records at 10 per page offered 215 pages and the last
+  record could not be opened from anywhere. Worse, any list with fewer than two full pages
+  (`total < 2 * limit`) computed a single page and hid the pagination entirely, stranding every
+  record after the first page. It also renders nothing while `limit` is still 0 rather than drawing
+  `NaN` pages.
+- The loading state now fills the datagrid instead of replacing the whole page, so the list header
+  and footer no longer disappear on every page change.
+
 ## 1.11.1
 
 ### Fixed
