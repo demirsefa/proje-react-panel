@@ -109,3 +109,9 @@ rollup.config.mjs
 tsconfig.json
 examples
 jest
+
+# Yarn Berry toolchain: the pinned release binary is 3 MB and the install state is
+# machine-local — neither belongs in the published tarball.
+.yarn
+.yarnrc.yml
+yarn.lock

@@ -9,6 +9,7 @@
   "module": "dist/index.esm.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
+  "packageManager": "yarn@4.17.0",
   "scripts": {
     "test": "jest",
     "build": "rollup -c",
@@ -23,7 +24,6 @@
     "url": "https://github.com/demirsefa/proje-react-panel/issues"
   },
   "homepage": "https://github.com/demirsefa/proje-react-panel#readme",
-  "dependencies": {},
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
     "@hookform/resolvers": "^4.1.3",
