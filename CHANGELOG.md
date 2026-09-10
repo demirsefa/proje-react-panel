@@ -2,7 +2,7 @@
 
 This file starts at 1.11.0; earlier releases are only in the git history.
 
-## Unreleased
+## 1.12.0
 
 ### Added
 
