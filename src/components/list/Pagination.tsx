@@ -11,7 +11,11 @@ interface PaginationProps {
 
 export function Pagination({ pagination, onPageChange }: PaginationProps) {
   const { total, page, limit } = pagination;
-  const totalPages = Math.floor(total / limit);
+  // `floor` son, eksik dolu sayfayi hic saymiyordu: 2151 kayit / 10 limit ->
+  // 215 sayfa cizilir, son kayda hicbir sayfadan ulasilamazdi. Daha kotusu
+  // total < 2*limit olan her listede sonuc 1 cikip pagination tamamen
+  // gizleniyor, ikinci sayfadaki kayitlar erisilemez oluyordu.
+  const totalPages = limit > 0 ? Math.ceil(total / limit) : 0;
 
   if (totalPages <= 1) return null;
 
